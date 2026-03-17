@@ -8,6 +8,7 @@ const __dirname = path.dirname(__filename);
 
 export default defineConfig({
     plugins: [react()],
+    assetsInclude: ['**/*.glix'],
     resolve: {
         alias: {
             '@glix/runtime': path.resolve(__dirname, '../runtime'),
@@ -16,5 +17,20 @@ export default defineConfig({
     },
     server: {
         port: 3000,
+        host: true,
+    },
+    build: {
+        outDir: 'dist',
+        rollupOptions: {
+            output: {
+                manualChunks: {
+                    vendor: ['react', 'react-dom'],
+                },
+            },
+        },
+    },
+    worker: {
+        format: 'es',
+        plugins: () => [react()],
     },
 });
