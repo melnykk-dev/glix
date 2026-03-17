@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState, useMemo } from 'react';
 import { useEditorStore } from '../store/useEditorStore';
 import { editorBridge } from '../bridge/EditorBridge';
 import { useHistoryStore } from '../store/useHistoryStore';
+import { useProjectStore } from '../store/useProjectStore';
 import { UpdatePropertyCommand } from '../history/commands/UpdatePropertyCommand';
 import { CreateEntityCommand } from '../history/commands/CreateEntityCommand';
 import { TilemapComponent, TilemapLayer } from '@glix/shared';
@@ -9,6 +10,7 @@ import { TilemapComponent, TilemapLayer } from '@glix/shared';
 export const TilemapEditor: React.FC = () => {
     const { selectedEntityIds } = useEditorStore();
     const { pushCommand } = useHistoryStore();
+    const { project, updateProject } = useProjectStore();
 
     const [tilemap, setTilemap] = useState<TilemapComponent | null>(null);
     const [textureSrc, setTextureSrc] = useState<string | null>(null);
@@ -359,8 +361,71 @@ export const TilemapEditor: React.FC = () => {
         }
     };
 
+    if (!selectedEntityIds[0]) {
+        return <div style={{ padding: 10, color: '#aaa' }}>Select an entity to use the Tilemap Editor.</div>;
+    }
+
     if (!tilemap) {
-        return <div style={{ padding: 10, color: '#aaa' }}>No Tilemap component on selected entity.</div>;
+        return (
+            <div style={{ padding: 20, textAlign: 'center', color: '#aaa' }}>
+                <p>No Tilemap component on selected entity.</p>
+                <button
+                    onClick={() => {
+                        const engine = editorBridge.getEngine();
+                        if (engine && selectedEntityIds[0]) {
+                            const defaultTM = {
+                                tilesetId: '',
+                                layers: [{ name: 'Layer 1', tiles: [], visible: true, opacity: 1 }],
+                                tileWidth: 16,
+                                tileHeight: 16
+                            };
+                            engine.getWorld().addComponent(selectedEntityIds[0], 'tilemap', defaultTM);
+                            updateProject(proj => {
+                                // Try all scenes to find the entity
+                                for (const sceneId in proj.scenes) {
+                                    const scene = proj.scenes[sceneId];
+                                    const ent = scene.entities.find(e => e.id === selectedEntityIds[0]);
+                                    if (ent) {
+                                        ent.components.tilemap = defaultTM;
+                                        break;
+                                    }
+                                }
+                                return { ...proj };
+                            });
+                        }
+                    }}
+                    className="btn-primary"
+                    style={{ marginTop: 10, padding: '8px 16px' }}
+                >
+                    Add Tilemap Component
+                </button>
+            </div>
+        );
+    }
+
+    if (!tilesetData) {
+        return (
+            <div style={{ padding: 20, textAlign: 'center', color: '#aaa' }}>
+                <p>No tileset assigned to this Tilemap.</p>
+                <div style={{ marginTop: 15, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
+                    <label style={{ fontSize: 12 }}>Pick a Tileset:</label>
+                    <select
+                        style={{ ...btnStyle, background: '#111', width: 240 }}
+                        onChange={(e) => {
+                            if (e.target.value) {
+                                pushCommand(new UpdatePropertyCommand(selectedEntityIds[0], 'tilemap', 'tilesetId', '', e.target.value));
+                            }
+                        }}
+                    >
+                        <option value="">-- Select Tileset --</option>
+                        {Object.values(project?.assets || {})
+                            .filter(a => a.type === 'tileset')
+                            .map(a => <option key={a.id} value={a.id}>{a.name}</option>)
+                        }
+                    </select>
+                </div>
+            </div>
+        );
     }
 
     return (

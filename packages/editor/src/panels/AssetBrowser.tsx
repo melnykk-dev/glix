@@ -36,8 +36,25 @@ export const AssetBrowser: React.FC = () => {
                 data: dataUrl
             };
 
+            const tilesetId = 'tileset_' + id;
+            const tileset: AssetDef = {
+                id: tilesetId,
+                name: file.name + ' (Tileset)',
+                type: 'tileset',
+                mimeType: 'application/json',
+                data: JSON.stringify({
+                    textureId: id,
+                    tileWidth: 16,
+                    tileHeight: 16,
+                    columns: 1,
+                    rows: 1,
+                    solidTiles: []
+                }) as any
+            };
+
             updateProject(proj => {
                 proj.assets[id] = asset;
+                proj.assets[tilesetId] = tileset;
                 return { ...proj };
             });
         };
@@ -57,9 +74,28 @@ export const AssetBrowser: React.FC = () => {
             mimeType: 'image/png',
             data: dataUrl
         };
+        const tilesetId = 'tileset_' + id;
+        const tileset: AssetDef = {
+            id: tilesetId,
+            name: 'New Sprite (Tileset)',
+            type: 'tileset',
+            mimeType: 'application/json',
+            data: JSON.stringify({
+                textureId: id,
+                tileWidth: 16,
+                tileHeight: 16,
+                columns: 1,
+                rows: 1,
+                solidTiles: []
+            }) as any
+        };
         updateProject(proj => ({
             ...proj,
-            assets: { ...proj.assets, [id]: asset }
+            assets: {
+                ...proj.assets,
+                [id]: asset,
+                [tilesetId]: tileset
+            }
         }));
         setShowPixelEditor(false);
     };
