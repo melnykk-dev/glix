@@ -96,7 +96,7 @@ export const AssetBrowser: React.FC = () => {
                     {textures.map(a => (
                         <div key={a.id} style={{ background: '#222', border: '1px solid #333', borderRadius: '4px', padding: '4px', textAlign: 'center', cursor: 'default' }}>
                             <img src={a.data} style={{ width: '100%', height: 32, objectFit: 'contain', marginBottom: 4 }} />
-                            <div style={{ fontSize: '9px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{a.name}</div>
+                            <div style={{ fontSize: '9px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{a?.name || 'unnamed'}</div>
                         </div>
                     ))}
                 </div>
@@ -110,7 +110,7 @@ export const AssetBrowser: React.FC = () => {
                     {tilesets.map(a => (
                         <div key={a.id} style={{ background: '#222', border: '1px solid #333', borderRadius: '4px', padding: '4px', textAlign: 'center', cursor: 'default' }}>
                             <div style={{ fontSize: '20px', marginBottom: 4 }}>🗺️</div>
-                            <div style={{ fontSize: '9px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{a.name}</div>
+                            <div style={{ fontSize: '9px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{a?.name || 'unnamed'}</div>
                         </div>
                     ))}
                 </div>

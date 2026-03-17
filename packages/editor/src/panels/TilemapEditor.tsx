@@ -369,7 +369,7 @@ export const TilemapEditor: React.FC = () => {
             <div style={{ flex: 1, padding: 10, overflow: 'auto' }}>
                 <div style={{ marginBottom: 10, display: 'flex', gap: 10, flexWrap: 'wrap' }}>
                     <select value={selectedLayerIdx} onChange={e => setSelectedLayerIdx(Number(e.target.value))} style={{ background: '#333', color: '#fff', border: 'none', padding: 4 }}>
-                        {tilemap.layers.map((l, i) => <option key={i} value={i}>{l.name}</option>)}
+                        {tilemap.layers.map((l, i) => <option key={i} value={i}>{l?.name || 'Layer'}</option>)}
                     </select>
 
                     <button style={{ ...btnStyle, background: activeTool === 'paint' ? '#555' : '#333' }} onClick={() => setActiveTool('paint')}>Paint</button>
@@ -427,11 +427,13 @@ export const TilemapEditor: React.FC = () => {
                                         background: 'transparent', border: 'none', color: '#fff',
                                         fontSize: 12, width: '100%', outline: 'none'
                                     }}
-                                    value={l.name}
+                                    value={l?.name || ''}
                                     onChange={(e) => {
                                         const c = JSON.parse(JSON.stringify(tilemap.layers));
-                                        c[i].name = e.target.value;
-                                        commitLayerUpdate(c);
+                                        if (c[i]) {
+                                            c[i].name = e.target.value;
+                                            commitLayerUpdate(c);
+                                        }
                                     }}
                                 />
                             </span>

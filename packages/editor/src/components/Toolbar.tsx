@@ -28,7 +28,7 @@ export const Toolbar: React.FC = () => {
     }, [project, fileHandle]);
 
     const isPlaying = playState === 'playing';
-    const isPaused  = playState === 'paused';
+    const isPaused = playState === 'paused';
     const isStopped = playState === 'stopped';
 
     return (
@@ -41,28 +41,28 @@ export const Toolbar: React.FC = () => {
             {/* Logo / name */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', paddingRight: '12px', marginRight: '4px', borderRight: '1px solid var(--glix-border)' }}>
                 <svg width="18" height="18" viewBox="0 0 64 64">
-                    <rect x="8"  y="8"  width="14" height="14" rx="2" fill="#E94560"/>
-                    <rect x="25" y="8"  width="14" height="14" rx="2" fill="#E94560"/>
-                    <rect x="42" y="8"  width="14" height="14" rx="2" fill="#E94560"/>
-                    <rect x="8"  y="25" width="14" height="14" rx="2" fill="#E94560"/>
-                    <rect x="8"  y="42" width="14" height="14" rx="2" fill="#E94560"/>
-                    <rect x="25" y="42" width="14" height="14" rx="2" fill="#533483"/>
-                    <rect x="42" y="42" width="14" height="14" rx="2" fill="#533483"/>
+                    <rect x="8" y="8" width="14" height="14" rx="2" fill="#E94560" />
+                    <rect x="25" y="8" width="14" height="14" rx="2" fill="#E94560" />
+                    <rect x="42" y="8" width="14" height="14" rx="2" fill="#E94560" />
+                    <rect x="8" y="25" width="14" height="14" rx="2" fill="#E94560" />
+                    <rect x="8" y="42" width="14" height="14" rx="2" fill="#E94560" />
+                    <rect x="25" y="42" width="14" height="14" rx="2" fill="#533483" />
+                    <rect x="42" y="42" width="14" height="14" rx="2" fill="#533483" />
                 </svg>
                 <span style={{ fontSize: '13px', fontWeight: 700, color: 'var(--glix-text)', letterSpacing: '0.04em' }}>GLIX</span>
                 {project && (
                     <span style={{ fontSize: '11px', color: 'var(--glix-text-muted)', maxWidth: 140, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                        {project.meta.name}{isDirty ? ' ●' : ''}
+                        {project.meta?.name || 'Untitled'}{isDirty ? ' ●' : ''}
                     </span>
                 )}
             </div>
 
             {/* File ops */}
             <div style={{ display: 'flex', gap: '1px', paddingRight: '8px', marginRight: '4px', borderRight: '1px solid var(--glix-border)' }}>
-                <button className="icon-btn" onClick={() => setShowNewProjectDialog(true)} title="New (Ctrl+N)"><FilePlus size={14}/></button>
-                <button className="icon-btn" onClick={() => loadProject()} title="Open (Ctrl+O)"><FolderOpen size={14}/></button>
-                <button className={`icon-btn${isDirty ? ' active' : ''}`} onClick={() => project && saveProject(project, fileHandle)} title="Save (Ctrl+S)"><Save size={14}/></button>
-                <button className="icon-btn" onClick={() => project && exportProject(project)} title="Export HTML"><Download size={14}/></button>
+                <button className="icon-btn" onClick={() => setShowNewProjectDialog(true)} title="New (Ctrl+N)"><FilePlus size={14} /></button>
+                <button className="icon-btn" onClick={() => loadProject()} title="Open (Ctrl+O)"><FolderOpen size={14} /></button>
+                <button className={`icon-btn${isDirty ? ' active' : ''}`} onClick={() => project && saveProject(project, fileHandle)} title="Save (Ctrl+S)"><Save size={14} /></button>
+                <button className="icon-btn" onClick={() => project && exportProject(project)} title="Export HTML"><Download size={14} /></button>
             </div>
 
             {/* Play controls */}
@@ -74,7 +74,7 @@ export const Toolbar: React.FC = () => {
                         onClick={() => isPaused ? editorBridge.resume() : editorBridge.play()}
                         title="Play"
                     >
-                        <Play size={14} fill="currentColor"/>
+                        <Play size={14} fill="currentColor" />
                     </button>
                 ) : (
                     <button
@@ -83,7 +83,7 @@ export const Toolbar: React.FC = () => {
                         onClick={() => editorBridge.pause()}
                         title="Pause"
                     >
-                        <Pause size={14} fill="currentColor"/>
+                        <Pause size={14} fill="currentColor" />
                     </button>
                 )}
                 <button
@@ -93,7 +93,7 @@ export const Toolbar: React.FC = () => {
                     disabled={isStopped}
                     title="Stop"
                 >
-                    <Square size={13} fill="currentColor"/>
+                    <Square size={13} fill="currentColor" />
                 </button>
 
                 {isPlaying && (
@@ -104,7 +104,7 @@ export const Toolbar: React.FC = () => {
                 )}
             </div>
 
-            <div style={{ flex: 1 }}/>
+            <div style={{ flex: 1 }} />
 
             {/* Theme toggle */}
             <button
@@ -112,7 +112,7 @@ export const Toolbar: React.FC = () => {
                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
                 title="Toggle theme"
             >
-                {theme === 'dark' ? <Sun size={13}/> : <Moon size={13}/>}
+                {theme === 'dark' ? <Sun size={13} /> : <Moon size={13} />}
             </button>
 
             <span style={{ fontSize: '9px', color: 'var(--glix-text-dim)', padding: '0 6px' }}>v0.1.0</span>

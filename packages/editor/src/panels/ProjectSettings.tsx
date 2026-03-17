@@ -53,7 +53,7 @@ export const ProjectSettings: React.FC = () => {
                         Name
                         <input
                             type="text"
-                            value={project.meta.name}
+                            value={project.meta?.name || ''}
                             onChange={(e) => handleMetaChange('name', e.target.value)}
                             style={inputStyle}
                         />

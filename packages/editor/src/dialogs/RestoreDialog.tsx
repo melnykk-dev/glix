@@ -58,7 +58,7 @@ export const RestoreDialog: React.FC = () => {
                 <p>
                     An unsaved project recovery file was found.
                     <br /><br />
-                    <strong>Project:</strong> {autoSaveData.project.meta?.name || 'Unknown'}
+                    <strong>Project:</strong> {autoSaveData.project?.meta?.name || 'Unknown'}
                     <br />
                     <strong>Date:</strong> {new Date(autoSaveData.timestamp).toLocaleString()}
                 </p>
