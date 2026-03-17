@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "meta": { "name": "Empty Project", "resolution": { "width": 800, "height": 600 } },
+  "assets": {},
+  "prefabs": {},
+  "scenes": {
+    "main": {
+      "id": "main",
+      "name": "Main Scene",
+      "entities": []
+    }
+  },
+  "settings": {
+    "startScene": "main",
+    "physics": { "gravity": { "x": 0, "y": -9.81 } },
+    "input": {}
+  }
+}

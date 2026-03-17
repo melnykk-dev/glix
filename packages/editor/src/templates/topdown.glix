@@ -1,0 +1,27 @@
+{
+  "version": "1.0.0",
+  "meta": { "name": "Top-Down Project", "resolution": { "width": 800, "height": 600 } },
+  "assets": {},
+  "prefabs": {},
+  "scenes": {
+    "main": {
+      "id": "main",
+      "name": "Top-Down Scene",
+      "entities": [
+        {
+          "id": "player",
+          "components": {
+            "transform": { "x": 0, "y": 0, "rotation": 0, "scaleX": 1, "scaleY": 1 },
+            "rigidBody": { "type": "dynamic", "gravityScale": 0, "linearDamping": 5, "angularDamping": 5, "fixedRotation": true },
+            "circleCollider": { "radius": 0.5, "offsetX": 0, "offsetY": 0, "isSensor": false, "restitution": 0, "friction": 0.2 }
+          }
+        }
+      ]
+    }
+  },
+  "settings": {
+    "startScene": "main",
+    "physics": { "gravity": { "x": 0, "y": 0 } },
+    "input": {}
+  }
+}

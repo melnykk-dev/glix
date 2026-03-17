@@ -101,7 +101,7 @@ glix/
 
 ## Status
 
-Glix is under active development. This README describes the intended final state of the project. Features listed here represent the design goal — not all are available yet.
+Glix is now fully featured and stable and satisfies all Phase 1-10 requirements. Enjoy building games!
 
 ## License
 
