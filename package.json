@@ -1,0 +1,18 @@
+{
+  "name": "glix",
+  "type": "module",
+  "private": true,
+  "description": "A browser-based 2D game engine",
+  "scripts": {
+    "dev": "pnpm -F @glix/editor dev",
+    "build": "pnpm -F @glix/editor build",
+    "preview": "pnpm -F @glix/editor preview"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "planck": "^1.4.3"
+  }
+}

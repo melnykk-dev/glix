@@ -1,0 +1,15 @@
+{
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@glix/shared": [
+                "../shared/index.ts"
+            ]
+        }
+    },
+    "include": [
+        "src",
+        "index.ts"
+    ]
+}

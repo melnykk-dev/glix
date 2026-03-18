@@ -1,0 +1,19 @@
+{
+  "version": "1.0.0",
+  "meta": { "name": "Empty Project", "resolution": { "width": 1280, "height": 720 } },
+  "assets": {},
+  "prefabs": {},
+  "scenes": {
+    "main": {
+      "id": "main",
+      "name": "Main Scene",
+      "entities": []
+    }
+  },
+  "settings": {
+    "startScene": "main",
+    "physics": { "gravity": { "x": 0, "y": -9.81 } },
+    "postProcess": { "bloom": false, "vignette": false, "crt": false, "bloomThreshold": 0.8, "vignetteStrength": 0.3 },
+    "input": {}
+  }
+}
