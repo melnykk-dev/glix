@@ -1,0 +1,107 @@
+{
+  "version": "1.0.0",
+  "meta": {
+    "name": "Top-Down",
+    "resolution": { "width": 1280, "height": 720 }
+  },
+  "assets": {},
+  "prefabs": {},
+  "scenes": {
+    "main": {
+      "id": "main",
+      "name": "Main Scene",
+      "entities": [
+        {
+          "id": "player",
+          "name": "Player",
+          "components": {
+            "transform": { "x": 0, "y": 0, "rotation": 0, "scaleX": 1, "scaleY": 1 },
+            "sprite": {
+              "textureId": "",
+              "tintColor": "#6366F1",
+              "width": 0.8,
+              "height": 0.8,
+              "pivotX": 0.5,
+              "pivotY": 0.5
+            },
+            "rigidBody": {
+              "type": "dynamic",
+              "gravityScale": 0,
+              "linearDamping": 8,
+              "angularDamping": 8,
+              "fixedRotation": true
+            },
+            "circleCollider": {
+              "radius": 0.4,
+              "offsetX": 0,
+              "offsetY": 0,
+              "isSensor": false,
+              "restitution": 0,
+              "friction": 0.1
+            },
+            "script": {
+              "src": "// Top-Down Controller\nclass TopDownController extends ScriptComponent {\n  speed = 5;\n\n  onUpdate(dt: number) {\n    const moveX =\n      (this.input.isKeyDown('ArrowRight') || this.input.isKeyDown('KeyD') ? 1 : 0) -\n      (this.input.isKeyDown('ArrowLeft')  || this.input.isKeyDown('KeyA') ? 1 : 0);\n    const moveY =\n      (this.input.isKeyDown('ArrowUp')   || this.input.isKeyDown('KeyW') ? 1 : 0) -\n      (this.input.isKeyDown('ArrowDown') || this.input.isKeyDown('KeyS') ? 1 : 0);\n\n    // Normalize diagonal movement\n    const len = Math.sqrt(moveX * moveX + moveY * moveY) || 1;\n    this.setVelocity((moveX / len) * this.speed, (moveY / len) * this.speed);\n\n    // Rotate to face movement direction\n    if (moveX !== 0 || moveY !== 0) {\n      this.setRotation(Math.atan2(moveY, moveX) - Math.PI / 2);\n    }\n  }\n}\n\nexport default TopDownController;",
+              "compiledJs": ""
+            }
+          }
+        },
+        {
+          "id": "wall_top",
+          "name": "Wall Top",
+          "components": {
+            "transform": { "x": 0, "y": 8, "rotation": 0, "scaleX": 20, "scaleY": 1 },
+            "sprite": { "textureId": "", "tintColor": "#475569", "width": 1, "height": 1, "pivotX": 0.5, "pivotY": 0.5 },
+            "rigidBody": { "type": "static", "gravityScale": 0, "linearDamping": 0, "angularDamping": 0, "fixedRotation": true },
+            "boxCollider": { "width": 1, "height": 1, "offsetX": 0, "offsetY": 0, "isSensor": false, "restitution": 0, "friction": 0.1 }
+          }
+        },
+        {
+          "id": "wall_bottom",
+          "name": "Wall Bottom",
+          "components": {
+            "transform": { "x": 0, "y": -8, "rotation": 0, "scaleX": 20, "scaleY": 1 },
+            "sprite": { "textureId": "", "tintColor": "#475569", "width": 1, "height": 1, "pivotX": 0.5, "pivotY": 0.5 },
+            "rigidBody": { "type": "static", "gravityScale": 0, "linearDamping": 0, "angularDamping": 0, "fixedRotation": true },
+            "boxCollider": { "width": 1, "height": 1, "offsetX": 0, "offsetY": 0, "isSensor": false, "restitution": 0, "friction": 0.1 }
+          }
+        },
+        {
+          "id": "wall_left",
+          "name": "Wall Left",
+          "components": {
+            "transform": { "x": -10, "y": 0, "rotation": 0, "scaleX": 1, "scaleY": 16 },
+            "sprite": { "textureId": "", "tintColor": "#475569", "width": 1, "height": 1, "pivotX": 0.5, "pivotY": 0.5 },
+            "rigidBody": { "type": "static", "gravityScale": 0, "linearDamping": 0, "angularDamping": 0, "fixedRotation": true },
+            "boxCollider": { "width": 1, "height": 1, "offsetX": 0, "offsetY": 0, "isSensor": false, "restitution": 0, "friction": 0.1 }
+          }
+        },
+        {
+          "id": "wall_right",
+          "name": "Wall Right",
+          "components": {
+            "transform": { "x": 10, "y": 0, "rotation": 0, "scaleX": 1, "scaleY": 16 },
+            "sprite": { "textureId": "", "tintColor": "#475569", "width": 1, "height": 1, "pivotX": 0.5, "pivotY": 0.5 },
+            "rigidBody": { "type": "static", "gravityScale": 0, "linearDamping": 0, "angularDamping": 0, "fixedRotation": true },
+            "boxCollider": { "width": 1, "height": 1, "offsetX": 0, "offsetY": 0, "isSensor": false, "restitution": 0, "friction": 0.1 }
+          }
+        },
+        {
+          "id": "obstacle_1",
+          "name": "Obstacle",
+          "components": {
+            "transform": { "x": 3, "y": 3, "rotation": 0, "scaleX": 1.5, "scaleY": 1.5 },
+            "sprite": { "textureId": "", "tintColor": "#E94560", "width": 1, "height": 1, "pivotX": 0.5, "pivotY": 0.5 },
+            "rigidBody": { "type": "static", "gravityScale": 0, "linearDamping": 0, "angularDamping": 0, "fixedRotation": true },
+            "boxCollider": { "width": 1, "height": 1, "offsetX": 0, "offsetY": 0, "isSensor": false, "restitution": 0.3, "friction": 0.1 }
+          }
+        }
+      ]
+    }
+  },
+  "settings": {
+    "startScene": "main",
+    "physics": { "gravity": { "x": 0, "y": 0 } },
+    "postProcess": { "bloom": false, "vignette": false, "crt": false, "bloomThreshold": 0.8, "vignetteStrength": 0.3 },
+    "input": {}
+  }
+}

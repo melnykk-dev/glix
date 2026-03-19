@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="320" viewBox="0 0 1280 320">
+
+  <rect width="1280" height="320" fill="#0D1B2A"/>
+  <rect x="0" y="0" width="1280" height="3" fill="#E94560"/>
+  <pattern id="dots" x="0" y="0" width="32" height="32" patternUnits="userSpaceOnUse">
+    <circle cx="16" cy="16" r="0.8" fill="#E94560" opacity="0.1"/>
+  </pattern>
+  <rect width="1280" height="320" fill="url(#dots)"/>
+  <!-- mark -->
+  <g transform="translate(80,90) scale(2.2)">
+    <rect x="8"  y="8"  width="14" height="14" rx="2" fill="#E94560"/>
+    <rect x="25" y="8"  width="14" height="14" rx="2" fill="#E94560"/>
+    <rect x="42" y="8"  width="14" height="14" rx="2" fill="#E94560"/>
+    <rect x="8"  y="25" width="14" height="14" rx="2" fill="#E94560"/>
+    <rect x="8"  y="42" width="14" height="14" rx="2" fill="#E94560"/>
+    <rect x="25" y="42" width="14" height="14" rx="2" fill="#533483"/>
+    <rect x="42" y="42" width="14" height="14" rx="2" fill="#533483"/>
+    <rect x="42" y="25" width="14" height="14" rx="2" fill="rgba(233,69,96,0.25)"/>
+  </g>
+  <text x="270" y="200" font-family="monospace" font-size="110" font-weight="500"
+        fill="#F5F5F5" letter-spacing="-3">Glix</text>
+  <text x="80" y="268" font-family="monospace" font-size="22"
+        fill="rgba(245,245,245,0.4)">A fun, local-first 2D game engine. Build games in the browser. No installs, no accounts.</text>
+  <rect x="0" y="317" width="1280" height="3" fill="#533483"/>
+
+</svg>
