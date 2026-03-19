@@ -45,15 +45,15 @@ export class PhysicsSystem {
                     isSensor: fixtureA.isSensor() || fixtureB.isSensor()
                 });
 
-                // Track ground contacts (entity B is below entity A if normal points up)
-                const manifold = contact.getManifold();
-                const normal = manifold.localNormal;
+                // Track ground contacts (if normal points from A to B and normal.y > 0.5, B is supported by A)
+                const worldManifold = contact.getWorldManifold(null);
+                const normal = worldManifold ? worldManifold.normal : contact.getManifold().localNormal;
                 if (normal.y > 0.5) {
-                    if (!this.groundContacts.has(entityA)) this.groundContacts.set(entityA, new Set());
-                    this.groundContacts.get(entityA)!.add(entityB);
-                } else if (normal.y < -0.5) {
                     if (!this.groundContacts.has(entityB)) this.groundContacts.set(entityB, new Set());
                     this.groundContacts.get(entityB)!.add(entityA);
+                } else if (normal.y < -0.5) {
+                    if (!this.groundContacts.has(entityA)) this.groundContacts.set(entityA, new Set());
+                    this.groundContacts.get(entityA)!.add(entityB);
                 }
             }
         });

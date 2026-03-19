@@ -42,6 +42,15 @@ export class InputManager {
         this.canvas.removeEventListener('touchmove', this.handleTouchMove);
     }
 
+    public reset() {
+        this.keys.clear();
+        this.keysJustPressed.clear();
+        this.keysJustReleased.clear();
+        this.mouseButtons.clear();
+        this.mouseButtonsJustPressed.clear();
+        this.mouseButtonsJustReleased.clear();
+    }
+
     public update() {
         this.keysJustPressed.clear();
         this.keysJustReleased.clear();

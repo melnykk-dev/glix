@@ -179,7 +179,7 @@ export class Engine {
     stop(): void {
         this.isRunning = false;
         this.scriptSystem.destroy();
-        this.inputManager.destroy();
+        this.inputManager.reset();
         this.world.clear();
         this.accumulator = 0;
     }

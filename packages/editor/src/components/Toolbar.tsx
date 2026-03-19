@@ -14,6 +14,9 @@ export const Toolbar: React.FC = () => {
 
     // ── Play / Pause / Stop helpers ──────────────────────────────────────────
     const handlePlay = () => {
+        if (document.activeElement instanceof HTMLElement) {
+            document.activeElement.blur();
+        }
         if (playState === 'playing') {
             editorBridge.pause();
         } else if (playState === 'paused') {
@@ -24,6 +27,9 @@ export const Toolbar: React.FC = () => {
     };
 
     const handleStop = () => {
+        if (document.activeElement instanceof HTMLElement) {
+            document.activeElement.blur();
+        }
         editorBridge.stop();
     };
 

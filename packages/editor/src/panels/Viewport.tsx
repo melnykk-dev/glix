@@ -50,6 +50,8 @@ export const Viewport: React.FC = () => {
         const scaleGizmo = new ScaleGizmo(engine);
 
         let isPanning = false;
+        let isDraggingEntity = false;
+        let dragEntityOffset = { x: 0, y: 0 };
         let lastMouseX = 0;
         let lastMouseY = 0;
 
@@ -80,6 +82,14 @@ export const Viewport: React.FC = () => {
                         : [...current, hit]);
                 } else {
                     setSelectedEntityIds(hit ? [hit] : []);
+
+                    if (hit && mode === 'translate') {
+                        isDraggingEntity = true;
+                        const t = engine.getWorld().getComponent(hit, 'transform');
+                        if (t) {
+                            dragEntityOffset = { x: t.x - downWorldX, y: t.y - downWorldY };
+                        }
+                    }
                 }
                 engine.render(0);
             } else if (e.button === 1) {
@@ -122,6 +132,17 @@ export const Viewport: React.FC = () => {
                         const t = engine.getWorld().getComponent(id, 'transform');
                         if (t) editorBridge.updateTransform(id, { x: t.x, y: t.y });
                     });
+                } else if (isDraggingEntity && mode === 'translate') {
+                    const selected = useEditorStore.getState().selectedEntityIds;
+                    if (selected.length > 0) {
+                        const id = selected[0];
+                        const t = engine.getWorld().getComponent(id, 'transform');
+                        if (t) {
+                            t.x = worldX + dragEntityOffset.x;
+                            t.y = worldY + dragEntityOffset.y;
+                            editorBridge.updateTransform(id, { x: t.x, y: t.y });
+                        }
+                    }
                 }
                 if (useSceneStore.getState().playState === 'stopped') engine.render(0);
             }
@@ -131,6 +152,9 @@ export const Viewport: React.FC = () => {
             const wasPanning = isPanning;
             isPanning = false;
 
+            const entityWasDragged = isDraggingEntity;
+            isDraggingEntity = false;
+
             const translateWasActive = (translateGizmo as any).dragging;
             const rotateWasActive = (rotateGizmo as any).dragging;
             const scaleWasActive = (scaleGizmo as any).dragging;
@@ -139,7 +163,7 @@ export const Viewport: React.FC = () => {
             rotateGizmo.handleMouseUp();
             scaleGizmo.handleMouseUp();
 
-            if (!wasPanning && (translateWasActive || rotateWasActive || scaleWasActive)) {
+            if (!wasPanning && (translateWasActive || rotateWasActive || scaleWasActive || entityWasDragged)) {
                 syncWorldToProject();
             }
         };
