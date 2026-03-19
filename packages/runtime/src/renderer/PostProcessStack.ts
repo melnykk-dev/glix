@@ -220,7 +220,6 @@ export class PostProcessStack {
         this.gl.vertexAttribPointer(0, 2, this.gl.FLOAT, false, 0, 0);
 
         let currentInput = this.sceneTexture;
-        let currentOutputFbo = this.pingpongFbos[0];
         let pingPongIdx = 0;
 
         const drawPass = (program: WebGLProgram, outputFbo: WebGLFramebuffer | null, inputTex: WebGLTexture, setupUniforms?: () => void) => {
