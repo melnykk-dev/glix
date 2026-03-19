@@ -332,36 +332,11 @@ export class ScriptSystem {
     }
 
     /** Replace a script's source and recompile it. */
-    async replaceScript(entityId: Entity, newSrc: string, world: World): Promise<boolean> {
+    async replaceScript(entityId: Entity, newSrc: string, compiledJs: string, world: World): Promise<boolean> {
         const scriptComp = world.getComponent(entityId, 'script');
         if (!scriptComp) return false;
 
         try {
-            // Validate syntax first
-            const validation = this.validateScriptSyntax(newSrc);
-            if (!validation.valid) {
-                console.error(`[ScriptSystem] Invalid script syntax for ${entityId}:`, validation.errors);
-                return false;
-            }
-
-            // Compile the new script
-            const worker = new Worker(
-                new URL('../scripting/compiler.worker.ts', import.meta.url),
-                { type: 'module' }
-            );
-
-            const compiledJs = await new Promise<string>((resolve, reject) => {
-                const id = Math.random().toString(36).slice(2);
-                const handler = (evt: MessageEvent) => {
-                    if (evt.data.id !== id) return;
-                    worker.removeEventListener('message', handler);
-                    if (evt.data.compiledJs) resolve(evt.data.compiledJs);
-                    else reject(new Error(evt.data.error || 'Compilation failed'));
-                };
-                worker.addEventListener('message', handler);
-                worker.postMessage({ src: newSrc, id });
-            });
-
             // Update the component
             scriptComp.src = newSrc;
             scriptComp.compiledJs = compiledJs;
