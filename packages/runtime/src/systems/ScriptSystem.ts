@@ -466,14 +466,27 @@ export class ScriptSystem {
         try {
             const instance = ScriptSandbox.instantiate(scriptComp.compiledJs);
 
-            // Inject context
-            instance.entity = entity;
-            instance.world = world;
-            instance.input = this.inputManager;
-            instance.physics = this.physicsSystem;
-            instance.audio = this.audioManager;
-            instance.eventBus = this.eventBus;
-            instance.sceneManager = this.sceneManager;
+            // Inject context via formal init method for reliability
+            if ((instance as any).__init) {
+                (instance as any).__init(
+                    entity,
+                    world,
+                    this.inputManager,
+                    this.physicsSystem,
+                    this.audioManager,
+                    this.eventBus,
+                    this.sceneManager
+                );
+            } else {
+                // Fallback for older script instances or direct property access
+                instance.entity = entity;
+                instance.world = world;
+                instance.input = this.inputManager;
+                instance.physics = this.physicsSystem;
+                instance.audio = this.audioManager;
+                instance.eventBus = this.eventBus;
+                instance.sceneManager = this.sceneManager;
+            }
 
             // Add engine reference for isPlaying(), isPaused() methods
             (instance as any).engine = {

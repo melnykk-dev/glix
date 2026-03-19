@@ -41,6 +41,17 @@ export abstract class ScriptComponent {
     /** Called once, after the engine enters Play mode for this entity. */
     onStart(): void { }
 
+    /** @internal - Injected by ScriptSystem */
+    __init(entity: Entity, world: World, input: InputManager, physics: PhysicsSystem, audio: AudioManager, eventBus: EventBus, sceneManager: SceneManager): void {
+        this.entity = entity;
+        this.world = world;
+        this.input = input;
+        this.physics = physics;
+        this.audio = audio;
+        this.eventBus = eventBus;
+        this.sceneManager = sceneManager;
+    }
+
     /** Called every fixed-timestep tick while the engine is running. */
     onUpdate(_dt: number): void { }
 
@@ -106,6 +117,11 @@ export abstract class ScriptComponent {
 
     // ── World helpers ─────────────────────────────────────────────────────────
 
+    /** Destroy this entity. */
+    destroy(): void {
+        (this.world as World).removeEntity(this.entity);
+    }
+
     /** Destroy any entity by ID. */
     destroyEntity(entityId: Entity): void {
         (this.world as World).removeEntity(entityId);
@@ -114,5 +130,18 @@ export abstract class ScriptComponent {
     /** Get a component from any entity. */
     getComponent<T = any>(entityId: Entity, type: string): T | undefined {
         return (this.world as World).getComponent(entityId, type as any) as T | undefined;
+    }
+
+    /** Add a component to any entity. */
+    addComponent(entityId: Entity, type: string, data: any): void {
+        (this.world as World).addComponent(entityId, type as any, data);
+    }
+
+    get transform(): any {
+        return (this.world as World).getComponent(this.entity, 'transform');
+    }
+
+    get name(): string {
+        return (this.world as World).getName(this.entity) || '';
     }
 }

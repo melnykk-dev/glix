@@ -20,7 +20,7 @@
             "rigidBody": { "type": "dynamic", "gravityScale": 1.2, "linearDamping": 0.0, "angularDamping": 0.1, "fixedRotation": true },
             "boxCollider": { "width": 0.8, "height": 0.8, "offsetX": 0, "offsetY": 0, "isSensor": false, "restitution": 0, "friction": 0.5 },
             "script": {
-              "src": "// Platformer Controller\nclass PlatformerController extends ScriptComponent {\n  speed = 6;\n  jumpForce = 13;\n\n  onUpdate(dt) {\n    const moveX =\n      (this.input.isKeyDown('ArrowRight') || this.input.isKeyDown('KeyD') ? 1 : 0) -\n      (this.input.isKeyDown('ArrowLeft')  || this.input.isKeyDown('KeyA') ? 1 : 0);\n\n    const vel = this.getVelocity();\n    this.setVelocity(moveX * this.speed, vel.y);\n\n    if ((this.input.isJustPressed('Space') || this.input.isJustPressed('ArrowUp') || this.input.isJustPressed('KeyW')) && this.isGrounded()) {\n      this.setVelocity(moveX * this.speed, this.jumpForce);\n    }\n\n    // Death height check\n    if (this.transform.y < -10) {\n       this.teleport(-8, 2);\n       this.setVelocity(0, 0);\n    }\n  }\n}\nexport default PlatformerController;",
+              "src": "// Platformer Controller\nclass PlatformerController extends ScriptComponent {\n  speed = 6;\n  jumpForce = 13;\n\n  onUpdate(dt) {\n    const moveX =\n      (this.input.isKeyDown('ArrowRight') || this.input.isKeyDown('KeyD') ? 1 : 0) -\n      (this.input.isKeyDown('ArrowLeft')  || this.input.isKeyDown('KeyA') ? 1 : 0);\n\n    const vel = this.getVelocity();\n    this.setVelocity(moveX * this.speed, vel.y);\n\n    if ((this.input.isJustPressed('Space') || this.input.isJustPressed('ArrowUp') || this.input.isJustPressed('KeyW')) && this.isGrounded()) {\n      this.setVelocity(moveX * this.speed, this.jumpForce);\n    }\n\n    // Death height check\n    if (this.transform && this.transform.y < -10) {\n       this.setPosition(-8, 2);\n       this.setVelocity(0, 0);\n    }\n  }\n}\nexport default PlatformerController;",
               "compiledJs": ""
             }
           }
@@ -44,7 +44,7 @@
             "rigidBody": { "type": "static" },
             "boxCollider": { "width": 1, "height": 1, "isSensor": true },
             "script": {
-              "src": "class Lava extends ScriptComponent {\n  onCollisionEnter(e) {\n    const other = e.entityA === this.entity ? e.entityB : e.entityA;\n    if (other.name === 'Player') {\n      other.getComponent('script').instance.teleport(-8, 2);\n    }\n  }\n}\nexport default Lava;"
+              "src": "class Lava extends ScriptComponent {\n  onCollision(otherId) {\n    if (this.world.getName(otherId) === 'Player') {\n       this.physics.teleport(otherId, -8, 2);\n       this.physics.setVelocity(otherId, 0, 0);\n    }\n  }\n}\nexport default Lava;"
             }
           }
         },
@@ -87,7 +87,7 @@
             "rigidBody": { "type": "static" },
             "boxCollider": { "width": 1, "height": 1, "isSensor": true },
             "script": {
-              "src": "class Goal extends ScriptComponent {\n  onCollisionEnter(e) {\n    const other = e.entityA === this.entity ? e.entityB : e.entityA;\n    if (other.name === 'Player') {\n      alert('You reached the Goal!');\n    }\n  }\n}\nexport default Goal;"
+              "src": "class Goal extends ScriptComponent {\n  onCollision(otherId) {\n    if (this.world.getName(otherId) === 'Player') {\n      alert('You reached the Goal!');\n    }\n  }\n}\nexport default Goal;"
             }
           }
         }
