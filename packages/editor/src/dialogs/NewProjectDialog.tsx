@@ -6,15 +6,17 @@ import { Zap, ArrowUpRight } from 'lucide-react';
 import emptyTemplate from '../templates/empty.glix?raw';
 import platformerTemplate from '../templates/platformer.glix?raw';
 import topdownTemplate from '../templates/topdown.glix?raw';
+import spaceShooterTemplate from '../templates/space_shooter.glix?raw';
 
 interface NewProjectDialogProps {
     onClose: () => void;
 }
 
 const TEMPLATES = [
-    { label: 'Empty Project',     desc: 'Blank scene, start fresh',         raw: emptyTemplate },
-    { label: 'Platformer',        desc: 'Player, gravity, jump & run',       raw: platformerTemplate },
-    { label: 'Top-down',          desc: 'WASD movement, collision walls',    raw: topdownTemplate },
+    { label: 'Empty Project', desc: 'Blank scene, start fresh', raw: emptyTemplate },
+    { label: 'Platformer', desc: 'Player, gravity, jump & run', raw: platformerTemplate },
+    { label: 'Top-down', desc: 'WASD movement, collision walls', raw: topdownTemplate },
+    { label: 'Space Shooter', desc: 'Shoot enemies, score points', raw: spaceShooterTemplate },
 ];
 
 export const NewProjectDialog: React.FC<NewProjectDialogProps> = ({ onClose }) => {

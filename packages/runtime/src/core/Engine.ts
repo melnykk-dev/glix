@@ -196,9 +196,11 @@ export class Engine {
         this.inputManager.cameraPosition = this.cameraPosition;
         this.inputManager.cameraZoom = this.cameraZoom;
 
+        // Process input consumption once per frame
+        this.inputManager.update();
+
         while (this.accumulator >= this.timestep) {
             const fixedDtSeconds = this.timestep / 1000;
-            this.inputManager.update();
 
             const startAnim = performance.now();
             this.animationSystem.update(this.world, fixedDtSeconds);
