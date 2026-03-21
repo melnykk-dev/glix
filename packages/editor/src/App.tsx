@@ -18,6 +18,7 @@ import { WelcomeScreen } from './panels/WelcomeScreen';
 import { ShortcutsDialog } from './panels/ShortcutsDialog';
 import { Move, RotateCcw, Maximize2, Monitor } from 'lucide-react';
 import { CommandPalette } from './components/CommandPalette';
+import { HomePage } from './components/HomePage';
 import './index.css';
 
 const App: React.FC = () => {
@@ -27,6 +28,7 @@ const App: React.FC = () => {
         theme, setTheme,
         showShortcuts, setShowShortcuts,
         hasSeenWelcome, setHasSeenWelcome,
+        hasEnteredEditor,
         gizmoMode, setGizmoMode,
         editorMode,
     } = useEditorStore();
@@ -40,6 +42,10 @@ const App: React.FC = () => {
         window.addEventListener('glix-toggle-shortcuts', onToggle);
         return () => window.removeEventListener('glix-toggle-shortcuts', onToggle);
     }, [showShortcuts, setShowShortcuts]);
+
+    if (!hasEnteredEditor) {
+        return <HomePage />;
+    }
 
     return (
         <div className="glix-editor" style={{ width: '100vw', height: '100vh', display: 'flex' }}>

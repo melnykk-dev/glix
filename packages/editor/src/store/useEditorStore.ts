@@ -11,8 +11,12 @@ interface EditorState {
     theme: 'dark' | 'light';
     showShortcuts: boolean;
     hasSeenWelcome: boolean;
+    hasEnteredEditor: boolean;
     editorMode: 'starter' | 'advanced';
     showProfiler: boolean;
+    snappingEnabled: boolean;
+    snapSize: number;
+    selectionRect: { x1: number, y1: number, x2: number, y2: number } | null;
 
     setLeftPanelWidth: (width: number) => void;
     setRightPanelWidth: (width: number) => void;
@@ -24,8 +28,12 @@ interface EditorState {
     setTheme: (theme: 'dark' | 'light') => void;
     setShowShortcuts: (show: boolean) => void;
     setHasSeenWelcome: (seen: boolean) => void;
+    setHasEnteredEditor: (entered: boolean) => void;
     setEditorMode: (mode: 'starter' | 'advanced') => void;
     setShowProfiler: (show: boolean) => void;
+    setSnappingEnabled: (enabled: boolean) => void;
+    setSnapSize: (size: number) => void;
+    setSelectionRect: (rect: { x1: number, y1: number, x2: number, y2: number } | null) => void;
 }
 
 export const useEditorStore = create<EditorState>()(
@@ -40,8 +48,12 @@ export const useEditorStore = create<EditorState>()(
             theme: 'dark',
             showShortcuts: false,
             hasSeenWelcome: false,
+            hasEnteredEditor: false,
             editorMode: 'starter',
             showProfiler: false,
+            snappingEnabled: true,
+            snapSize: 0.5,
+            selectionRect: null,
 
             setLeftPanelWidth: (leftPanelWidth) => set({ leftPanelWidth }),
             setRightPanelWidth: (rightPanelWidth) => set({ rightPanelWidth }),
@@ -57,6 +69,7 @@ export const useEditorStore = create<EditorState>()(
             setTheme: (theme) => set({ theme }),
             setShowShortcuts: (showShortcuts) => set({ showShortcuts }),
             setHasSeenWelcome: (hasSeenWelcome) => set({ hasSeenWelcome }),
+            setHasEnteredEditor: (hasEnteredEditor) => set({ hasEnteredEditor }),
             setEditorMode: (mode) => {
                 if (mode === 'starter') {
                     set({ editorMode: mode, activeRightTab: 'logic' });
@@ -65,6 +78,9 @@ export const useEditorStore = create<EditorState>()(
                 }
             },
             setShowProfiler: (showProfiler) => set({ showProfiler }),
+            setSnappingEnabled: (snappingEnabled) => set({ snappingEnabled }),
+            setSnapSize: (snapSize) => set({ snapSize }),
+            setSelectionRect: (selectionRect) => set({ selectionRect }),
         }),
         {
             name: 'glix-editor-storage',
@@ -73,7 +89,10 @@ export const useEditorStore = create<EditorState>()(
                 rightPanelWidth: state.rightPanelWidth,
                 theme: state.theme,
                 hasSeenWelcome: state.hasSeenWelcome,
+                hasEnteredEditor: state.hasEnteredEditor,
                 editorMode: state.editorMode,
+                snappingEnabled: state.snappingEnabled,
+                snapSize: state.snapSize,
             }),
         }
     )

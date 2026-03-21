@@ -17,7 +17,7 @@ export async function exportProject(project: MgexFile): Promise<void> {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>\${project.meta.name || 'Glix Game'}</title>
+    <title>${project.meta.name || 'Glix Game'}</title>
     <style>
         body { margin: 0; padding: 0; overflow: hidden; background-color: #000; }
         canvas { display: block; width: 100vw; height: 100vh; }
@@ -26,10 +26,10 @@ export async function exportProject(project: MgexFile): Promise<void> {
 <body>
     <canvas id="glix-canvas"></canvas>
     <script>
-        \${runtimeScript}
+        ${runtimeScript}
     </script>
     <script>
-        const projectData = \${projectJson};
+        const projectData = ${projectJson};
         const canvas = document.getElementById('glix-canvas');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
@@ -83,7 +83,7 @@ export async function exportProject(project: MgexFile): Promise<void> {
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `\${project.meta.name || 'game'}.html`;
+        a.download = `${project.meta.name || 'game'}.html`;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);

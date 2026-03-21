@@ -163,7 +163,7 @@ export const AssetBrowser: React.FC = () => {
                         <Paintbrush size={10} /> Draw
                     </button>
                     <label className={`btn-primary ${!project ? 'disabled' : ''}`} style={{ padding: '4px 8px', fontSize: 10, display: 'flex', alignItems: 'center', gap: 4, cursor: project ? 'pointer' : 'not-allowed', opacity: project ? 1 : 0.5 }}>
-                        <Upload size={10} /> Upload
+                        <Upload size={10} /> Import Image
                         <input type="file" hidden accept="image/*" onChange={handleUpload} disabled={!project} />
                     </label>
                 </div>

@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { Engine, SceneLoader } from '@glix/runtime';
+import { Engine, SceneLoader, Mat4 } from '@glix/runtime';
 import type { ScriptError } from '@glix/runtime';
 import { editorBridge } from '../bridge/EditorBridge';
 import { useEditorStore } from '../store/useEditorStore';
@@ -10,14 +10,16 @@ import { syncWorldToProject } from '../history/syncWorldToProject';
 import { TranslateGizmo } from '../gizmos/TranslateGizmo';
 import { RotateGizmo } from '../gizmos/RotateGizmo';
 import { ScaleGizmo } from '../gizmos/ScaleGizmo';
+import { GizmoRenderer } from '../gizmos/GizmoRenderer';
 import { CreateEntityCommand } from '../history/commands/CreateEntityCommand';
 import { AddComponentCommand } from '../history/commands/AddComponentCommand';
+import { MoveEntityCommand } from '../history/commands/MoveEntityCommand';
 
 export const Viewport: React.FC = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
-    const { setSelectedEntityIds } = useEditorStore();
-    const { undo, redo } = useHistoryStore();
+    const { setSelectedEntityIds, setSelectionRect } = useEditorStore();
+    const { undo, redo, pushCommand } = useHistoryStore();
     const [scriptErrors, setScriptErrors] = useState<ScriptError[]>([]);
     const [isDraggingOver, setIsDraggingOver] = useState(false);
 
@@ -26,7 +28,7 @@ export const Viewport: React.FC = () => {
         if (!canvasRef.current) return;
 
         const canvas = canvasRef.current;
-        const gl = canvas.getContext('webgl2');
+        const gl = canvas.getContext('webgl2', { antialias: true });
         if (!gl) return;
 
         const engine = new Engine({ gl });
@@ -39,21 +41,83 @@ export const Viewport: React.FC = () => {
             canvas.width = width;
             canvas.height = height;
             gl.viewport(0, 0, width, height);
+            if (useSceneStore.getState().playState === 'stopped') engine.render(0);
         };
         const resizeObserver = new ResizeObserver(resize);
         resizeObserver.observe(containerRef.current!);
         resize();
 
-        // Gizmos
+        // Editor Tools
+        const gizmoRenderer = new GizmoRenderer(gl);
         const translateGizmo = new TranslateGizmo(engine);
         const rotateGizmo = new RotateGizmo(engine);
         const scaleGizmo = new ScaleGizmo(engine);
 
+        // Render Hook
+        const originalRender = engine.render.bind(engine);
+        engine.render = (dt) => {
+            originalRender(dt);
+            if (useSceneStore.getState().playState === 'stopped') {
+                const aspect = canvas.width / canvas.height;
+                const worldSize = 10 / engine.cameraZoom;
+                const projection = Mat4.create();
+                Mat4.ortho(projection, -worldSize * aspect, worldSize * aspect, -worldSize, worldSize, -1, 1);
+                const view = Mat4.create();
+                Mat4.translate(view, view, [-engine.cameraPosition[0], -engine.cameraPosition[1], 0]);
+
+                gizmoRenderer.begin(projection, view);
+
+                // 1. Draw Selection Outlines
+                const selectedIds = useEditorStore.getState().selectedEntityIds;
+                selectedIds.forEach(id => {
+                    const transform = engine.getWorld().getComponent(id, 'transform');
+                    const sprite = engine.getWorld().getComponent(id, 'sprite');
+                    if (transform) {
+                        const w = sprite?.width || 1;
+                        const h = sprite?.height || 1;
+                        gizmoRenderer.drawRect(transform.x, transform.y, w * transform.scaleX, h * transform.scaleY, [1, 1, 1, 0.4], true, transform.rotation);
+                    }
+                });
+
+                // 2. Draw Marquee
+                const rect = useEditorStore.getState().selectionRect;
+                if (rect) {
+                    const x = (rect.x1 + rect.x2) / 2;
+                    const y = (rect.y1 + rect.y2) / 2;
+                    const w = Math.abs(rect.x2 - rect.x1);
+                    const h = Math.abs(rect.y2 - rect.y1);
+                    gizmoRenderer.drawRect(x, y, w, h, [0.4, 0.6, 1, 0.3], false);
+                    gizmoRenderer.drawRect(x, y, w, h, [0.4, 0.6, 1, 0.8], true);
+                }
+
+                // 3. Draw Gizmos
+                const mode = useEditorStore.getState().gizmoMode;
+                if (selectedIds.length > 0) {
+                    if (mode === 'translate') translateGizmo.render(gizmoRenderer);
+                    else if (mode === 'rotate') rotateGizmo.render(gizmoRenderer);
+                    else if (mode === 'scale') scaleGizmo.render(gizmoRenderer);
+                }
+            }
+        };
+
         let isPanning = false;
-        let isDraggingEntity = false;
-        let dragEntityOffset = { x: 0, y: 0 };
+        let isDraggingSelection = false;
+        let isMarquee = false;
+        let startPositions: { x: number, y: number }[] = [];
+        let dragStartWorldPos = { x: 0, y: 0 };
         let lastMouseX = 0;
         let lastMouseY = 0;
+
+        const spacePressed = { current: false };
+
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.code === 'Space') spacePressed.current = true;
+        };
+        const handleKeyUp = (e: KeyboardEvent) => {
+            if (e.code === 'Space') spacePressed.current = false;
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        window.addEventListener('keyup', handleKeyUp);
 
         const onMouseDown = (e: MouseEvent) => {
             const rect = canvas.getBoundingClientRect();
@@ -67,32 +131,65 @@ export const Viewport: React.FC = () => {
             const downWorldY = clipY * worldSize + engine.cameraPosition[1];
 
             const isPlaying = useSceneStore.getState().playState !== 'stopped';
+            if (isPlaying) return;
 
-            if (e.button === 0 && !isPlaying) {
+            if (e.button === 0 && !spacePressed.current) {
                 const mode = useEditorStore.getState().gizmoMode;
                 const activeGizmo = mode === 'translate' ? translateGizmo : mode === 'rotate' ? rotateGizmo : scaleGizmo;
 
                 if (activeGizmo.handleMouseDown(downWorldX, downWorldY)) return;
 
                 const hit = editorBridge.raycast(downWorldX, downWorldY);
-                if (e.shiftKey && hit) {
-                    const current = useEditorStore.getState().selectedEntityIds;
-                    setSelectedEntityIds(current.includes(hit)
-                        ? current.filter(id => id !== hit)
-                        : [...current, hit]);
-                } else {
-                    setSelectedEntityIds(hit ? [hit] : []);
-
-                    if (hit && mode === 'translate') {
-                        isDraggingEntity = true;
-                        const t = engine.getWorld().getComponent(hit, 'transform');
-                        if (t) {
-                            dragEntityOffset = { x: t.x - downWorldX, y: t.y - downWorldY };
+                if (hit) {
+                    if (e.shiftKey) {
+                        const current = useEditorStore.getState().selectedEntityIds;
+                        setSelectedEntityIds(current.includes(hit)
+                            ? current.filter(id => id !== hit)
+                            : [...current, hit]);
+                    } else {
+                        const current = useEditorStore.getState().selectedEntityIds;
+                        if (!current.includes(hit)) {
+                            setSelectedEntityIds([hit]);
                         }
+
+                        // Handle Alt-drag duplication
+                        if (e.altKey) {
+                            const world = engine.getWorld();
+                            const selected = useEditorStore.getState().selectedEntityIds;
+                            const newIds: string[] = [];
+                            selected.forEach(id => {
+                                const allComponents = world.getEntityComponents(id);
+                                if (allComponents) {
+                                    const duplicatedComponents = JSON.parse(JSON.stringify(allComponents));
+                                    const cmd = new CreateEntityCommand(duplicatedComponents);
+                                    pushCommand(cmd);
+                                    if (cmd.entityId) newIds.push(cmd.entityId);
+                                }
+                            });
+                            if (newIds.length > 0) {
+                                setSelectedEntityIds(newIds);
+                                engine.render(0);
+                            }
+                        }
+
+                        // Start direct drag for all selected
+                        isDraggingSelection = true;
+                        dragStartWorldPos = { x: downWorldX, y: downWorldY };
+                        const world = engine.getWorld();
+                        const selected = useEditorStore.getState().selectedEntityIds;
+                        startPositions = selected.map(id => {
+                            const t = world.getComponent(id, 'transform');
+                            return { x: t?.x || 0, y: t?.y || 0 };
+                        });
                     }
+                } else {
+                    // Start Marquee
+                    setSelectedEntityIds([]);
+                    isMarquee = true;
+                    setSelectionRect({ x1: downWorldX, y1: downWorldY, x2: downWorldX, y2: downWorldY });
                 }
                 engine.render(0);
-            } else if (e.button === 1) {
+            } else if (e.button === 1 || (e.button === 0 && spacePressed.current)) {
                 isPanning = true;
                 lastMouseX = e.clientX;
                 lastMouseY = e.clientY;
@@ -100,50 +197,66 @@ export const Viewport: React.FC = () => {
         };
 
         const onMouseMove = (e: MouseEvent) => {
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const clipX = (x / canvas.width) * 2 - 1;
+            const clipY = -((y / canvas.height) * 2 - 1);
+            const aspect = canvas.width / canvas.height;
+            const worldSize = 10 / engine.cameraZoom;
+            const worldX = clipX * worldSize * aspect + engine.cameraPosition[0];
+            const worldY = clipY * worldSize + engine.cameraPosition[1];
+
             if (isPanning) {
                 const dx = e.clientX - lastMouseX;
                 const dy = e.clientY - lastMouseY;
                 lastMouseX = e.clientX;
                 lastMouseY = e.clientY;
-                const worldSize = 10 / engine.cameraZoom;
-                const aspect = canvas.width / canvas.height;
                 engine.cameraPosition[0] -= (dx / canvas.width) * worldSize * 2 * aspect;
                 engine.cameraPosition[1] += (dy / canvas.height) * worldSize * 2;
                 engine.render(0);
+            } else if (isMarquee) {
+                const rect = useEditorStore.getState().selectionRect;
+                if (rect) {
+                    setSelectionRect({ ...rect, x2: worldX, y2: worldY });
+                    engine.render(0);
+                }
             } else {
-                const rect = canvas.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                const clipX = (x / canvas.width) * 2 - 1;
-                const clipY = -((y / canvas.height) * 2 - 1);
-                const aspect = canvas.width / canvas.height;
-                const worldSize = 10 / engine.cameraZoom;
-                const worldX = clipX * worldSize * aspect + engine.cameraPosition[0];
-                const worldY = clipY * worldSize + engine.cameraPosition[1];
-
                 const mode = useEditorStore.getState().gizmoMode;
                 const activeGizmo = mode === 'translate' ? translateGizmo : mode === 'rotate' ? rotateGizmo : scaleGizmo;
-                const wasDragging = (activeGizmo as any).dragging;
-                activeGizmo.handleMouseMove(worldX, worldY);
+                const gizmoActive = (activeGizmo as any).dragging;
 
-                if (wasDragging) {
+                if (gizmoActive) {
+                    activeGizmo.handleMouseMove(worldX, worldY);
                     const selected = useEditorStore.getState().selectedEntityIds;
                     selected.forEach(id => {
                         const t = engine.getWorld().getComponent(id, 'transform');
-                        if (t) editorBridge.updateTransform(id, { x: t.x, y: t.y });
+                        if (t) editorBridge.updateTransform(id, { x: t.x, y: t.y, rotation: t.rotation, scaleX: t.scaleX, scaleY: t.scaleY });
                     });
-                } else if (isDraggingEntity && mode === 'translate') {
+                } else if (isDraggingSelection) {
+                    const dx = worldX - dragStartWorldPos.x;
+                    const dy = worldY - dragStartWorldPos.y;
                     const selected = useEditorStore.getState().selectedEntityIds;
-                    if (selected.length > 0) {
-                        const id = selected[0];
+                    const { snappingEnabled, snapSize } = useEditorStore.getState();
+
+                    selected.forEach((id, index) => {
                         const t = engine.getWorld().getComponent(id, 'transform');
                         if (t) {
-                            t.x = worldX + dragEntityOffset.x;
-                            t.y = worldY + dragEntityOffset.y;
+                            let newX = startPositions[index].x + dx;
+                            let newY = startPositions[index].y + dy;
+                            if (snappingEnabled) {
+                                newX = Math.round(newX / snapSize) * snapSize;
+                                newY = Math.round(newY / snapSize) * snapSize;
+                            }
+                            t.x = newX;
+                            t.y = newY;
                             editorBridge.updateTransform(id, { x: t.x, y: t.y });
                         }
-                    }
+                    });
+                } else {
+                    activeGizmo.handleMouseMove(worldX, worldY);
                 }
+
                 if (useSceneStore.getState().playState === 'stopped') engine.render(0);
             }
         };
@@ -152,8 +265,38 @@ export const Viewport: React.FC = () => {
             const wasPanning = isPanning;
             isPanning = false;
 
-            const entityWasDragged = isDraggingEntity;
-            isDraggingEntity = false;
+            if (isMarquee) {
+                const rect = useEditorStore.getState().selectionRect;
+                if (rect) {
+                    const xMin = Math.min(rect.x1, rect.x2);
+                    const xMax = Math.max(rect.x1, rect.x2);
+                    const yMin = Math.min(rect.y1, rect.y2);
+                    const yMax = Math.max(rect.y1, rect.y2);
+
+                    const world = engine.getWorld();
+                    const entities = world.getEntitiesWithComponents('transform');
+                    const within = entities.filter(id => {
+                        const t = world.getComponent(id, 'transform')!;
+                        return t.x >= xMin && t.x <= xMax && t.y >= yMin && t.y <= yMax;
+                    });
+                    setSelectedEntityIds(within);
+                }
+                isMarquee = false;
+                setSelectionRect(null);
+            }
+
+            const wasDragged = isDraggingSelection;
+            if (isDraggingSelection) {
+                const world = engine.getWorld();
+                const selected = useEditorStore.getState().selectedEntityIds;
+                const currentPositions = selected.map(id => {
+                    const t = world.getComponent(id, 'transform');
+                    return { x: t?.x || 0, y: t?.y || 0 };
+                });
+
+                pushCommand(new MoveEntityCommand([...selected], [...startPositions], currentPositions));
+            }
+            isDraggingSelection = false;
 
             const translateWasActive = (translateGizmo as any).dragging;
             const rotateWasActive = (rotateGizmo as any).dragging;
@@ -163,9 +306,10 @@ export const Viewport: React.FC = () => {
             rotateGizmo.handleMouseUp();
             scaleGizmo.handleMouseUp();
 
-            if (!wasPanning && (translateWasActive || rotateWasActive || scaleWasActive || entityWasDragged)) {
+            if (!wasPanning && (translateWasActive || rotateWasActive || scaleWasActive || wasDragged)) {
                 syncWorldToProject();
             }
+            engine.render(0);
         };
 
         const onWheel = (e: WheelEvent) => {
@@ -196,13 +340,9 @@ export const Viewport: React.FC = () => {
         window.addEventListener('glix-focus-selection', onFocusSelection);
 
         // ── React to playState changes ────────────────────────────────────────
-        // NOTE: The actual play/pause/stop calls come from editorBridge (triggered
-        // by the Toolbar). We subscribe here only so we can do a final re-render
-        // on stop to restore the editor view.
         const unsubPlayState = useSceneStore.subscribe((state, prev) => {
             if (state.playState === prev.playState) return;
             if (state.playState === 'stopped') {
-                // After stop, the world has been restored — render one frame
                 requestAnimationFrame(() => engine.render(0));
             }
         });
@@ -210,14 +350,11 @@ export const Viewport: React.FC = () => {
         // ── Sync project → engine ─────────────────────────────────────────────
         const unsubProject = useProjectStore.subscribe((state, prevState) => {
             if (state.project && state.project !== prevState.project) {
-                // Only reload if we're not playing (during play, engine owns the world)
                 if (useSceneStore.getState().playState === 'stopped') {
                     const world = engine.getWorld();
                     world.clear();
                     engine.setProject(state.project);
                     new SceneLoader(world).loadScene(state.project);
-
-                    // Preload assets for proper rendering in Editor Mode
                     editorBridge.preloadProjectAssets(state.project).then(() => {
                         engine.render(0);
                     });
@@ -248,10 +385,12 @@ export const Viewport: React.FC = () => {
             canvas.removeEventListener('mousedown', onMouseDown);
             window.removeEventListener('mousemove', onMouseMove);
             window.removeEventListener('mouseup', onMouseUp);
-            canvas.removeEventListener('wheel', onWheel);
+            canvas.removeEventListener('wheel', onWheel, { passive: false } as any);
+            window.removeEventListener('keydown', handleKeyDown);
+            window.removeEventListener('keyup', handleKeyUp);
             window.removeEventListener('glix-focus-selection', onFocusSelection);
         };
-    }, [undo, redo, setSelectedEntityIds]);
+    }, [undo, redo, setSelectedEntityIds, setSelectionRect, pushCommand]);
 
     // ── Script error overlay ─────────────────────────────────────────────────
     useEffect(() => {
@@ -293,9 +432,11 @@ export const Viewport: React.FC = () => {
                 let worldX = clipX * worldSize * aspect + engine.cameraPosition[0];
                 let worldY = clipY * worldSize + engine.cameraPosition[1];
 
-                if (e.shiftKey) {
-                    worldX = Math.round(worldX);
-                    worldY = Math.round(worldY);
+                const { snappingEnabled, snapSize } = useEditorStore.getState();
+                if (e.shiftKey || snappingEnabled) {
+                    const step = e.shiftKey ? 1 : snapSize;
+                    worldX = Math.round(worldX / step) * step;
+                    worldY = Math.round(worldY / step) * step;
                 }
 
                 const assetData = e.dataTransfer.getData('glix/asset');

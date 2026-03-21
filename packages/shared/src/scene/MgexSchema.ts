@@ -3,8 +3,8 @@ import { z } from 'zod';
 export const AssetSchema = z.object({
     id: z.string(),
     type: z.enum(['texture', 'audio', 'spriteatlas', 'tileset']),
-    name: z.string(),
-    mimeType: z.string(),
+    name: z.string().default('unnamed'),
+    mimeType: z.string().optional(),
     data: z.string(), // base64 data URL
 });
 
@@ -16,24 +16,24 @@ export const EntitySchema = z.object({
 
 export const SceneSchema = z.object({
     id: z.string(),
-    name: z.string(),
-    entities: z.array(EntitySchema),
+    name: z.string().default('Scene'),
+    entities: z.array(EntitySchema).default([]),
 });
 
 export const MgexSchema = z.object({
-    version: z.string(),
+    version: z.string().default('0.1.0'),
     meta: z.object({
-        name: z.string(),
+        name: z.string().default('Untitled'),
         resolution: z.object({
-            width: z.number(),
-            height: z.number(),
-        }),
-    }),
-    assets: z.record(AssetSchema),
+            width: z.number().default(1280),
+            height: z.number().default(720),
+        }).default({ width: 1280, height: 720 }),
+    }).default({ name: 'Untitled', resolution: { width: 1280, height: 720 } }),
+    assets: z.record(AssetSchema).default({}),
     prefabs: z.record(EntitySchema).default({}),
-    scenes: z.record(SceneSchema),
+    scenes: z.record(SceneSchema).default({}),
     settings: z.object({
-        startScene: z.string(),
+        startScene: z.string().optional(),
         physics: z.object({
             gravity: z.object({
                 x: z.number(),
@@ -48,7 +48,7 @@ export const MgexSchema = z.object({
             vignetteStrength: z.number().default(0.3),
         }).default({ bloom: true, vignette: false, crt: false, bloomThreshold: 0.8, vignetteStrength: 0.3 }),
         input: z.record(z.array(z.string())).default({}),
-    }),
+    }).default({ physics: { gravity: { x: 0, y: 9.8 } } }),
 });
 
 export type AssetDef = z.infer<typeof AssetSchema>;

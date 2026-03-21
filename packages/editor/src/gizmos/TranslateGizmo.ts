@@ -1,6 +1,8 @@
 import { Engine } from '@glix/runtime';
 import { useHistoryStore } from '../store/useHistoryStore';
 import { MoveEntityCommand } from '../history/commands/MoveEntityCommand';
+import { GizmoRenderer } from './GizmoRenderer';
+import { useEditorStore } from '../store/useEditorStore';
 
 export class TranslateGizmo {
     private engine: Engine;
@@ -17,41 +19,52 @@ export class TranslateGizmo {
         this.selectedEntityIds = ids;
     }
 
-    render() {
+    render(renderer: GizmoRenderer) {
         if (this.selectedEntityIds.length === 0) return;
-        // Visual rendering would go here
+
+        const world = this.engine.getWorld();
+        const primaryId = this.selectedEntityIds[0];
+        const transform = world.getComponent(primaryId, 'transform');
+        if (!transform) return;
+
+        const worldPos = this.getWorldPos(primaryId);
+        const handleSize = 1.0;
+
+        // X Axis (Red)
+        const xColor: [number, number, number, number] = this.dragging === 'x' ? [1, 1, 0, 1] : [1, 0, 0, 1];
+        renderer.drawArrow(worldPos.x, worldPos.y, handleSize, 0, xColor);
+
+        // Y Axis (Green)
+        const yColor: [number, number, number, number] = this.dragging === 'y' ? [1, 1, 0, 1] : [0, 1, 0, 1];
+        renderer.drawArrow(worldPos.x, worldPos.y, 0, handleSize, yColor);
+    }
+
+    private getWorldPos(entityId: string): { x: number, y: number } {
+        const world = this.engine.getWorld();
+        const t = world.getComponent(entityId, 'transform')!;
+        if (t.parent) {
+            const pPos = this.getWorldPos(t.parent);
+            return { x: pPos.x + t.x, y: pPos.y + t.y };
+        }
+        return { x: t.x, y: t.y };
     }
 
     handleMouseDown(worldX: number, worldY: number): boolean {
         if (this.selectedEntityIds.length === 0) return false;
 
-        const world = this.engine.getWorld();
-        const primaryId = this.selectedEntityIds[0];
-        const transform = world.getComponent(primaryId, 'transform');
-        if (!transform) return false;
-
-        // Use RenderSystem's getWorldMatrix logic (but since we are in Editor we compute it locally)
-        const computeWorldPos = (entityId: string): { x: number, y: number } => {
-            const t = world.getComponent(entityId, 'transform')!;
-            if (t.parent) {
-                const pPos = computeWorldPos(t.parent);
-                // Simple 2D translation only for now (full 4x4 matrix multiplication is better but more complex here)
-                return { x: pPos.x + t.x, y: pPos.y + t.y };
-            }
-            return { x: t.x, y: t.y };
-        };
-
-        const worldPos = computeWorldPos(primaryId);
-
+        const worldPos = this.getWorldPos(this.selectedEntityIds[0]);
         const handleSize = 1.0;
-        if (Math.abs(worldY - worldPos.y) < 0.2 && worldX >= worldPos.x && worldX <= worldPos.x + handleSize) {
+        const hitThreshold = 0.2;
+
+        if (Math.abs(worldY - worldPos.y) < hitThreshold && worldX >= worldPos.x && worldX <= worldPos.x + handleSize) {
             this.dragging = 'x';
-        } else if (Math.abs(worldX - worldPos.x) < 0.2 && worldY >= worldPos.y && worldY <= worldPos.y + handleSize) {
+        } else if (Math.abs(worldX - worldPos.x) < hitThreshold && worldY >= worldPos.y && worldY <= worldPos.y + handleSize) {
             this.dragging = 'y';
         }
 
         if (this.dragging) {
             this.dragStartWorldPos = { x: worldX, y: worldY };
+            const world = this.engine.getWorld();
             this.startPositions = this.selectedEntityIds.map(id => {
                 const t = world.getComponent(id, 'transform');
                 return { x: t?.x || 0, y: t?.y || 0 };
@@ -65,17 +78,23 @@ export class TranslateGizmo {
     handleMouseMove(worldX: number, worldY: number) {
         if (!this.dragging || this.selectedEntityIds.length === 0) return;
 
-        const dx = worldX - this.dragStartWorldPos.x;
-        const dy = worldY - this.dragStartWorldPos.y;
+        let dx = worldX - this.dragStartWorldPos.x;
+        let dy = worldY - this.dragStartWorldPos.y;
+
+        const { snappingEnabled, snapSize } = useEditorStore.getState();
 
         const world = this.engine.getWorld();
         this.selectedEntityIds.forEach((id, index) => {
             const transform = world.getComponent(id, 'transform');
             if (transform) {
                 if (this.dragging === 'x') {
-                    transform.x = this.startPositions[index].x + dx;
+                    let newX = this.startPositions[index].x + dx;
+                    if (snappingEnabled) newX = Math.round(newX / snapSize) * snapSize;
+                    transform.x = newX;
                 } else if (this.dragging === 'y') {
-                    transform.y = this.startPositions[index].y + dy;
+                    let newY = this.startPositions[index].y + dy;
+                    if (snappingEnabled) newY = Math.round(newY / snapSize) * snapSize;
+                    transform.y = newY;
                 }
             }
         });

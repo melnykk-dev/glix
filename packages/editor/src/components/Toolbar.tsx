@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Play, Pause, Square, FilePlus, FolderOpen, Save, Download, Sun, Moon, Zap, Code, Move, RotateCcw, Maximize } from 'lucide-react';
+import { Play, Pause, Square, FilePlus, FolderOpen, Save, Download, Sun, Moon, Zap, Code, Move, RotateCcw, Maximize, Home, Magnet, Share } from 'lucide-react';
 import { useSceneStore } from '../store/useSceneStore';
 import { useProjectStore } from '../store/useProjectStore';
 import { useEditorStore } from '../store/useEditorStore';
@@ -10,7 +10,14 @@ import { exportProject } from '../export/Exporter';
 export const Toolbar: React.FC = () => {
     const { playState } = useSceneStore();
     const { project, fileHandle, isDirty } = useProjectStore();
-    const { setShowNewProjectDialog, theme, setTheme, editorMode, setEditorMode, gizmoMode, setGizmoMode } = useEditorStore();
+    const {
+        setShowNewProjectDialog, theme, setTheme,
+        editorMode, setEditorMode,
+        gizmoMode, setGizmoMode,
+        setHasEnteredEditor,
+        snappingEnabled, setSnappingEnabled,
+        snapSize, setSnapSize
+    } = useEditorStore();
 
     // ── Play / Pause / Stop helpers ──────────────────────────────────────────
     const handlePlay = () => {
@@ -31,6 +38,22 @@ export const Toolbar: React.FC = () => {
             document.activeElement.blur();
         }
         editorBridge.stop();
+    };
+
+    const handleDownload = () => {
+        if (project) {
+            const json = JSON.stringify(project, null, 2);
+            const fileName = `${project.meta.name || 'project'}.glix`;
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = fileName;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
     };
 
     // ── Keyboard shortcuts wiring ────────────────────────────────────────────
@@ -71,8 +94,16 @@ export const Toolbar: React.FC = () => {
             background: 'var(--glix-bg-deep)',
             borderBottom: '1px solid var(--glix-border)',
         }}>
-            {/* Logo / name */}
+            {/* Home / Logo */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', paddingRight: '12px', marginRight: '4px', borderRight: '1px solid var(--glix-border)' }}>
+                <button
+                    className="icon-btn"
+                    onClick={() => setHasEnteredEditor(false)}
+                    title="Back to Home"
+                    style={{ marginRight: 4 }}
+                >
+                    <Home size={16} />
+                </button>
                 <svg width="18" height="18" viewBox="0 0 64 64">
                     <rect x="8" y="8" width="14" height="14" rx="2" fill="#E94560" />
                     <rect x="25" y="8" width="14" height="14" rx="2" fill="#E94560" />
@@ -93,11 +124,11 @@ export const Toolbar: React.FC = () => {
             {/* File ops */}
             <div style={{ display: 'flex', gap: '1px', paddingRight: '8px', marginRight: '4px', borderRight: '1px solid var(--glix-border)' }}>
                 <button className="icon-btn" onClick={() => setShowNewProjectDialog(true)} title="New project (Ctrl+N)"><FilePlus size={14} /></button>
-                <button className="icon-btn" onClick={() => loadProject()} title="Open .glix (Ctrl+O)"><FolderOpen size={14} /></button>
-                <button className="icon-btn" onClick={() => project && saveProject(project, fileHandle)} title="Save (Ctrl+S)" disabled={!project}>
+                <button className="icon-btn" onClick={() => loadProject().catch(err => alert(err.message))} title="Open .glix (Ctrl+O)"><FolderOpen size={14} /></button>
+                <button className="icon-btn" onClick={() => project && saveProject(project, fileHandle)} title="Save Project (Overwrite) (Ctrl+S)" disabled={!project}>
                     <Save size={14} />
                 </button>
-                <button className="icon-btn" onClick={() => project && exportProject(project)} title="Export as HTML" disabled={!project}>
+                <button className="icon-btn" onClick={handleDownload} title="Download Project (.glix)" disabled={!project}>
                     <Download size={14} />
                 </button>
             </div>
@@ -118,6 +149,32 @@ export const Toolbar: React.FC = () => {
                 >
                     <Code size={14} />
                 </button>
+            </div>
+
+            {/* Snap Settings */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 4, paddingRight: '8px', marginRight: '4px', borderRight: '1px solid var(--glix-border)' }}>
+                <button
+                    className={`icon-btn ${snappingEnabled ? 'active' : ''}`}
+                    onClick={() => setSnappingEnabled(!snappingEnabled)}
+                    title="Toggle Grid Snapping"
+                >
+                    <Magnet size={14} />
+                </button>
+                <select
+                    value={snapSize}
+                    onChange={(e) => setSnapSize(Number(e.target.value))}
+                    style={{
+                        background: 'transparent', border: 'none', color: 'var(--glix-text-muted)',
+                        fontSize: '10px', outline: 'none', cursor: 'pointer',
+                        width: '45px'
+                    }}
+                >
+                    <option value={0.1}>0.1</option>
+                    <option value={0.25}>0.25</option>
+                    <option value={0.5}>0.5</option>
+                    <option value={1}>1.0</option>
+                    <option value={2}>2.0</option>
+                </select>
             </div>
 
             {/* Playback controls — centred */}
