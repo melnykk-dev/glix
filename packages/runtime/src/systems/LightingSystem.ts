@@ -1,4 +1,4 @@
-import { Vec2, Vec3, Mat4 } from '../math';
+import { Vec3, Mat4 } from '../math';
 
 /**
  * Advanced Lighting System with dynamic lights, shadows, and global illumination.
@@ -11,32 +11,19 @@ export class LightingSystem {
     private maxLights: number = 16;
     private ambientColor: [number, number, number] = [0.1, 0.1, 0.15];
     private ambientIntensity: number = 0.3;
-    private globalIlluminationEnabled: boolean = false;
+    // GI / advanced feature toggles -- reserved for future rendering passes
     private lightProbes: LightProbe[] = [];
     private reflectionProbes: ReflectionProbe[] = [];
 
     // Advanced lighting features
     private colorTemperature: number = 6500; // Kelvin
-    private exposure: number = 1.0;
-    private contrast: number = 1.0;
-    private saturation: number = 1.0;
-    private bloomThreshold: number = 0.8;
-    private bloomIntensity: number = 0.5;
-    private bloomRadius: number = 0.5;
 
     // Light baking
-    private bakedLightingEnabled: boolean = false;
     private lightmapResolution: number = 512;
     private lightmapTextures: Map<string, WebGLTexture> = new Map();
 
     // Volumetric lighting
     private volumetricLightingEnabled: boolean = false;
-    private volumetricSteps: number = 32;
-    private volumetricScattering: number = 0.1;
-
-    // Area lights
-    private areaLightsEnabled: boolean = false;
-    private areaLightSamples: number = 16;
 
     constructor(gl: WebGL2RenderingContext) {
         this.gl = gl;
@@ -71,8 +58,8 @@ export class LightingSystem {
             shadowMapSize: 1024,
             colorTemperature: this.colorTemperature,
             iesProfile: null,
-            animation: null,
-            flicker: null
+            animation: undefined,
+            flicker: undefined
         };
 
         this.lights.set(lightId, light);
@@ -148,7 +135,6 @@ export class LightingSystem {
     async bakeLighting(sceneBounds: { min: Vec3, max: Vec3 }, resolution: number = this.lightmapResolution): Promise<void> {
         console.log('[LightingSystem] Starting light baking...');
 
-        this.bakedLightingEnabled = true;
         this.lightmapResolution = resolution;
 
         // Create lightmap textures
@@ -197,7 +183,7 @@ export class LightingSystem {
         await Promise.all(promises);
     }
 
-    private async traceLightRays(worldX: number, worldY: number, worldZ: number, texelX: number, texelZ: number): Promise<void> {
+    private async traceLightRays(worldX: number, worldY: number, worldZ: number, _texelX: number, _texelZ: number): Promise<void> {
         // Simplified ray tracing for demonstration
         // In a real implementation, this would cast rays in multiple directions
         // and accumulate lighting from all light sources
@@ -280,7 +266,8 @@ export class LightingSystem {
         let totalIrradiance = Vec3.create();
 
         for (const dir of directions) {
-            const direction = Vec3.fromValues(dir[0], dir[1], dir[2]);
+            const lightDir = Vec3.fromValues(dir[0], dir[1], dir[2]);
+            void lightDir;
             let lightContribution = Vec3.create();
 
             for (const light of this.lights.values()) {
@@ -345,21 +332,7 @@ export class LightingSystem {
         // This is a complex operation that would require rendering the scene
         // multiple times from different viewpoints
 
-        const directions = [
-            { target: [1, 0, 0], up: [0, 1, 0] },   // +X
-            { target: [-1, 0, 0], up: [0, 1, 0] },  // -X
-            { target: [0, 1, 0], up: [0, 0, -1] },  // +Y
-            { target: [0, -1, 0], up: [0, 0, 1] },  // -Y
-            { target: [0, 0, 1], up: [0, 1, 0] },   // +Z
-            { target: [0, 0, -1], up: [0, 1, 0] }   // -Z
-        ];
-
-        // For each face, render the scene
-        // This would typically involve:
-        // 1. Setting up camera at probe position
-        // 2. Rendering scene without the probe's influence
-        // 3. Copying result to cubemap face
-
+        // Placeholder faces for future implementation
         probe.lastUpdated = performance.now();
     }
 
@@ -378,7 +351,7 @@ export class LightingSystem {
         }
     }
 
-    private renderLightVolume(light: Light, viewMatrix: Mat4, projectionMatrix: Mat4): void {
+    private renderLightVolume(_light: Light, _viewMatrix: Mat4, _projectionMatrix: Mat4): void {
         // Render light volume geometry (sphere for point lights, cone for spot lights)
         // Use ray marching shader to compute volumetric lighting
 
@@ -553,26 +526,28 @@ export class LightingSystem {
         this.ambientIntensity = intensity;
     }
 
-    setExposure(exposure: number): void {
-        this.exposure = exposure;
+    setExposure(_exposure: number): void {
+        // reserved for post-processing tone mapping
     }
 
-    setBloomProperties(threshold: number, intensity: number, radius: number): void {
-        this.bloomThreshold = threshold;
-        this.bloomIntensity = intensity;
-        this.bloomRadius = radius;
+    setBloomProperties(_threshold: number, _intensity: number, _radius: number): void {
+        // reserved for post-processing bloom
     }
 
-    enableGlobalIllumination(enabled: boolean): void {
-        this.globalIlluminationEnabled = enabled;
+    enableGlobalIllumination(_enabled: boolean): void {
+        // reserved for future GI implementation
     }
 
     enableVolumetricLighting(enabled: boolean): void {
         this.volumetricLightingEnabled = enabled;
     }
 
-    enableAreaLights(enabled: boolean): void {
-        this.areaLightsEnabled = enabled;
+    enableAreaLights(_enabled: boolean): void {
+        // reserved for area light support
+    }
+
+    setBakedLighting(_enabled: boolean): void {
+        // reserved
     }
 
     dispose(): void {

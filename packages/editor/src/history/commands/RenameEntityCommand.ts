@@ -27,9 +27,10 @@ export class RenameEntityCommand implements Command {
         // Sync with project store
         useProjectStore.getState().updateProject(project => {
             const sceneId = project.settings.startScene;
+            if (!sceneId) return project;
             const scene = project.scenes[sceneId];
             if (scene) {
-                const entity = scene.entities.find(e => e.id === this.entityId);
+                const entity = scene.entities.find((e: any) => e.id === this.entityId);
                 if (entity) {
                     entity.name = name;
                 }

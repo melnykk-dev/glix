@@ -1,4 +1,15 @@
-import { Vec2, Vec3, Mat4 } from '../math';
+import { Vec3, Vec4, Mat4 } from '../math';
+
+// Temporary stubs for deprecated WebVR and WebXR types used in this file
+type VRPose = any;
+type VRDisplay = any;
+type VRGamepad = any;
+type XRSession = any;
+type XRFrame = any;
+type XRInputSourcesChangeEvent = any;
+type XRHand = any;
+type XRJointPose = any;
+type XRRigidTransform = any;
 
 /**
  * Advanced VR/AR System with immersive experiences, hand tracking,
@@ -11,9 +22,13 @@ export class AdvancedVRARSystem {
     private canvas: HTMLCanvasElement;
 
     // VR/AR state
-    private isVRActive: boolean = false;
-    private isARActive: boolean = false;
+    private _isVRActive: boolean = false;
+    private _isARActive: boolean = false;
     private currentMode: 'none' | 'vr' | 'ar' = 'none';
+
+    // Public state accessors
+    get isVRActive(): boolean { return this._isVRActive; }
+    get isARActive(): boolean { return this._isARActive; }
 
     // Device tracking
     private headsetPose: VRPose | null = null;
@@ -36,17 +51,15 @@ export class AdvancedVRARSystem {
     private hapticActuators: Map<string, GamepadHapticActuator> = new Map();
 
     // Interaction
-    private interactionManager: VRInteractionManager;
-    private gestureRecognizer: GestureRecognizer;
+    private interactionManager!: VRInteractionManager; // used lazily
+    public get interactionManagerRef(): VRInteractionManager { return this.interactionManager; }
+    private gestureRecognizer!: GestureRecognizer;
     private raycasters: Map<string, Raycaster> = new Map();
 
-    // Mixed reality
     private virtualObjects: Map<string, VirtualObject> = new Map();
     private realWorldAnchors: Map<string, RealWorldAnchor> = new Map();
-    private occlusionGeometry: OcclusionGeometry | null = null;
 
     // Performance
-    private frameTime: number = 0;
     private renderStats: VRRenderStats = {
         drawCalls: 0,
         triangles: 0,
@@ -58,6 +71,8 @@ export class AdvancedVRARSystem {
     private comfortManager: VRComfortManager;
     private safetyManager: VRSafetyManager;
 
+    private localFloorRefSpace: any = null;
+
     constructor(gl: WebGL2RenderingContext, canvas: HTMLCanvasElement) {
         this.gl = gl;
         this.canvas = canvas;
@@ -67,11 +82,11 @@ export class AdvancedVRARSystem {
         this.comfortManager = new VRComfortManager();
         this.safetyManager = new VRSafetyManager();
 
-        this.initializeVRAR();
+        this._initializeVRAR();
         console.log('[AdvancedVRARSystem] Advanced VR/AR system initialized');
     }
 
-    private async initializeVRAR(): Promise<void> {
+    private async _initializeVRAR(): Promise<void> {
         // Check for WebXR support
         if ('xr' in navigator) {
             try {
@@ -115,8 +130,6 @@ export class AdvancedVRARSystem {
     }
 
     private initializeVRRendering(): void {
-        const gl = this.gl;
-
         // Create VR shader
         const vertexShader = `#version 300 es
             layout(location = 0) in vec3 a_position;
@@ -238,8 +251,8 @@ export class AdvancedVRARSystem {
         if (navigator.getGamepads) {
             const gamepads = navigator.getGamepads();
             for (const gamepad of gamepads) {
-                if (gamepad && gamepad.hapticActuators && gamepad.hapticActuators.length > 0) {
-                    this.hapticActuators.set(`controller_${gamepad.index}`, gamepad.hapticActuators[0]);
+                if (gamepad && (gamepad as any).hapticActuators && (gamepad as any).hapticActuators.length > 0) {
+                    this.hapticActuators.set(`controller_${gamepad.index}`, (gamepad as any).hapticActuators[0]);
                 }
             }
         }
@@ -268,7 +281,7 @@ export class AdvancedVRARSystem {
                 }]);
             }
 
-            this.isVRActive = true;
+            this._isVRActive = true;
             this.currentMode = 'vr';
             console.log('[AdvancedVRARSystem] VR session started');
 
@@ -292,7 +305,7 @@ export class AdvancedVRARSystem {
 
             this.setupXRSession();
 
-            this.isARActive = true;
+            this._isARActive = true;
             this.currentMode = 'ar';
             console.log('[AdvancedVRARSystem] AR session started');
 
@@ -306,7 +319,7 @@ export class AdvancedVRARSystem {
         if (!this.arSession) return;
 
         // Set up reference spaces
-        this.arSession.requestReferenceSpace('local-floor').then(refSpace => {
+        this.arSession.requestReferenceSpace('local-floor').then((refSpace: any) => {
             this.localFloorRefSpace = refSpace;
         });
 
@@ -317,11 +330,11 @@ export class AdvancedVRARSystem {
         this.arSession.addEventListener('inputsourceschange', this.onInputSourcesChange.bind(this));
 
         // Set up layers
-        const glLayer = new XRWebGLLayer(this.arSession, this.gl);
+        const glLayer = new (window as any).XRWebGLLayer(this.arSession, this.gl);
         this.arSession.updateRenderState({ baseLayer: glLayer });
     }
 
-    private onXRFrame(time: number, frame: XRFrame): void {
+    private onXRFrame(_time: number, frame: XRFrame): void {
         if (!this.arSession) return;
 
         // Get poses
@@ -460,7 +473,7 @@ export class AdvancedVRARSystem {
         Mat4.multiply(viewProjMatrix, projectionMatrix, viewMatrix);
 
         // Render virtual objects
-        for (const [id, object] of this.virtualObjects) {
+        for (const [_id, object] of this.virtualObjects) {
             this.renderVirtualObject(object, viewProjMatrix);
         }
 
@@ -507,7 +520,7 @@ export class AdvancedVRARSystem {
         this.renderStats.triangles += object.indexCount / 3;
     }
 
-    private renderVRUI(viewProjMatrix: Mat4): void {
+    private renderVRUI(_viewProjMatrix: Mat4): void {
         // Render VR-specific UI elements (menus, crosshairs, etc.)
     }
 
@@ -524,7 +537,7 @@ export class AdvancedVRARSystem {
         if (!this.handTrackingData) return;
 
         // Render hand joints and connections
-        for (const [jointName, jointPose] of this.handTrackingData.joints) {
+        for (const [_jointName, jointPose] of this.handTrackingData.joints) {
             this.renderHandJoint(jointPose, viewMatrix);
         }
 
@@ -532,7 +545,7 @@ export class AdvancedVRARSystem {
         this.renderHandMesh(this.handTrackingData, viewMatrix);
     }
 
-    private renderHandJoint(jointPose: XRJointPose, viewMatrix: Float32Array): void {
+    private renderHandJoint(jointPose: XRJointPose, _viewMatrix: Float32Array): void {
         // Render small sphere at joint position
         const jointObject: VirtualObject = {
             id: `joint_${Math.random()}`,
@@ -551,7 +564,7 @@ export class AdvancedVRARSystem {
         this.renderVirtualObject(jointObject, viewProjMatrix);
     }
 
-    private renderHandMesh(handData: HandTrackingData, viewMatrix: Float32Array): void {
+    private renderHandMesh(_handData: HandTrackingData, _viewMatrix: Float32Array): void {
         // Render triangulated hand mesh
         // This would use the joint positions to deform a hand mesh
     }
@@ -567,11 +580,11 @@ export class AdvancedVRARSystem {
         }
     }
 
-    private renderController(pose: any, viewMatrix: Float32Array, isLeft: boolean): void {
+    private renderController(_pose: any, _viewMatrix: Float32Array, _isLeft: boolean): void {
         // Render controller model at pose position
     }
 
-    private renderARPassThrough(frame: XRFrame): void {
+    private renderARPassThrough(_frame: XRFrame): void {
         // Handle AR camera passthrough
         // This would composite virtual objects with camera feed
     }
@@ -585,7 +598,7 @@ export class AdvancedVRARSystem {
         const rotation = Mat4.fromQuat(Mat4.create(), [orientation.x, orientation.y, orientation.z, orientation.w]);
 
         Mat4.multiply(matrix, translation, rotation);
-        return matrix;
+        return matrix as any;
     }
 
     // Spatial audio
@@ -599,7 +612,7 @@ export class AdvancedVRARSystem {
         panner.maxDistance = 100;
         panner.rolloffFactor = 1;
 
-        this.updateAudioSourcePosition(panner, position);
+        this.applyAudioSourcePosition(panner, position);
         this.audioSources.set(audioId, panner);
     }
 
@@ -607,18 +620,18 @@ export class AdvancedVRARSystem {
         const panner = this.audioSources.get(audioId);
         if (!panner) return;
 
-        this.updateAudioSourcePosition(panner, position);
+        this.applyAudioSourcePosition(panner, position);
     }
 
-    private updateAudioSourcePosition(panner: PannerNode, position: Vec3): void {
-        if (panner.positionX !== undefined) {
+    private applyAudioSourcePosition(panner: PannerNode, position: Vec3): void {
+        if ((panner as any).positionX !== undefined) {
             // Modern Audio API
-            panner.positionX.value = position[0];
-            panner.positionY.value = position[1];
-            panner.positionZ.value = position[2];
+            (panner as any).positionX.value = position[0];
+            (panner as any).positionY.value = position[1];
+            (panner as any).positionZ.value = position[2];
         } else {
             // Legacy Audio API
-            panner.setPosition(position[0], position[1], position[2]);
+            (panner as any).setPosition(position[0], position[1], position[2]);
         }
     }
 
@@ -647,7 +660,7 @@ export class AdvancedVRARSystem {
         });
     }
 
-    triggerHandHaptic(finger: string, intensity: number): void {
+    triggerHandHaptic(_finger: string, _intensity: number): void {
         // Trigger haptic feedback on specific fingers
         // This would require haptic glove hardware
     }
@@ -679,7 +692,7 @@ export class AdvancedVRARSystem {
         }
     }
 
-    private updateControllerRaycaster(hand: string, pose: any): void {
+    private updateControllerRaycaster(hand: string, _pose: any): void {
         const raycaster = this.raycasters.get(`${hand}_controller`) || new Raycaster();
         // Set raycaster origin and direction from controller pose
         this.raycasters.set(`${hand}_controller`, raycaster);
@@ -687,7 +700,7 @@ export class AdvancedVRARSystem {
 
     private updateHandRaycasters(handData: HandTrackingData): void {
         // Update raycasters from hand poses
-        for (const [jointName, jointPose] of handData.joints) {
+        for (const [jointName, _jointPose] of handData.joints) {
             if (jointName.includes('index') && jointName.includes('tip')) {
                 const raycaster = this.raycasters.get('index_finger') || new Raycaster();
                 // Set raycaster from index finger tip
@@ -699,7 +712,7 @@ export class AdvancedVRARSystem {
     private checkObjectInteractions(): void {
         // Check for raycaster intersections with virtual objects
         for (const [raycasterId, raycaster] of this.raycasters) {
-            for (const [objectId, object] of this.virtualObjects) {
+            for (const [_objectId, object] of this.virtualObjects) {
                 const intersection = raycaster.intersectObject(object);
                 if (intersection) {
                     this.handleObjectInteraction(object, intersection, raycasterId);
@@ -708,19 +721,19 @@ export class AdvancedVRARSystem {
         }
     }
 
-    private handleObjectInteraction(object: VirtualObject, intersection: any, raycasterId: string): void {
+    private handleObjectInteraction(object: VirtualObject, _intersection: any, raycasterId: string): void {
         // Handle different interaction types (grab, touch, etc.)
         const interactionType = this.determineInteractionType(raycasterId);
 
         switch (interactionType) {
             case 'grab':
-                this.handleGrabInteraction(object, intersection);
+                this.handleGrabInteraction(object, _intersection);
                 break;
             case 'touch':
-                this.handleTouchInteraction(object, intersection);
+                this.handleTouchInteraction(object, _intersection);
                 break;
             case 'point':
-                this.handlePointInteraction(object, intersection);
+                this.handlePointInteraction(object, _intersection);
                 break;
         }
     }
@@ -734,19 +747,19 @@ export class AdvancedVRARSystem {
         return 'point';
     }
 
-    private handleGrabInteraction(object: VirtualObject, intersection: any): void {
+    private handleGrabInteraction(object: VirtualObject, _intersection: any): void {
         // Handle grabbing objects with controllers
         console.log(`[AdvancedVRARSystem] Grabbing object ${object.id}`);
         // Implement grab logic
     }
 
-    private handleTouchInteraction(object: VirtualObject, intersection: any): void {
+    private handleTouchInteraction(object: VirtualObject, _intersection: any): void {
         // Handle touching objects with hands
         console.log(`[AdvancedVRARSystem] Touching object ${object.id}`);
         // Implement touch logic
     }
 
-    private handlePointInteraction(object: VirtualObject, intersection: any): void {
+    private handlePointInteraction(object: VirtualObject, _intersection: any): void {
         // Handle pointing at objects
         console.log(`[AdvancedVRARSystem] Pointing at object ${object.id}`);
         // Implement point logic
@@ -923,12 +936,12 @@ export class AdvancedVRARSystem {
         return { vertices, indices };
     }
 
-    private createSphereGeometry(radius: number, segments: number): { vertices: Float32Array; indices: Uint16Array } {
+    private createSphereGeometry(_radius: number, _segments: number): { vertices: Float32Array; indices: Uint16Array } {
         // Implement sphere geometry generation
         return { vertices: new Float32Array(0), indices: new Uint16Array(0) };
     }
 
-    private createCylinderGeometry(radius: number, height: number, segments: number): { vertices: Float32Array; indices: Uint16Array } {
+    private createCylinderGeometry(_radius: number, _height: number, _segments: number): { vertices: Float32Array; indices: Uint16Array } {
         // Implement cylinder geometry generation
         return { vertices: new Float32Array(0), indices: new Uint16Array(0) };
     }
@@ -951,7 +964,7 @@ export class AdvancedVRARSystem {
         return { vertices, indices };
     }
 
-    private loadTexture(url: string): WebGLTexture {
+    private loadTexture(_url: string): WebGLTexture {
         const gl = this.gl;
         const texture = gl.createTexture();
         // Implement texture loading
@@ -1016,8 +1029,8 @@ export class AdvancedVRARSystem {
             this.vrDisplay.exitPresent();
         }
 
-        this.isVRActive = false;
-        this.isARActive = false;
+        this._isVRActive = false;
+        this._isARActive = false;
         this.currentMode = 'none';
 
         console.log('[AdvancedVRARSystem] Session ended');
@@ -1167,16 +1180,13 @@ interface SafetyStatus {
     recommendations: string[];
 }
 
-interface OcclusionGeometry {
-    // AR occlusion geometry
-}
 
 // Stub implementations
 class Raycaster {
     origin: Vec3 = Vec3.create();
     direction: Vec3 = Vec3.create();
 
-    intersectObject(object: VirtualObject): any {
+    intersectObject(_object: VirtualObject): any {
         // Implement ray-object intersection
         return null;
     }
@@ -1187,7 +1197,7 @@ class VRInteractionManager {
 }
 
 class GestureRecognizer {
-    processGesture(gesture: HandGesture, handData: HandTrackingData): void {
+    processGesture(_gesture: HandGesture, _handData: HandTrackingData): void {
         // Implementation
     }
 
@@ -1203,7 +1213,7 @@ class VRComfortManager {
 }
 
 class VRSafetyManager {
-    checkSafety(headsetPose: VRPose | null, objects: Map<string, VirtualObject>): SafetyStatus {
+    checkSafety(_headsetPose: VRPose | null, _objects: Map<string, VirtualObject>): SafetyStatus {
         return {
             isSafe: true,
             warnings: [],

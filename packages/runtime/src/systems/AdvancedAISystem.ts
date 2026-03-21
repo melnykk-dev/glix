@@ -1,4 +1,4 @@
-import { Vec2, Vec3 } from '../math';
+import { Vec3 } from '../math';
 import { World } from '../core/World';
 import { Entity } from '@glix/shared';
 
@@ -8,7 +8,6 @@ import { Entity } from '@glix/shared';
  */
 export class AdvancedAISystem {
     private agents: Map<string, AIAgent> = new Map();
-    private behaviors: Map<string, AIBehavior> = new Map();
     private behaviorTrees: Map<string, BehaviorTree> = new Map();
     private stateMachines: Map<string, AIStateMachine> = new Map();
     private steeringBehaviors: Map<string, SteeringBehavior> = new Map();
@@ -18,10 +17,8 @@ export class AdvancedAISystem {
     private goals: Map<string, AIGoal> = new Map();
     private formations: Map<string, Formation> = new Map();
 
-    // Pathfinding
     private pathfinder: Pathfinder;
     private pathCache: Map<string, Path> = new Map();
-    private waypointGraph: WaypointGraph | null = null;
 
     // Performance optimization
     private activeAgents: number = 0;
@@ -35,8 +32,6 @@ export class AdvancedAISystem {
 
     // Emergent behavior
     private flockingSystems: Map<string, FlockingSystem> = new Map();
-    private crowdSimulation: CrowdSimulation | null = null;
-
     // Learning and adaptation
     private reinforcementLearners: Map<string, ReinforcementLearner> = new Map();
     private behaviorAdaptors: Map<string, BehaviorAdaptor> = new Map();
@@ -73,31 +68,31 @@ export class AdvancedAISystem {
             radius: config.radius || 1,
 
             // AI components
-            behaviorTree: config.behaviorTree || null,
-            stateMachine: config.stateMachine || null,
+            behaviorTree: config.behaviorTree || undefined,
+            stateMachine: config.stateMachine || undefined,
             steeringBehaviors: config.steeringBehaviors || [],
             perception: config.perception || this.createDefaultPerception(),
-            decisionMaker: config.decisionMaker || null,
+            decisionMaker: (config.decisionMaker as any) || undefined,
 
             // State
-            currentGoal: null,
-            currentPath: null,
-            currentTarget: null,
+            currentGoal: undefined,
+            currentPath: undefined,
+            currentTarget: undefined,
             isActive: true,
             isPaused: false,
 
             // Navigation
-            navigationMesh: config.navigationMesh || null,
+            navigationMesh: config.navigationMesh || undefined,
             avoidanceRadius: config.avoidanceRadius || 2,
 
             // Group behavior
-            groupId: config.groupId || null,
-            formation: config.formation || null,
+            groupId: config.groupId || undefined,
+            formation: (config.formation as any) || undefined,
             formationPosition: config.formationPosition || Vec3.create(),
 
             // Memory and learning
             memory: new AIMemory(),
-            learning: config.learning || null,
+            learning: config.learning || undefined,
 
             // Debug
             debugInfo: {
@@ -272,25 +267,25 @@ export class AdvancedAISystem {
     private executeActionNode(node: ActionNode, agent: AIAgent, blackboard: Map<string, any>, deltaTime: number): BehaviorStatus {
         switch (node.actionType) {
             case 'move_to':
-                return this.actionMoveTo(agent, node.target, deltaTime);
+                return this.actionMoveTo(agent, node.target as Vec3, deltaTime);
             case 'wait':
-                return this.actionWait(agent, node.duration, blackboard);
+                return this.actionWait(agent, node.duration as number, blackboard);
             case 'attack':
-                return this.actionAttack(agent, node.target);
+                return this.actionAttack(agent, node.target as unknown as string);
             case 'flee':
-                return this.actionFlee(agent, node.target);
+                return this.actionFlee(agent, node.target as Vec3);
             case 'patrol':
-                return this.actionPatrol(agent, node.waypoints, blackboard);
+                return this.actionPatrol(agent, node.waypoints as Vec3[], blackboard);
             case 'follow':
-                return this.actionFollow(agent, node.target, node.distance);
+                return this.actionFollow(agent, node.target as Vec3, node.distance as number);
             case 'wander':
                 return this.actionWander(agent, blackboard);
             case 'look_at':
-                return this.actionLookAt(agent, node.target);
+                return this.actionLookAt(agent, node.target as Vec3);
             case 'play_animation':
-                return this.actionPlayAnimation(agent, node.animation);
+                return this.actionPlayAnimation(agent, node.animation as string);
             case 'custom':
-                return node.customFunction(agent, blackboard, deltaTime);
+                return node.customFunction ? node.customFunction(agent, blackboard, deltaTime) : BehaviorStatus.Failure;
             default:
                 return BehaviorStatus.Failure;
         }
@@ -301,15 +296,15 @@ export class AdvancedAISystem {
             case 'has_target':
                 return agent.currentTarget ? BehaviorStatus.Success : BehaviorStatus.Failure;
             case 'in_range':
-                return this.conditionInRange(agent, node.target, node.range);
+                return this.conditionInRange(agent, node.target as Vec3, node.range as number);
             case 'can_see':
-                return this.conditionCanSee(agent, node.target);
+                return this.conditionCanSee(agent, node.target as Vec3);
             case 'health_above':
-                return this.conditionHealthAbove(agent, node.threshold);
+                return this.conditionHealthAbove(agent, node.threshold as number);
             case 'time_elapsed':
-                return this.conditionTimeElapsed(agent, node.duration, blackboard);
+                return this.conditionTimeElapsed(agent, node.duration as number, blackboard);
             case 'custom':
-                return node.customFunction(agent, blackboard) ? BehaviorStatus.Success : BehaviorStatus.Failure;
+                return node.customFunction ? (node.customFunction(agent, blackboard) ? BehaviorStatus.Success : BehaviorStatus.Failure) : BehaviorStatus.Failure;
             default:
                 return BehaviorStatus.Failure;
         }
@@ -445,8 +440,8 @@ export class AdvancedAISystem {
             Vec3.normalize(axis, axis);
 
             // Apply rotation (simplified)
-            const rotationSpeed = agent.angularSpeed * Math.PI / 180 * (1/60);
-            const rotationAmount = Math.min(rotationSpeed, angle);
+            // const rotationSpeed = agent.angularSpeed * Math.PI / 180 * (1/60);
+            // const _rotationAmount = Math.min(rotationSpeed, angle);
 
             // This would apply the rotation to the agent's orientation
             return BehaviorStatus.Running;
@@ -474,7 +469,7 @@ export class AdvancedAISystem {
         return distance <= 20 ? BehaviorStatus.Success : BehaviorStatus.Failure;
     }
 
-    private conditionHealthAbove(agent: AIAgent, threshold: number): BehaviorStatus {
+    private conditionHealthAbove(_agent: AIAgent, _threshold: number): BehaviorStatus {
         // Check agent's health (would need to be stored somewhere)
         return BehaviorStatus.Success; // Placeholder
     }
@@ -492,6 +487,7 @@ export class AdvancedAISystem {
     createStateMachine(smId: string, states: AIState[], transitions: StateTransition[]): AIStateMachine {
         const stateMachine: AIStateMachine = {
             id: smId,
+            name: smId,
             states: new Map(states.map(s => [s.name, s])),
             transitions,
             currentState: states[0]?.name || '',
@@ -546,7 +542,7 @@ export class AdvancedAISystem {
     }
 
     private evaluateTransition(transition: StateTransition, parameters: Map<string, any>): boolean {
-        for (const condition of transition.conditions) {
+        for (const condition of (transition as any).conditions) {
             const value = parameters.get(condition.parameter);
 
             switch (condition.type) {
@@ -577,9 +573,9 @@ export class AdvancedAISystem {
             return this.pathCache.get(cacheKey)!;
         }
 
-        let navMesh: NavigationMesh | null = null;
+        let navMesh: NavigationMesh | undefined = undefined;
         if (navigationMesh) {
-            navMesh = this.navigationMeshes.get(navigationMesh) || null;
+            navMesh = this.navigationMeshes.get(navigationMesh);
         }
 
         const path = this.pathfinder.findPath(start, end, navMesh);
@@ -617,8 +613,8 @@ export class AdvancedAISystem {
                 agent.currentTarget = agent.currentPath.points[currentIndex + 1];
             } else {
                 // Reached end of path
-                agent.currentPath = null;
-                agent.currentTarget = null;
+                agent.currentPath = undefined;
+                agent.currentTarget = undefined;
                 return;
             }
         }
@@ -710,7 +706,7 @@ export class AdvancedAISystem {
         return false;
     }
 
-    private edgesEqual(edge1: [Vec3, Vec3], edge2: [Vec3, Vec3]): boolean {
+    private edgesEqual(edge1: Vec3[], edge2: Vec3[]): boolean {
         return (Vec3.equals(edge1[0], edge2[0]) && Vec3.equals(edge1[1], edge2[1])) ||
                (Vec3.equals(edge1[0], edge2[1]) && Vec3.equals(edge1[1], edge2[0]));
     }
@@ -732,7 +728,7 @@ export class AdvancedAISystem {
         this.steeringBehaviors.delete(`${agentId}_${behaviorType}`);
     }
 
-    calculateSteering(agent: AIAgent, deltaTime: number): Vec3 {
+    calculateSteering(agent: AIAgent, _deltaTime: number): Vec3 {
         const totalForce = Vec3.create();
 
         for (const behavior of agent.steeringBehaviors) {
@@ -815,9 +811,6 @@ export class AdvancedAISystem {
 
     private pursue(agent: AIAgent, target: Vec3): Vec3 {
         // Predict target's future position
-        const distance = Vec3.distance(agent.position, target);
-        const time = distance / agent.maxSpeed;
-
         const predictedTarget = Vec3.clone(target);
         // Assuming target has velocity, add it scaled by time
         // For now, just seek to current target
@@ -993,18 +986,9 @@ export class AdvancedAISystem {
         }
     }
 
-    private updateVisionSensor(sensor: VisionSensor, agent: AIAgent, world: World): void {
+    private updateVisionSensor(sensor: VisionSensor, _agent: AIAgent, _world: World): void {
         // Cast rays in vision cone
-        const angleStep = sensor.fieldOfView / sensor.rayCount;
-        const startAngle = -sensor.fieldOfView / 2;
-
         for (let i = 0; i < sensor.rayCount; i++) {
-            const angle = startAngle + i * angleStep;
-            const rayDirection = Vec3.fromValues(
-                Math.sin(angle) * sensor.range,
-                0,
-                Math.cos(angle) * sensor.range
-            );
 
             // Rotate by agent orientation
             // This would need proper quaternion math
@@ -1014,17 +998,17 @@ export class AdvancedAISystem {
         }
     }
 
-    private updateHearingSensor(sensor: HearingSensor, agent: AIAgent, world: World): void {
+    private updateHearingSensor(_sensor: HearingSensor, _agent: AIAgent, _world: World): void {
         // Check for sound sources within range
         // Add heard sounds to perception memory
     }
 
-    private updateTouchSensor(sensor: TouchSensor, agent: AIAgent, world: World): void {
+    private updateTouchSensor(_sensor: TouchSensor, _agent: AIAgent, _world: World): void {
         // Check for physical contact
         // Add touch events to perception memory
     }
 
-    private updateSmellSensor(sensor: SmellSensor, agent: AIAgent, world: World): void {
+    private updateSmellSensor(_sensor: SmellSensor, _agent: AIAgent, _world: World): void {
         // Check for scent sources within range
         // Add smelled scents to perception memory
     }
@@ -1063,13 +1047,13 @@ export class AdvancedAISystem {
                 };
 
             case 'goal_sa':
-                return (agent, goals) => {
+                return (_agent, goals) => {
                     // Simple goal selection based on priority
                     return goals.sort((a, b) => b.priority - a.priority)[0] || null;
                 };
 
             case 'behavioral':
-                return (agent, goals) => {
+                return (_agent, goals) => {
                     // Behavioral decision making
                     return goals[0] || null;
                 };
@@ -1132,19 +1116,20 @@ export class AdvancedAISystem {
                 for (let i = 0; i < formation.config.count; i++) {
                     const angle = (i / formation.config.count) * Math.PI * 2;
                     formation.positions.push(Vec3.fromValues(
-                        Math.cos(angle) * formation.config.radius,
+                        Math.cos(angle) * (formation.config.radius || 1),
                         0,
-                        Math.sin(angle) * formation.config.radius
+                        Math.sin(angle) * (formation.config.radius || 1)
                     ));
                 }
                 break;
 
             case 'wedge':
                 for (let i = 0; i < formation.config.count; i++) {
-                    const row = Math.floor(i / formation.config.width);
-                    const col = i % formation.config.width;
+                    const width = formation.config.width || 1;
+                    const row = Math.floor(i / width);
+                    const col = i % width;
                     formation.positions.push(Vec3.fromValues(
-                        col * formation.config.spacing - (formation.config.width - 1) * formation.config.spacing / 2,
+                        col * formation.config.spacing - (width - 1) * formation.config.spacing / 2,
                         0,
                         row * formation.config.spacing
                     ));
@@ -1444,7 +1429,7 @@ export class AdvancedAISystem {
         }
 
         // Update reinforcement learners
-        for (const [learnerId, learner] of this.reinforcementLearners) {
+        for (const [_learnerId, _learner] of this.reinforcementLearners) {
             // Periodic learning updates would go here
         }
 
@@ -1528,17 +1513,16 @@ export class AdvancedAISystem {
         };
     }
 
-    raycast(origin: Vec3, direction: Vec3, maxDistance: number): RaycastHit | null {
+    raycast(_origin: Vec3, _direction: Vec3, _maxDistance: number): RaycastHit | null {
         // Perform raycast against navigation meshes and obstacles
         // This is a simplified implementation
 
         let closestHit: RaycastHit | null = null;
-        let closestDistance = maxDistance;
 
         // Check against navigation meshes
-        for (const navMesh of this.navigationMeshes.values()) {
-            // Ray-triangle intersection tests would go here
-        }
+        // for (const navMesh of this.navigationMeshes.values()) {
+        //     // Ray-triangle intersection tests would go here
+        // }
 
         return closestHit;
     }
@@ -1584,7 +1568,6 @@ export class AdvancedAISystem {
     // Cleanup
     dispose(): void {
         this.agents.clear();
-        this.behaviors.clear();
         this.behaviorTrees.clear();
         this.stateMachines.clear();
         this.steeringBehaviors.clear();
@@ -1784,22 +1767,7 @@ interface NavEdge {
     cost: number;
 }
 
-interface WaypointGraph {
-    nodes: Waypoint[];
-    edges: WaypointEdge[];
-}
 
-interface Waypoint {
-    id: string;
-    position: Vec3;
-    connections: string[];
-}
-
-interface WaypointEdge {
-    from: string;
-    to: string;
-    cost: number;
-}
 
 interface AIState {
     name: string;
@@ -2050,43 +2018,6 @@ interface SpatialGrid {
     update(): void;
 }
 
-interface IKSolver {
-    id: string;
-    type: 'ccd' | 'fabrik' | 'two_bone';
-    bones: string[];
-    target: Vec3;
-    constraints: IKConstraint[];
-    maxIterations: number;
-    tolerance: number;
-    enabled: boolean;
-}
-
-interface IKConstraint {
-    boneIndex: number;
-    type: 'hinge' | 'ball' | 'fixed';
-    axis?: Vec3;
-    limit?: number;
-}
-
-type ProceduralAnimationType = 'walk_cycle' | 'breathing' | 'head_tracking' | 'tail_wag' | 'ear_twitch';
-
-interface ProceduralAnimator {
-    id: string;
-    type: ProceduralAnimationType;
-    config: any;
-    bones: string[];
-    updateFunction: (bone: Bone, time: number, config: any) => void;
-    enabled: boolean;
-}
-
-interface Bone {
-    name: string;
-    parent: number;
-    localTransform: Mat4;
-    bindPose: Mat4;
-    length: number;
-}
-
 interface PerceptionDebug {
     agentId: string;
     sensorData: any[];
@@ -2094,11 +2025,11 @@ interface PerceptionDebug {
 }
 
 interface Pathfinder {
-    findPath(start: Vec3, end: Vec3, navMesh?: NavigationMesh): Path | null;
+    findPath(start: Vec3, end: Vec3, _navMesh?: NavigationMesh): Path | null;
 }
 
 class AStarPathfinder implements Pathfinder {
-    findPath(start: Vec3, end: Vec3, navMesh?: NavigationMesh): Path | null {
+    findPath(start: Vec3, end: Vec3, _navMesh?: NavigationMesh): Path | null {
         // A* pathfinding implementation
         // This would include proper graph search with heuristics
         // Simplified for demonstration
@@ -2208,7 +2139,7 @@ class PerceptionMemory implements PerceptionMemory {
     entities: Map<Entity, PerceivedEntity> = new Map();
     events: PerceptionEvent[] = [];
 
-    update(deltaTime: number): void {
+    update(_deltaTime: number): void {
         // Decay confidence over time
         for (const [entityId, entity] of this.entities) {
             entity.confidence *= 0.99; // Decay factor
@@ -2227,7 +2158,7 @@ class PerceptionMemory implements PerceptionMemory {
 class AttentionSystem implements AttentionSystem {
     focus: any = null;
 
-    update(memory: PerceptionMemory, deltaTime: number): void {
+    update(memory: PerceptionMemory, _deltaTime: number): void {
         // Simple attention system - focus on highest confidence entity
         let highestConfidence = 0;
         let targetEntity: Entity | null = null;

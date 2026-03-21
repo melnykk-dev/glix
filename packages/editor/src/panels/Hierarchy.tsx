@@ -208,6 +208,7 @@ export const Hierarchy: React.FC = () => {
                 // Sync with project store
                 updateProject(project => {
                     const startSceneId = project.settings.startScene;
+                    if (!startSceneId) return project;
                     const scene = project.scenes[startSceneId];
                     if (scene) {
                         const idsToDelete = new Set<string>();
@@ -218,7 +219,7 @@ export const Hierarchy: React.FC = () => {
                         };
                         // Simplified: just filter by what's still in the world
                         const remaining = world.getEntitiesWithComponents();
-                        scene.entities = scene.entities.filter(e => remaining.includes(e.id));
+                        scene.entities = scene.entities.filter((e: any) => remaining.includes(e.id));
                     }
                     return { ...project };
                 });
@@ -248,6 +249,7 @@ export const Hierarchy: React.FC = () => {
                         // Sync with project store
                         updateProject(project => {
                             const startSceneId = project.settings.startScene;
+                            if (!startSceneId) return project;
                             const scene = project.scenes[startSceneId];
                             if (scene) {
                                 scene.entities.push({ id, components: { transform } as any });

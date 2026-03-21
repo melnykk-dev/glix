@@ -1,6 +1,4 @@
-import { Vec2, Vec3, Mat4 } from '../math';
-import { World } from '../core/World';
-import { Entity } from '@glix/shared';
+import { Vec3, Mat4 } from '../math';
 
 /**
  * Advanced Particle System with sub-emitters, trails, force fields, advanced rendering,
@@ -27,16 +25,10 @@ export class AdvancedParticleSystem {
     private maxParticles: number = 100000;
     private particlePool: Particle[] = [];
     private activeParticles: number = 0;
-    private gpuAccelerationEnabled: boolean = true;
-    private sortingEnabled: boolean = true;
-    private interpolationEnabled: boolean = true;
-    private lodEnabled: boolean = true;
 
     // Performance optimization
     private particleBatches: ParticleBatch[] = [];
     private renderGroups: Map<string, ParticleRenderGroup> = new Map();
-    private cullingEnabled: boolean = true;
-    private frustumCulling: boolean = true;
 
     // Advanced rendering
     private blendModes: Map<string, BlendMode> = new Map();
@@ -49,13 +41,7 @@ export class AdvancedParticleSystem {
     private fixedTimeStep: number = 1/60;
     private accumulator: number = 0;
 
-    // Effects and post-processing
-    private distortionEnabled: boolean = false;
-    private lightingEnabled: boolean = false;
-    private shadowsEnabled: boolean = false;
-
     // Debug and profiling
-    private debugMode: boolean = false;
     private performanceStats: ParticlePerformanceStats = {
         activeParticles: 0,
         emittedPerSecond: 0,
@@ -305,7 +291,7 @@ export class AdvancedParticleSystem {
                 maxLife: 1,
                 emitterId: '',
                 textureId: '',
-                trail: null,
+                trail: undefined,
                 customData: {}
             });
         }
@@ -511,11 +497,15 @@ export class AdvancedParticleSystem {
         // Initialize trail if needed
         if (emitter.trails.length > 0) {
             particle.trail = {
+                id: `trail_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+                emitterId: emitter.id,
                 positions: [Vec3.clone(particle.position)],
-                colors: [Vec4.clone(particle.color)],
+                colors: [[particle.color[0], particle.color[1], particle.color[2], particle.color[3]] as any],
                 widths: [particle.size],
                 maxLength: emitter.trails[0].maxLength,
-                textureId: emitter.trails[0].textureId
+                textureId: emitter.trails[0].textureId,
+                age: 0,
+                enabled: true
             };
         }
     }
@@ -554,7 +544,6 @@ export class AdvancedParticleSystem {
 
             case 'cone':
                 const coneRadius = this.randomBetween(emitter.radius[0], emitter.radius[1]);
-                const coneAngle = this.randomBetween(emitter.angle[0], emitter.angle[1]) * Math.PI / 180;
                 const coneDistance = Math.random();
 
                 const radialAngle = Math.random() * Math.PI * 2;
@@ -651,11 +640,7 @@ export class AdvancedParticleSystem {
         }
 
         // Update particles
-        if (this.gpuAccelerationEnabled && this.computeShader) {
-            this.updateParticlesGPU(deltaTime);
-        } else {
-            this.updateParticlesCPU(deltaTime);
-        }
+        this.updateParticlesCPU(deltaTime);
 
         // Update trails
         this.updateTrails(deltaTime);
@@ -716,20 +701,16 @@ export class AdvancedParticleSystem {
         }
     }
 
-    private updateParticlesGPU(deltaTime: number): void {
-        // GPU-accelerated particle simulation using transform feedback or compute shaders
-        // This would be much more complex in practice
-        this.updateParticlesCPU(deltaTime); // Fallback for now
-    }
 
-    private updateParticleTrail(particle: Particle, deltaTime: number): void {
+
+    private updateParticleTrail(particle: Particle, _deltaTime: number): void {
         if (!particle.trail) return;
 
         const trail = particle.trail;
 
         // Add current position to trail
         trail.positions.unshift(Vec3.clone(particle.position));
-        trail.colors.unshift(Vec4.clone(particle.color));
+        trail.colors.unshift([particle.color[0], particle.color[1], particle.color[2], particle.color[3]] as any);
         trail.widths.unshift(particle.size);
 
         // Limit trail length
@@ -742,7 +723,7 @@ export class AdvancedParticleSystem {
 
     private updateTrails(deltaTime: number): void {
         // Update trail effects
-        for (const [emitterId, emitterTrails] of this.trails) {
+        for (const [_emitterId, emitterTrails] of this.trails) {
             for (const trail of emitterTrails) {
                 // Update trail properties
                 trail.age += deltaTime;
@@ -755,13 +736,13 @@ export class AdvancedParticleSystem {
         }
     }
 
-    private applyForceFields(deltaTime: number): void {
+    private applyForceFields(_deltaTime: number): void {
         for (const forceField of this.forceFields.values()) {
             if (!forceField.enabled) continue;
 
-            for (const [emitterId, emitterParticles] of this.particles) {
+            for (const [_emitterId, emitterParticles] of this.particles) {
                 for (const particle of emitterParticles) {
-                    this.applyForceFieldToParticle(forceField, particle, deltaTime);
+                    this.applyForceFieldToParticle(forceField, particle, _deltaTime);
                 }
             }
         }
@@ -806,7 +787,7 @@ export class AdvancedParticleSystem {
         Vec3.scaleAndAdd(particle.velocity, particle.velocity, force, deltaTime);
     }
 
-    private updateSubEmitters(deltaTime: number): void {
+    private updateSubEmitters(_deltaTime: number): void {
         for (const [parentEmitterId, subEmitters] of this.subEmitters) {
             for (const subEmitter of subEmitters) {
                 if (!subEmitter.enabled) continue;
@@ -820,7 +801,7 @@ export class AdvancedParticleSystem {
                         this.emitParticles(subEmitter.emitterId, subEmitter.particlesPerEvent);
                     } else if (subEmitter.triggerCondition === 'collision') {
                         // Would check for particle collisions
-                    } else if (subEmitter.triggerCondition === 'time' && lifeRatio <= subEmitter.triggerTime) {
+                    } else if (subEmitter.triggerCondition === 'time' && lifeRatio <= subEmitter.triggerTime!) {
                         this.emitParticles(subEmitter.emitterId, subEmitter.particlesPerEvent);
                     }
                 }
@@ -856,10 +837,11 @@ export class AdvancedParticleSystem {
         const trail: ParticleTrail = {
             id: trailId,
             emitterId,
+            positions: [],
             textureId: config.textureId || 'default_circle',
             maxLength: config.maxLength || 20,
-            width: config.width || [1, 0],
-            color: config.color || [[1, 1, 1, 1], [1, 1, 1, 0]],
+            widths: config.width || [1, 0],
+            colors: config.color || [[1, 1, 1, 1], [1, 1, 1, 0]] as any,
             age: 0,
             enabled: true
         };
@@ -1064,11 +1046,11 @@ export class AdvancedParticleSystem {
         gl.drawElements(gl.TRIANGLES, indexData.length, gl.UNSIGNED_SHORT, 0);
     }
 
-    private renderTrails(viewProjection: Mat4, cameraPosition: Vec3): void {
+    private renderTrails(_viewProjection: Mat4, _cameraPosition: Vec3): void {
         // Render particle trails as connected line strips
         const gl = this.gl;
 
-        for (const [emitterId, emitterTrails] of this.trails) {
+        for (const [_emitterId, emitterTrails] of this.trails) {
             for (const trail of emitterTrails) {
                 if (trail.positions.length < 2) continue;
 
@@ -1080,9 +1062,7 @@ export class AdvancedParticleSystem {
                     const pos1 = trail.positions[i];
                     const pos2 = trail.positions[i + 1];
                     const color1 = trail.colors[i];
-                    const color2 = trail.colors[i + 1];
                     const width1 = trail.widths[i];
-                    const width2 = trail.widths[i + 1];
 
                     // Calculate perpendicular vectors for trail width
                     const delta = Vec3.create();
@@ -1095,7 +1075,6 @@ export class AdvancedParticleSystem {
 
                     // Create quad vertices
                     const halfWidth1 = width1 * 0.5;
-                    const halfWidth2 = width2 * 0.5;
 
                     // Side 1
                     Vec3.scaleAndAdd(perp, pos1, perp, -halfWidth1);
@@ -1159,7 +1138,7 @@ export class AdvancedParticleSystem {
                 maxLife: 1,
                 emitterId: '',
                 textureId: '',
-                trail: null,
+                trail: undefined,
                 customData: {}
             };
             return particle;
@@ -1180,7 +1159,7 @@ export class AdvancedParticleSystem {
         particle.maxLife = 1;
         particle.emitterId = '';
         particle.textureId = '';
-        particle.trail = null;
+        particle.trail = undefined;
         particle.customData = {};
 
         this.particlePool.push(particle);
@@ -1196,30 +1175,6 @@ export class AdvancedParticleSystem {
         this.timeScale = Math.max(0, scale);
     }
 
-    enableGPUAcceleration(enabled: boolean): void {
-        this.gpuAccelerationEnabled = enabled;
-    }
-
-    enableSorting(enabled: boolean): void {
-        this.sortingEnabled = enabled;
-    }
-
-    enableInterpolation(enabled: boolean): void {
-        this.interpolationEnabled = enabled;
-    }
-
-    enableLOD(enabled: boolean): void {
-        this.lodEnabled = enabled;
-    }
-
-    enableCulling(enabled: boolean): void {
-        this.cullingEnabled = enabled;
-    }
-
-    enableFrustumCulling(enabled: boolean): void {
-        this.frustumCullingEnabled = enabled;
-    }
-
     // Performance and debugging
     private updatePerformanceStats(): void {
         this.performanceStats.activeParticles = this.activeParticles;
@@ -1229,10 +1184,6 @@ export class AdvancedParticleSystem {
 
     getPerformanceStats(): ParticlePerformanceStats {
         return { ...this.performanceStats };
-    }
-
-    enableDebugMode(enabled: boolean): void {
-        this.debugMode = enabled;
     }
 
     // Cleanup

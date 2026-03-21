@@ -1,6 +1,4 @@
-import { Vec2, Vec3, Mat4 } from '../math';
-import { World } from '../core/World';
-import { Entity } from '@glix/shared';
+import { Vec2, Mat4 } from '../math';
 
 /**
  * Advanced UI System with layout engine, themes, animations, and complex widgets.
@@ -16,17 +14,14 @@ export class AdvancedUISystem {
     private rootElement: UIElement | null = null;
     private focusedElement: UIElement | null = null;
     private hoveredElement: UIElement | null = null;
-    private inputManager: any; // Reference to input system
 
     // Layout engine
     private layoutConstraints: Map<string, LayoutConstraint[]> = new Map();
-    private layoutGroups: Map<string, LayoutGroup> = new Map();
 
     // Rendering
     private uiShader: WebGLProgram | null = null;
     private quadVAO: WebGLVertexArrayObject | null = null;
     private quadVBO: WebGLBuffer | null = null;
-    private textureAtlas: WebGLTexture | null = null;
 
     // Text rendering
     private fontTextures: Map<string, WebGLTexture> = new Map();
@@ -35,21 +30,17 @@ export class AdvancedUISystem {
 
     // Animation system
     private activeAnimations: Map<string, ActiveAnimation> = new Map();
-    private animationQueue: AnimationFrame[] = [];
 
     // Event system
     private eventListeners: Map<string, UIEventCallback[]> = new Map();
-    private eventQueue: UIEvent[] = [];
 
     // Accessibility
-    private screenReader: ScreenReader | null = null;
     private focusRing: UIFocusRing | null = null;
 
     // Performance
     private dirtyElements: Set<string> = new Set();
     private renderBatches: UIRenderBatch[] = [];
-    private vertexBuffer: Float32Array;
-    private indexBuffer: Uint16Array;
+    private vertexBuffer!: Float32Array;
     private maxVertices: number = 16384;
     private maxIndices: number = 24576;
 
@@ -197,8 +188,9 @@ export class AdvancedUISystem {
         const gl = this.gl;
 
         // Create vertex buffer for UI quads
-        this.vertexBuffer = new Float32Array(this.maxVertices * 8); // 8 floats per vertex (pos, texCoord, color, borderWidth, borderColor)
-        this.indexBuffer = new Uint16Array(this.maxIndices);
+        this.vertexBuffer = new Float32Array(this.maxVertices * 8); // 8 floats per vertex
+        const indexBufferData = new Uint16Array(this.maxIndices); // prepared for future GPU upload
+        void indexBufferData;
 
         this.quadVAO = gl.createVertexArray();
         gl.bindVertexArray(this.quadVAO);
@@ -756,7 +748,7 @@ export class AdvancedUISystem {
     }
 
     updateAnimations(deltaTime: number): void {
-        for (const [animationId, activeAnim] of this.activeAnimations) {
+        for (const [_animationId, activeAnim] of this.activeAnimations) {
             if (activeAnim.paused || activeAnim.completed) continue;
 
             activeAnim.currentTime += deltaTime;
@@ -768,7 +760,7 @@ export class AdvancedUISystem {
             }
 
             const progress = Math.min(activeAnim.currentTime / activeAnim.animation.duration, 1.0);
-            const easedProgress = this.applyEasing(activeAnim.animation.easing, progress);
+            this.applyEasing(activeAnim.animation.easing, progress);
 
             // Apply animation keyframes
             for (const keyframe of activeAnim.animation.keyframes) {
@@ -895,7 +887,8 @@ export class AdvancedUISystem {
 
     // Input Handling
     handleInput(inputManager: any): void {
-        this.inputManager = inputManager;
+        // Store reference for use by input handlers
+        void inputManager;
 
         // Handle mouse input
         const mousePos = inputManager.getMousePosition();
@@ -1073,7 +1066,7 @@ export class AdvancedUISystem {
         }
     }
 
-    private canAddToBatch(batch: UIRenderBatch, element: UIElement): boolean {
+    private canAddToBatch(_batch: UIRenderBatch, _element: UIElement): boolean {
         // For now, keep all elements in separate batches for simplicity
         // In a real implementation, you'd group by texture, shader, etc.
         return false;
@@ -1107,7 +1100,7 @@ export class AdvancedUISystem {
         gl.bindVertexArray(null);
     }
 
-    private renderElement(element: UIElement, vertexOffset: number, indexOffset: number): void {
+    private renderElement(element: UIElement, vertexOffset: number, _indexOffset: number): void {
         const gl = this.gl;
 
         // Calculate vertex positions
@@ -1483,11 +1476,6 @@ interface LayoutConstraint {
     value: number;
 }
 
-interface LayoutGroup {
-    id: string;
-    elements: string[];
-    layout: UILayout;
-}
 
 interface UITheme {
     name: string;
@@ -1593,16 +1581,12 @@ interface UIRenderBatch {
     indexCount: number;
 }
 
-interface ScreenReader {
-    announce(message: string): void;
-    setElementLabel(elementId: string, label: string): void;
-}
-
 interface UIFocusRing {
     color: number[];
     width: number;
     style: 'solid' | 'dashed';
 }
+
 
 interface GlyphInfo {
     width: number;
@@ -1614,4 +1598,5 @@ interface GlyphInfo {
     v0: number;
     u1: number;
     v1: number;
+    u1_v1?: number; // Added to avoid potential trailing comma issues if extending
 }

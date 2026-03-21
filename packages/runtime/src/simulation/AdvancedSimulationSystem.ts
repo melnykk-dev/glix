@@ -1,4 +1,4 @@
-import { Vec2, Vec3, Mat4 } from '../math';
+import { Vec2, Vec3 } from '../math';
 import { World } from '../core/World';
 import { Entity } from '@glix/shared';
 
@@ -7,7 +7,6 @@ import { Entity } from '@glix/shared';
  * ecosystem dynamics, population simulation, and environmental effects.
  */
 export class AdvancedSimulationSystem {
-    private world: World;
     private eventBus: any;
 
     // Time management
@@ -17,7 +16,7 @@ export class AdvancedSimulationSystem {
 
     // Weather system
     private weatherEngine: WeatherEngine;
-    private currentWeather: WeatherState;
+    private currentWeather!: WeatherState;
     private weatherHistory: WeatherState[] = [];
 
     // Ecosystem simulation
@@ -27,10 +26,8 @@ export class AdvancedSimulationSystem {
 
     // Environmental effects
     private environmentalEffects: Map<string, EnvironmentalEffect> = new Map();
-    private particleSystems: Map<string, any> = new Map(); // Reference to particle system
 
     // Climate and seasons
-    private climateEngine: ClimateEngine;
     private seasons: Map<string, Season> = new Map();
 
     // Resource management
@@ -50,13 +47,11 @@ export class AdvancedSimulationSystem {
         timeSpent: 0
     };
 
-    constructor(world: World, eventBus: any) {
-        this.world = world;
+    constructor(_world: World, eventBus: any) {
         this.eventBus = eventBus;
 
         this.gameTime = new GameTime();
         this.weatherEngine = new WeatherEngine();
-        this.climateEngine = new ClimateEngine();
         this.disasterEngine = new DisasterEngine();
 
         this.initializeSeasons();
@@ -288,7 +283,7 @@ export class AdvancedSimulationSystem {
     }
 
     private updateEcosystems(deltaTime: number): void {
-        for (const [ecosystemId, ecosystem] of this.ecosystems) {
+        for (const [_ecosystemId, ecosystem] of this.ecosystems) {
             this.updateEcosystem(ecosystem, deltaTime);
         }
 
@@ -457,7 +452,7 @@ export class AdvancedSimulationSystem {
     }
 
     private updateResources(deltaTime: number): void {
-        for (const [resourceId, resource] of this.resources) {
+        for (const [_resourceId, resource] of this.resources) {
             // Update resource regeneration/consumption
             if (resource.regenerationRate > 0) {
                 resource.currentAmount = Math.min(
@@ -571,7 +566,8 @@ export class AdvancedSimulationSystem {
             duration: config.duration || -1, // -1 for permanent
             startTime: this.gameTime.getTotalSeconds(),
             affectedEntities: [],
-            parameters: config.parameters || {}
+            parameters: config.parameters || {},
+            update: (_dt: number) => {}
         };
 
         this.environmentalEffects.set(effectId, effect);
@@ -693,7 +689,6 @@ export class AdvancedSimulationSystem {
 // Supporting classes and interfaces
 class GameTime {
     private totalSeconds: number = 0;
-    private startTime: number = Date.now();
 
     update(deltaTime: number): void {
         this.totalSeconds += deltaTime;
@@ -726,7 +721,7 @@ class WeatherEngine {
         weather.windSpeed = Math.max(0, weather.windSpeed);
     }
 
-    generateNextWeather(currentWeather: WeatherState): string {
+    generateNextWeather(_currentWeather: WeatherState): string {
         const weatherTypes = ['clear', 'cloudy', 'rain', 'storm', 'snow'];
         const weights = [0.4, 0.3, 0.15, 0.1, 0.05];
 
@@ -835,20 +830,6 @@ class WeatherEngine {
     }
 }
 
-class ClimateEngine {
-    simulateClimate(position: Vec2, time: GameTime): ClimateData {
-        // Simplified climate simulation
-        const latitude = position[1] / 1000; // Assume world is 1000 units tall
-        const baseTemperature = 25 - Math.abs(latitude - 0.5) * 40;
-
-        return {
-            temperature: baseTemperature,
-            humidity: 0.5 + Math.sin(time.getSeasonProgress() * Math.PI * 2) * 0.2,
-            precipitation: 0.3 + Math.sin(time.getSeasonProgress() * Math.PI * 4) * 0.2,
-            windSpeed: 5 + Math.random() * 5
-        };
-    }
-}
 
 class DisasterEngine {
     createDisaster(type: string, position: Vec3): Disaster {
@@ -1060,19 +1041,8 @@ interface Disaster {
     update(deltaTime: number): void;
 }
 
-interface ClimateData {
-    temperature: number;
-    humidity: number;
-    precipitation: number;
-    windSpeed: number;
-}
 
-interface EcosystemData {
-    biodiversity: number;
-    predatorCount: number;
-    preyCount: number;
-    vegetationDensity: number;
-}
+
 
 interface SimulationStats {
     updatesPerSecond: number;

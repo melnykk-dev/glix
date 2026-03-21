@@ -32,7 +32,9 @@ export class RotateEntityCommand implements Command {
         const { updateProject, project } = useProjectStore.getState();
         if (project) {
             updateProject((proj: MgexFile) => {
-                const scene = proj.scenes[proj.settings.startScene];
+                const startSceneId = proj.settings.startScene;
+                if (!startSceneId) return proj;
+                const scene = proj.scenes[startSceneId];
                 if (scene) {
                     scene.entities.forEach((ent: { id: string; components: any }) => {
                         const idx = this.entityIds.indexOf(ent.id);

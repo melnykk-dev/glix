@@ -11,6 +11,7 @@ export function syncWorldToProject() {
 
     updateProject(proj => {
         const sceneId = proj.settings.startScene;
+        if (!sceneId) return proj;
         const currentScene = proj.scenes[sceneId];
         if (!currentScene) return proj;
 

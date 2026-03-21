@@ -1,4 +1,4 @@
-import { Vec2, Vec3, Mat4 } from '../math';
+import { Vec2 } from '../math';
 import { World } from '../core/World';
 import { Entity } from '@glix/shared';
 
@@ -26,20 +26,6 @@ export class AdvancedPhysicsSystem {
     private enableContinuousCollision: boolean = true;
     private enableWarmStarting: boolean = true;
     private enableSubStepping: boolean = false;
-
-    // Advanced features
-    private enableCCD: boolean = true; // Continuous Collision Detection
-    private enableTOI: boolean = true; // Time of Impact
-    private maxTOI: number = 1.0;
-    private enableBullet: boolean = true;
-    private enableFriction: boolean = true;
-    private enableRestitution: boolean = true;
-
-    // Performance settings
-    private broadphaseAlgorithm: 'dynamic' | 'sap' = 'dynamic';
-    private maxContacts: number = 2048;
-    private maxProxies: number = 1024;
-    private maxPairs: number = 8192;
 
     constructor(eventBus: any) {
         this.eventBus = eventBus;
@@ -98,7 +84,7 @@ export class AdvancedPhysicsSystem {
             const transform = world.getComponent(entity, 'transform');
 
             if (rigidBody && transform) {
-                const body = this.world.getBodyList();
+                let body = this.world.getBodyList();
                 while (body) {
                     if ((body as any).entityId === entity) {
                         const position = body.getPosition();
@@ -675,7 +661,7 @@ export class AdvancedPhysicsSystem {
         if (!destructible.isDestroyed) return;
 
         const currentTime = performance.now();
-        const elapsed = currentTime - destructible.destructionTime;
+        void currentTime; // reserved for future time-based effects
 
         for (const chunk of destructible.chunks) {
             if (!chunk.active) continue;
@@ -894,25 +880,14 @@ export class AdvancedPhysicsSystem {
         });
     }
 
-    private onPreSolve(contact: any, oldManifold: any): void {
-        // Pre-solve collision handling
-        const fixtureA = contact.getFixtureA();
-        const fixtureB = contact.getFixtureB();
-
-        // Modify contact properties here if needed
-        // contact.setEnabled(true);
-        // contact.setFriction(0.5);
-        // contact.setRestitution(0.3);
+    private onPreSolve(_contact: any, _oldManifold: any): void {
+        // Pre-solve: modify contact properties if needed
+        // e.g. contact.setEnabled(true), contact.setFriction(0.5)
     }
 
-    private onPostSolve(contact: any, impulse: any): void {
-        // Post-solve collision handling
-        const fixtureA = contact.getFixtureA();
-        const fixtureB = contact.getFixtureB();
-
-        // Access collision impulse data
-        // const normalImpulse = impulse.normalImpulses[0];
-        // const tangentImpulse = impulse.tangentImpulses[0];
+    private onPostSolve(_contact: any, _impulse: any): void {
+        // Post-solve: read collision impulse data if needed
+        // e.g. const normalImpulse = impulse.normalImpulses[0]
     }
 
     // Utility methods
@@ -988,12 +963,12 @@ export class AdvancedPhysicsSystem {
         this.timeStep = timeStep;
     }
 
-    enableSleeping(enabled: boolean): void {
+    setSleepingEnabled(enabled: boolean): void {
         this.enableSleeping = enabled;
         this.world.setAllowSleeping(enabled);
     }
 
-    enableContinuousCollision(enabled: boolean): void {
+    setContinuousCollisionEnabled(enabled: boolean): void {
         this.enableContinuousCollision = enabled;
         this.world.setContinuousPhysics(enabled);
     }

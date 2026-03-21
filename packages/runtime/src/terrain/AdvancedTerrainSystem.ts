@@ -6,29 +6,24 @@ import { Vec2, Vec3, Mat4 } from '../math';
  */
 export class AdvancedTerrainSystem {
     private terrainChunks: Map<string, TerrainChunk> = new Map();
-    private heightMapGenerators: Map<string, HeightMapGenerator> = new Map();
-    private textureGenerators: Map<string, TextureGenerator> = new Map();
+    private heightMapGenerators: Map<string, any> = new Map(); // HeightMapGenerator
+    private textureGenerators: Map<string, any> = new Map(); // TextureGenerator
     private vegetationSystems: Map<string, VegetationSystem> = new Map();
     private deformationTools: Map<string, TerrainDeformationTool> = new Map();
 
     // Terrain settings
     private chunkSize: number = 64;
-    private maxLODLevels: number = 5;
-    private baseResolution: number = 256;
     private maxHeight: number = 100;
     private minHeight: number = -50;
 
     // Performance optimization
     private activeChunks: Set<string> = new Set();
-    private chunkPool: TerrainChunk[] = [];
     private lodDistances: number[] = [50, 100, 200, 400, 800];
 
     // Terrain materials
     private terrainMaterials: Map<string, TerrainMaterial> = new Map();
-    private blendMaps: Map<string, BlendMap> = new Map();
 
     // Vegetation
-    private vegetationPatches: Map<string, VegetationPatch> = new Map();
     private vegetationInstances: VegetationInstance[] = [];
 
     // Deformation
@@ -40,17 +35,14 @@ export class AdvancedTerrainSystem {
     private weatheringSimulator: WeatheringSimulator;
     private thermalErosion: ThermalErosion;
 
-    // Physics integration
-    private physicsBodies: Map<string, any> = new Map(); // Reference to physics bodies
-
     // Rendering
     private terrainRenderer: TerrainRenderer;
     private normalCalculator: TerrainNormalCalculator;
     private lodSelector: LODSelector;
 
-    // Procedural generation
-    private biomeGenerator: BiomeGenerator;
-    private featureGenerator: TerrainFeatureGenerator;
+    // Procedural generation (reserved for future use)
+    // private biomeGenerator: BiomeGenerator;
+    // private featureGenerator: TerrainFeatureGenerator;
 
     constructor() {
         this.erosionSimulator = new ErosionSimulator();
@@ -59,8 +51,7 @@ export class AdvancedTerrainSystem {
         this.terrainRenderer = new TerrainRenderer();
         this.normalCalculator = new TerrainNormalCalculator();
         this.lodSelector = new LODSelector();
-        this.biomeGenerator = new BiomeGenerator();
-        this.featureGenerator = new TerrainFeatureGenerator();
+        // biomeGenerator and featureGenerator reserved for future use
 
         this.initializeGenerators();
         this.initializeMaterials();
@@ -277,11 +268,10 @@ export class AdvancedTerrainSystem {
         }
     }
 
-    private generateBiomeMap(chunk: TerrainChunk, config: TerrainGenerationConfig): void {
+    private generateBiomeMap(chunk: TerrainChunk, _config: TerrainGenerationConfig): void {
         for (let z = 0; z < this.chunkSize; z++) {
             for (let x = 0; x < this.chunkSize; x++) {
-                const worldX = chunk.coord[0] * this.chunkSize + x;
-                const worldZ = chunk.coord[1] * this.chunkSize + z;
+                // _worldX and _worldZ reserved for biome lookup in future
                 const height = this.sampleHeightMap(chunk, x, z);
 
                 // Determine biome based on height and other factors
@@ -337,7 +327,7 @@ export class AdvancedTerrainSystem {
 
     private calculateSlope(chunk: TerrainChunk, x: number, z: number): number {
         // Calculate slope using central difference
-        const height = this.sampleHeightMap(chunk, x, z);
+        // height is sampled to calculate dx/dz, but the center height isn't directly used
         const heightX1 = this.sampleHeightMap(chunk, x + 1, z);
         const heightX2 = this.sampleHeightMap(chunk, x - 1, z);
         const heightZ1 = this.sampleHeightMap(chunk, x, z + 1);
@@ -414,7 +404,7 @@ export class AdvancedTerrainSystem {
         return affectedChunks;
     }
 
-    private updatePhysicsBody(chunk: TerrainChunk): void {
+    private updatePhysicsBody(_chunk: TerrainChunk): void {
         // Update physics collision mesh
         // This would notify the physics system to update the collision shape
     }
@@ -471,7 +461,7 @@ export class AdvancedTerrainSystem {
 
     // LOD management
     updateLOD(cameraPosition: Vec3): void {
-        for (const [chunkKey, chunk] of this.terrainChunks) {
+        for (const [_chunkKey, chunk] of this.terrainChunks) {
             const chunkCenter = Vec3.fromValues(
                 chunk.coord[0] * this.chunkSize + this.chunkSize / 2,
                 0,
@@ -524,7 +514,7 @@ export class AdvancedTerrainSystem {
         return this.sampleHeightMap(chunk, localX, localZ);
     }
 
-    raycastTerrain(origin: Vec3, direction: Vec3, maxDistance: number): TerrainRaycastResult | null {
+    raycastTerrain(_origin: Vec3, _direction: Vec3, _maxDistance: number): TerrainRaycastResult | null {
         // Implement terrain raycasting
         // This would use the height maps to find intersections
         return null; // Placeholder
@@ -708,13 +698,6 @@ interface VegetationSystem {
     placementRules: string[];
 }
 
-interface VegetationPatch {
-    position: Vec3;
-    size: Vec2;
-    vegetationType: string;
-    instances: VegetationInstance[];
-}
-
 interface VegetationInstance {
     type: number;
     position: Vec3;
@@ -786,7 +769,7 @@ class SimplexHeightGenerator {
 }
 
 class DiamondSquareGenerator {
-    async generate(worldX: number, worldZ: number, size: number, heightMap: Float32Array, scale: number, weight: number): Promise<void> {
+    async generate(_worldX: number, _worldZ: number, size: number, heightMap: Float32Array, _scale: number, weight: number): Promise<void> {
         // Diamond-square algorithm implementation
         // Initialize corners
         heightMap[0] = Math.random() * weight;
@@ -850,35 +833,35 @@ class DiamondSquareGenerator {
 
 // Additional generator stubs
 class FaultLineGenerator {
-    async generate(worldX: number, worldZ: number, size: number, heightMap: Float32Array, scale: number, weight: number): Promise<void> {
+    async generate(_worldX: number, _worldZ: number, _size: number, _heightMap: Float32Array, _scale: number, _weight: number): Promise<void> {
         // Fault line displacement implementation
         // Placeholder
     }
 }
 
 class HydraulicErosionGenerator {
-    async generate(worldX: number, worldZ: number, size: number, heightMap: Float32Array, scale: number, weight: number): Promise<void> {
+    async generate(_worldX: number, _worldZ: number, _size: number, _heightMap: Float32Array, _scale: number, _weight: number): Promise<void> {
         // Hydraulic erosion implementation
         // Placeholder
     }
 }
 
 class SplatMapGenerator {
-    generate(chunk: TerrainChunk): BlendMap {
+    generate(_chunk: TerrainChunk): BlendMap {
         // Splat map generation
         return { textures: [], weights: new Float32Array(0) };
     }
 }
 
 class TriplanarTextureGenerator {
-    generate(chunk: TerrainChunk): BlendMap {
+    generate(_chunk: TerrainChunk): BlendMap {
         // Triplanar texture mapping
         return { textures: [], weights: new Float32Array(0) };
     }
 }
 
 class BiomeBlendGenerator {
-    generate(chunk: TerrainChunk): BlendMap {
+    generate(_chunk: TerrainChunk): BlendMap {
         // Biome-based texture blending
         return { textures: [], weights: new Float32Array(0) };
     }
@@ -1005,7 +988,7 @@ class NoiseTool implements TerrainDeformationTool {
 }
 
 class ThermalErosionTool implements TerrainDeformationTool {
-    apply(chunk: TerrainChunk, deformation: TerrainDeformation): void {
+    apply(_chunk: TerrainChunk, _deformation: TerrainDeformation): void {
         // Apply thermal erosion simulation
         // This would simulate material sliding down slopes
         // Placeholder implementation
@@ -1014,37 +997,37 @@ class ThermalErosionTool implements TerrainDeformationTool {
 
 // Simulator classes
 class ErosionSimulator {
-    simulate(chunk: TerrainChunk, deltaTime: number): void {
+    simulate(_chunk: TerrainChunk, _deltaTime: number): void {
         // Hydraulic erosion simulation
         // Placeholder
     }
 }
 
 class WeatheringSimulator {
-    simulate(chunk: TerrainChunk, deltaTime: number): void {
+    simulate(_chunk: TerrainChunk, _deltaTime: number): void {
         // Chemical weathering simulation
         // Placeholder
     }
 }
 
 class ThermalErosion {
-    simulate(chunk: TerrainChunk, deltaTime: number): void {
+    simulate(_chunk: TerrainChunk, _deltaTime: number): void {
         // Thermal erosion simulation
         // Placeholder
     }
 }
 
 class TerrainRenderer {
-    createRenderData(chunk: TerrainChunk): any {
+    createRenderData(_chunk: TerrainChunk): any {
         // Create vertex buffers, index buffers, etc.
         return {};
     }
 
-    destroyRenderData(renderData: any): void {
+    destroyRenderData(_renderData: any): void {
         // Clean up render data
     }
 
-    render(chunks: TerrainChunk[], vegetationInstances: VegetationInstance[], camera: any, projectionMatrix: Mat4, viewMatrix: Mat4): void {
+    render(_chunks: TerrainChunk[], _vegetationInstances: VegetationInstance[], _camera: any, _projectionMatrix: Mat4, _viewMatrix: Mat4): void {
         // Render terrain chunks and vegetation
     }
 }
@@ -1090,15 +1073,3 @@ class LODSelector {
     }
 }
 
-class BiomeGenerator {
-    generateBiome(x: number, z: number): any {
-        // Generate biome data
-        return {};
-    }
-}
-
-class TerrainFeatureGenerator {
-    generateFeatures(chunk: TerrainChunk): void {
-        // Generate terrain features like caves, overhangs, etc.
-    }
-}

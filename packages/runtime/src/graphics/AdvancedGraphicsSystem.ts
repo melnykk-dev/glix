@@ -1,4 +1,4 @@
-import { Vec2, Vec3, Mat4 } from '../math';
+import { Vec3, Mat4 } from '../math';
 
 /**
  * Advanced Graphics System with advanced rendering techniques, post-processing effects,
@@ -6,34 +6,31 @@ import { Vec2, Vec3, Mat4 } from '../math';
  */
 export class AdvancedGraphicsSystem {
     private gl: WebGL2RenderingContext;
-    private canvas: HTMLCanvasElement;
 
     // Core rendering
     private shaderPrograms: Map<string, ShaderProgram> = new Map();
-    private computePrograms: Map<string, ComputeProgram> = new Map();
     private framebuffers: Map<string, Framebuffer> = new Map();
     private renderTargets: Map<string, RenderTarget> = new Map();
 
     // Post-processing pipeline
     private postProcessEffects: PostProcessEffect[] = [];
-    private bloomEffect: BloomEffect;
-    private toneMapping: ToneMappingEffect;
-    private colorGrading: ColorGradingEffect;
-    private ssaoEffect: SSAOEffect;
-    private ssrEffect: SSREffect;
-    private motionBlurEffect: MotionBlurEffect;
-    private depthOfFieldEffect: DepthOfFieldEffect;
+    private bloomEffect!: BloomEffect;
+    private toneMapping!: ToneMappingEffect;
+    private colorGrading!: ColorGradingEffect;
+    private ssaoEffect!: SSAOEffect;
+    private ssrEffect!: SSREffect;
+    private motionBlurEffect!: MotionBlurEffect;
+    private depthOfFieldEffect!: DepthOfFieldEffect;
 
     // Advanced rendering techniques
-    private rayTracer: RayTracer;
-    private globalIllumination: GlobalIllumination;
-    private volumetricLighting: VolumetricLighting;
-    private particleRenderer: AdvancedParticleRenderer;
-    private decalRenderer: DecalRenderer;
+    private rayTracer!: RayTracer;
+    private globalIllumination!: GlobalIllumination;
+    private volumetricLighting!: VolumetricLighting;
+    private particleRenderer!: AdvancedParticleRenderer;
+    private decalRenderer!: DecalRenderer;
 
     // GPU compute
     private computeShaders: Map<string, ComputeShader> = new Map();
-    private gpuBuffers: Map<string, GPUBuffer> = new Map();
 
     // Visual effects
     private visualEffects: Map<string, VisualEffect> = new Map();
@@ -75,7 +72,7 @@ export class AdvancedGraphicsSystem {
         this.lodManager = new LODManager();
 
         // Initialize debug systems
-        this.debugRenderer = new DebugRenderer(gl);
+        this.debugRenderer = new DebugRenderer();
         this.profiler = new GraphicsProfiler();
 
         console.log('[AdvancedGraphicsSystem] Advanced graphics system initialized');
@@ -331,7 +328,7 @@ export class AdvancedGraphicsSystem {
 
     private initializeComputeShaders(): void {
         // Particle simulation compute shader
-        const particleComputeShader = `#version 310 es
+        const _particleComputeShader = `#version 310 es
             layout(local_size_x = 128) in;
 
             struct Particle {
@@ -414,7 +411,7 @@ export class AdvancedGraphicsSystem {
 
         gl.drawBuffers([gl.COLOR_ATTACHMENT0, gl.COLOR_ATTACHMENT1, gl.COLOR_ATTACHMENT2]);
 
-        this.framebuffers.set('gBuffer', gBuffer!);
+        this.framebuffers.set('gBuffer', gBuffer as unknown as Framebuffer);
         this.renderTargets.set('gBuffer', {
             framebuffer: gBuffer!,
             textures: [positionTexture!, normalTexture!, albedoTexture!],
@@ -444,7 +441,7 @@ export class AdvancedGraphicsSystem {
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
             gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, texture, 0);
 
-            this.framebuffers.set(`${effect}Buffer`, fbo!);
+            this.framebuffers.set(`${effect}Buffer`, fbo as unknown as Framebuffer);
             this.renderTargets.set(`${effect}Buffer`, {
                 framebuffer: fbo!,
                 textures: [texture!],
@@ -726,7 +723,7 @@ export class AdvancedGraphicsSystem {
         gl.uniform1f(gl.getUniformLocation(program.program, 'u_normalScale'), material.normalScale);
     }
 
-    private setLightingUniforms(program: ShaderProgram, lights: Light[], camera: Camera): void {
+    private setLightingUniforms(program: ShaderProgram, lights: Light[], _camera: Camera): void {
         const gl = this.gl;
 
         // Prepare light data
@@ -912,7 +909,7 @@ export class AdvancedGraphicsSystem {
         }
     }
 
-    private updateEffectInstance(instance: EffectInstance, effect: VisualEffect, deltaTime: number): void {
+    private updateEffectInstance(_instance: EffectInstance, _effect: VisualEffect, _deltaTime: number): void {
         // Update particles, geometry, etc.
         // Implementation depends on effect type
     }
@@ -945,10 +942,10 @@ export class AdvancedGraphicsSystem {
         }
 
         // Dispatch compute
-        gl.dispatchCompute(workGroups[0], workGroups[1], workGroups[2]);
+        (gl as any).dispatchCompute(workGroups[0], workGroups[1], workGroups[2]);
 
         // Memory barrier if needed
-        gl.memoryBarrier(gl.SHADER_IMAGE_ACCESS_BARRIER_BIT | gl.TEXTURE_FETCH_BARRIER_BIT);
+        (gl as any).memoryBarrier((gl as any).SHADER_IMAGE_ACCESS_BARRIER_BIT | (gl as any).TEXTURE_FETCH_BARRIER_BIT);
     }
 
     // Performance monitoring
@@ -1056,7 +1053,7 @@ interface Scene {
 
 interface RenderObject {
     position: Vec3;
-    rotation: Vec4; // Quaternion
+    rotation: any; // Quaternion
     scale: Vec3;
     material: Material;
     vao: WebGLVertexArrayObject;
@@ -1113,7 +1110,7 @@ interface ParticleSystem {
 interface Particle {
     position: Vec3;
     velocity: Vec3;
-    color: Vec4;
+    color: any;
     life: number;
     size: number;
 }
@@ -1128,7 +1125,7 @@ interface ParticleEmitter {
 
 interface Decal {
     position: Vec3;
-    rotation: Vec4;
+    rotation: any;
     scale: Vec3;
     texture: WebGLTexture;
     material: Material;
@@ -1169,7 +1166,7 @@ interface RenderStats {
 // Post-processing effect implementations
 class BloomEffect implements PostProcessEffect {
     private gl: WebGL2RenderingContext;
-    private program: WebGLProgram;
+    private program!: WebGLProgram;
     private framebuffers: WebGLFramebuffer[];
     private textures: WebGLTexture[];
 
@@ -1324,92 +1321,92 @@ class BloomEffect implements PostProcessEffect {
 
 // Placeholder classes for other effects
 class ToneMappingEffect implements PostProcessEffect {
-    constructor(private gl: WebGL2RenderingContext) {}
-    apply(renderTargets: Map<string, RenderTarget>): void {}
+    constructor(private _gl: WebGL2RenderingContext) {}
+    apply(_renderTargets: Map<string, RenderTarget>): void {}
     dispose(): void {}
 }
 
 class ColorGradingEffect implements PostProcessEffect {
-    constructor(private gl: WebGL2RenderingContext) {}
-    apply(renderTargets: Map<string, RenderTarget>): void {}
+    constructor(private _gl: WebGL2RenderingContext) {}
+    apply(_renderTargets: Map<string, RenderTarget>): void {}
     dispose(): void {}
 }
 
 class SSAOEffect implements PostProcessEffect {
-    constructor(private gl: WebGL2RenderingContext) {}
-    apply(renderTargets: Map<string, RenderTarget>): void {}
+    constructor(private _gl: WebGL2RenderingContext) {}
+    apply(_renderTargets: Map<string, RenderTarget>): void {}
     dispose(): void {}
 }
 
 class SSREffect implements PostProcessEffect {
-    constructor(private gl: WebGL2RenderingContext) {}
-    apply(renderTargets: Map<string, RenderTarget>): void {}
+    constructor(private _gl: WebGL2RenderingContext) {}
+    apply(_renderTargets: Map<string, RenderTarget>): void {}
     dispose(): void {}
 }
 
 class MotionBlurEffect implements PostProcessEffect {
-    constructor(private gl: WebGL2RenderingContext) {}
-    apply(renderTargets: Map<string, RenderTarget>): void {}
+    constructor(private _gl: WebGL2RenderingContext) {}
+    apply(_renderTargets: Map<string, RenderTarget>): void {}
     dispose(): void {}
 }
 
 class DepthOfFieldEffect implements PostProcessEffect {
-    constructor(private gl: WebGL2RenderingContext) {}
-    apply(renderTargets: Map<string, RenderTarget>): void {}
+    constructor(private _gl: WebGL2RenderingContext) {}
+    apply(_renderTargets: Map<string, RenderTarget>): void {}
     dispose(): void {}
 }
 
 // Advanced rendering system stubs
 class RayTracer {
-    constructor(private gl: WebGL2RenderingContext) {}
+    constructor(private _gl: WebGL2RenderingContext) {}
     enable(): void {}
     disable(): void {}
     dispose(): void {}
 }
 
 class GlobalIllumination {
-    constructor(private gl: WebGL2RenderingContext) {}
+    constructor(private _gl: WebGL2RenderingContext) {}
     enable(): void {}
     disable(): void {}
     dispose(): void {}
 }
 
 class VolumetricLighting {
-    constructor(private gl: WebGL2RenderingContext) {}
+    constructor(private _gl: WebGL2RenderingContext) {}
     enable(): void {}
     disable(): void {}
     dispose(): void {}
 }
 
 class AdvancedParticleRenderer {
-    constructor(private gl: WebGL2RenderingContext) {}
-    render(particles: ParticleSystem[], camera: Camera): void {}
+    constructor(private _gl: WebGL2RenderingContext) {}
+    render(_particles: ParticleSystem[], _camera: Camera): void {}
     dispose(): void {}
 }
 
 class DecalRenderer {
-    constructor(private gl: WebGL2RenderingContext) {}
-    render(decals: Decal[], camera: Camera): void {}
+    constructor(private _gl: WebGL2RenderingContext) {}
+    render(_decals: Decal[], _camera: Camera): void {}
     dispose(): void {}
 }
 
 // Optimization systems
 class FrustumCuller {
-    cull(objects: RenderObject[], camera: Camera): RenderObject[] {
+    cull(objects: RenderObject[], _camera: Camera): RenderObject[] {
         // Implement frustum culling
         return objects;
     }
 }
 
 class OcclusionCuller {
-    cull(objects: RenderObject[], camera: Camera): RenderObject[] {
+    cull(objects: RenderObject[], _camera: Camera): RenderObject[] {
         // Implement occlusion culling
         return objects;
     }
 }
 
 class LODManager {
-    updateLOD(objects: RenderObject[], camera: Camera): void {
+    updateLOD(_objects: RenderObject[], _camera: Camera): void {
         // Implement LOD management
     }
 }
@@ -1417,11 +1414,11 @@ class LODManager {
 class DebugRenderer {
     enabled: boolean = false;
 
-    render(scene: Scene, camera: Camera): void {
+    render(_scene: Scene, _camera: Camera): void {
         // Implement debug rendering
     }
 
-    renderStats(stats: RenderStats): void {
+    renderStats(_stats: RenderStats): void {
         // Render performance stats
     }
 }

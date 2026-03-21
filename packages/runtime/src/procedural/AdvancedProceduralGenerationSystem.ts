@@ -6,10 +6,8 @@ import { Vec2, Vec3 } from '../math';
  */
 export class AdvancedProceduralGenerationSystem {
     private noiseGenerators: Map<string, NoiseGenerator> = new Map();
-    private terrainGenerators: Map<string, TerrainGenerator> = new Map();
     private biomeGenerators: Map<string, BiomeGenerator> = new Map();
     private structureGenerators: Map<string, StructureGenerator> = new Map();
-    private contentGenerators: Map<string, ContentGenerator> = new Map();
 
     // World generation
     private worldConfig: WorldConfig;
@@ -19,11 +17,9 @@ export class AdvancedProceduralGenerationSystem {
 
     // Terrain synthesis
     private heightMapGenerator: HeightMapGenerator;
-    private textureSynthesizer: TextureSynthesizer;
     private vegetationPlacer: VegetationPlacer;
 
     // Structure placement
-    private structurePlacer: StructurePlacer;
     private settlementGenerator: SettlementGenerator;
     private dungeonGenerator: DungeonGenerator;
 
@@ -43,7 +39,6 @@ export class AdvancedProceduralGenerationSystem {
     private levelOfDetail: Map<string, number> = new Map();
 
     // Debug and visualization
-    private debugMode: boolean = false;
     private generationStats: GenerationStats = {
         chunksGenerated: 0,
         structuresPlaced: 0,
@@ -59,9 +54,7 @@ export class AdvancedProceduralGenerationSystem {
 
         // Initialize core generators
         this.heightMapGenerator = new HeightMapGenerator(this.worldSeed);
-        this.textureSynthesizer = new TextureSynthesizer();
         this.vegetationPlacer = new VegetationPlacer();
-        this.structurePlacer = new StructurePlacer();
         this.settlementGenerator = new SettlementGenerator();
         this.dungeonGenerator = new DungeonGenerator();
         this.biomeBlender = new BiomeBlender();
@@ -500,7 +493,7 @@ export class AdvancedProceduralGenerationSystem {
         return candidates;
     }
 
-    private async placeNaturalStructures(world: GeneratedWorld): Promise<void> {
+    private async placeNaturalStructures(_world: GeneratedWorld): Promise<void> {
         // Generate natural features like caves, lakes, forests, etc.
         // This would include additional procedural generation algorithms
     }
@@ -526,7 +519,7 @@ export class AdvancedProceduralGenerationSystem {
                 const npcCount = Math.floor(Math.random() * 10) + 5; // 5-15 NPCs per settlement
                 for (let i = 0; i < npcCount; i++) {
                     const npc = this.npcGenerator.generateNPC(structure.position);
-                    structure.objects.push(npc);
+                    structure.objects.push(npc as unknown as GeneratedObject);
                     this.generationStats.objectsCreated++;
                 }
             }
@@ -562,7 +555,7 @@ export class AdvancedProceduralGenerationSystem {
         const lod = this.levelOfDetail.get(cacheKey) || 1;
         if (lod < 0.5) return null; // Too far, don't generate
 
-        const world = { size: this.worldConfig.size, chunks: new Map(), biomes: new Map(), structures: [], metadata: {} };
+        const world: GeneratedWorld = { seed: this.worldConfig.seed || Date.now(), size: this.worldConfig.size, chunks: new Map(), biomes: new Map(), structures: [], metadata: {} };
         await this.generateChunk(coord, world);
 
         const chunk = world.chunks.get(cacheKey);
@@ -570,7 +563,7 @@ export class AdvancedProceduralGenerationSystem {
             this.generatedChunks.set(cacheKey, chunk);
         }
 
-        return chunk;
+        return chunk || null;
     }
 
     // Noise generation utilities
@@ -685,7 +678,7 @@ export class AdvancedProceduralGenerationSystem {
         const chunk = this.generatedChunks.get(chunkKey);
 
         if (chunk) {
-            chunk.objects.push(structure);
+            chunk.objects.push(structure as unknown as GeneratedObject);
         }
 
         return structure;
@@ -749,7 +742,6 @@ export class AdvancedProceduralGenerationSystem {
     }
 
     enableDebugMode(enabled: boolean): void {
-        this.debugMode = enabled;
         console.log(`[AdvancedProceduralGenerationSystem] Debug mode ${enabled ? 'enabled' : 'disabled'}`);
     }
 
@@ -802,10 +794,8 @@ export class AdvancedProceduralGenerationSystem {
     // Cleanup
     dispose(): void {
         this.noiseGenerators.clear();
-        this.terrainGenerators.clear();
         this.biomeGenerators.clear();
         this.structureGenerators.clear();
-        this.contentGenerators.clear();
         this.generationCache.clear();
         this.generatedChunks.clear();
         this.levelOfDetail.clear();
@@ -877,9 +867,9 @@ interface GeneratedObject {
     id: string;
     type: string;
     position: Vec3;
-    rotation: Vec3;
-    scale: Vec3;
-    properties: any;
+    rotation?: Vec3 | number;
+    scale?: Vec3;
+    properties?: any;
 }
 
 interface TerrainModification {
@@ -951,10 +941,7 @@ interface NoiseGenerator {
 }
 
 class PerlinNoiseGenerator implements NoiseGenerator {
-    private seed: number;
-
-    constructor(seed: number) {
-        this.seed = seed;
+    constructor(_seed: number) {
     }
 
     noise(x: number, y: number, z: number = 0): number {
@@ -964,10 +951,7 @@ class PerlinNoiseGenerator implements NoiseGenerator {
 }
 
 class SimplexNoiseGenerator implements NoiseGenerator {
-    private seed: number;
-
-    constructor(seed: number) {
-        this.seed = seed;
+    constructor(_seed: number) {
     }
 
     noise(x: number, y: number, z: number = 0): number {
@@ -977,10 +961,7 @@ class SimplexNoiseGenerator implements NoiseGenerator {
 }
 
 class WorleyNoiseGenerator implements NoiseGenerator {
-    private seed: number;
-
-    constructor(seed: number) {
-        this.seed = seed;
+    constructor(_seed: number) {
     }
 
     noise(x: number, y: number, z: number = 0): number {
@@ -1166,24 +1147,13 @@ interface StructureConfig {
 }
 
 // Placeholder classes for other generators
-class TextureSynthesizer {
-    synthesizeTexture(biome: string, size: number): any {
-        // Texture synthesis implementation
-        return {};
-    }
-}
 
 class VegetationPlacer {
-    placeVegetation(chunk: GeneratedChunk): void {
+    placeVegetation(_chunk: GeneratedChunk): void {
         // Vegetation placement logic
     }
 }
 
-class StructurePlacer {
-    placeStructures(chunk: GeneratedChunk, biomes: Map<string, BiomeInfo>): void {
-        // Structure placement logic
-    }
-}
 
 class SettlementGenerator {
     generateSettlement(position: Vec2): GeneratedStructure {
@@ -1214,13 +1184,13 @@ class DungeonGenerator {
 }
 
 class BiomeBlender {
-    blendBiomes(chunk: GeneratedChunk): void {
+    blendBiomes(_chunk: GeneratedChunk): void {
         // Biome blending algorithm
     }
 }
 
 class ClimateSimulator {
-    simulateClimate(position: Vec2): ClimateData {
+    simulateClimate(_position: Vec2): ClimateData {
         return {
             temperature: 0.5,
             humidity: 0.5,
@@ -1231,7 +1201,7 @@ class ClimateSimulator {
 }
 
 class EcosystemSimulator {
-    simulateEcosystem(chunk: GeneratedChunk): EcosystemData {
+    simulateEcosystem(_chunk: GeneratedChunk): EcosystemData {
         return {
             biodiversity: 0.5,
             predatorCount: 10,
@@ -1242,7 +1212,7 @@ class EcosystemSimulator {
 }
 
 class LootGenerator {
-    generateLoot(structure: GeneratedStructure): void {
+    generateLoot(_structure: GeneratedStructure): void {
         // Loot generation logic
     }
 
@@ -1286,11 +1256,11 @@ class NPCGenerator {
 }
 
 class QuestGenerator {
-    generateQuests(world: GeneratedWorld): void {
+    generateQuests(_world: GeneratedWorld): void {
         // Quest generation logic
     }
 
-    generateQuestOfType(type: string, context: any): GeneratedQuest | null {
+    generateQuestOfType(type: string, _context: any): GeneratedQuest | null {
         return {
             id: `quest_${type}_${Date.now()}`,
             type,
@@ -1310,7 +1280,7 @@ class AsyncGenerator {
         this.generationQueue.sort((a, b) => b.priority - a.priority);
     }
 
-    async generateWorldAsync(system: AdvancedProceduralGenerationSystem, onProgress?: (progress: number) => void): Promise<GeneratedWorld> {
+    async generateWorldAsync(system: AdvancedProceduralGenerationSystem, _onProgress?: (progress: number) => void): Promise<GeneratedWorld> {
         // Async world generation implementation
         return system.generateWorld();
     }

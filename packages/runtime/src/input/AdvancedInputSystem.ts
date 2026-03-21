@@ -1,4 +1,4 @@
-import { Vec2, Vec3 } from '../math';
+import { Vec2 } from '../math';
 
 /**
  * Advanced Input System with gamepad support, touch controls, gesture recognition,
@@ -6,7 +6,6 @@ import { Vec2, Vec3 } from '../math';
  */
 export class AdvancedInputSystem {
     private canvas: HTMLCanvasElement;
-    private gl: WebGL2RenderingContext;
 
     // Mouse and keyboard state
     private mousePosition: Vec2 = Vec2.fromValues(0, 0);
@@ -44,7 +43,6 @@ export class AdvancedInputSystem {
     // Advanced input mapping
     private inputMaps: Map<string, InputMap> = new Map();
     private activeInputMap: string = 'default';
-    private inputActions: Map<string, InputAction> = new Map();
     private actionStates: Map<string, ActionState> = new Map();
 
     // Input recording and playback
@@ -52,7 +50,6 @@ export class AdvancedInputSystem {
     private playback: boolean = false;
     private recordedInputs: RecordedInput[] = [];
     private playbackIndex: number = 0;
-    private playbackStartTime: number = 0;
 
     // Haptic feedback
     private hapticPatterns: Map<string, HapticPattern> = new Map();
@@ -61,8 +58,6 @@ export class AdvancedInputSystem {
     private mouseSmoothing: number = 0.1;
     private gamepadDeadzone: number = 0.1;
     private gamepadSensitivity: number = 1.0;
-    private keyRepeatDelay: number = 500;
-    private keyRepeatRate: number = 50;
 
     // Advanced features
     private inputPrediction: boolean = false;
@@ -74,18 +69,15 @@ export class AdvancedInputSystem {
     // Accessibility
     private stickyKeys: boolean = false;
     private slowKeys: boolean = false;
-    private slowKeysDelay: number = 1000;
     private bounceKeys: boolean = false;
-    private bounceKeysDelay: number = 500;
 
     // Text input
     private textInputBuffer: string = '';
     private textComposition: string = '';
     private imeActive: boolean = false;
 
-    constructor(canvas: HTMLCanvasElement, gl: WebGL2RenderingContext) {
+    constructor(canvas: HTMLCanvasElement, _gl: WebGL2RenderingContext) {
         this.canvas = canvas;
-        this.gl = gl;
         this.initializeEventListeners();
         this.initializeDefaultInputMap();
         this.initializeGestureRecognizers();
@@ -274,7 +266,7 @@ export class AdvancedInputSystem {
             if (gamepad) {
                 if (!this.gamepadConnected[i]) {
                     this.gamepadConnected[i] = true;
-                    this.gamepadHaptics[i] = gamepad.hapticActuators ? gamepad.hapticActuators[0] : null;
+                    this.gamepadHaptics[i] = (gamepad as any).hapticActuators ? (gamepad as any).hapticActuators[0] : null;
                 }
 
                 // Update button states
@@ -317,7 +309,7 @@ export class AdvancedInputSystem {
         }
     }
 
-    private updateInputBuffer(deltaTime: number): void {
+    private updateInputBuffer(_deltaTime: number): void {
         // Add current input state to buffer
         const bufferedInput: BufferedInput = {
             timestamp: performance.now(),
@@ -360,7 +352,7 @@ export class AdvancedInputSystem {
         }
     }
 
-    private updateGestureRecognition(deltaTime: number): void {
+    private updateGestureRecognition(_deltaTime: number): void {
         // Update active touches for gesture recognition
         for (const gestureRecognizer of this.gestureRecognizers) {
             this.checkGesture(gestureRecognizer);
@@ -416,7 +408,7 @@ export class AdvancedInputSystem {
             const duration = performance.now() - touch.startTime;
             const movement = Vec2.distance(touch.position, touch.startPosition);
 
-            if (duration <= recognizer.maxDuration && movement <= recognizer.maxMovement) {
+            if (duration <= (recognizer.maxDuration || 1000) && movement <= (recognizer.maxMovement || 10)) {
                 const gesture: Gesture = {
                     type: 'tap',
                     startTime: touch.startTime,
@@ -486,7 +478,7 @@ export class AdvancedInputSystem {
             if (!touch.velocity) continue;
 
             const speed = Vec2.length(touch.velocity);
-            if (speed >= recognizer.minVelocity) {
+            if (speed >= (recognizer.minVelocity || 0)) {
                 const gesture: Gesture = {
                     type: 'swipe',
                     startTime: touch.startTime,
@@ -519,7 +511,7 @@ export class AdvancedInputSystem {
                 const existingPan = this.activeGestures.find(g => g.type === 'pan');
                 if (!existingPan) {
                     recognizer.onRecognized(gesture);
-                } else {
+                } else if (existingPan.delta) {
                     Vec2.copy(existingPan.delta, this.mouseDelta);
                 }
             }
@@ -531,7 +523,7 @@ export class AdvancedInputSystem {
             const duration = performance.now() - touch.startTime;
             const movement = Vec2.distance(touch.position, touch.startPosition);
 
-            if (duration >= recognizer.minDuration && movement <= recognizer.maxMovement) {
+            if (duration >= (recognizer.minDuration || 100) && movement <= (recognizer.maxMovement || 10)) {
                 const gesture: Gesture = {
                     type: 'long_press',
                     startTime: touch.startTime,
@@ -630,9 +622,9 @@ export class AdvancedInputSystem {
             // Mouse axis
             if (axisConfig.mouseAxis !== undefined) {
                 if (axisConfig.mouseAxis === 0) {
-                    axisValue += this.mouseDelta[0] * axisConfig.sensitivity;
+                    axisValue += this.mouseDelta[0] * (axisConfig.sensitivity || 1);
                 } else if (axisConfig.mouseAxis === 1) {
-                    axisValue += this.mouseDelta[1] * axisConfig.sensitivity;
+                    axisValue += this.mouseDelta[1] * (axisConfig.sensitivity || 1);
                     if (axisConfig.invert) axisValue *= -1;
                 }
             }
@@ -642,8 +634,8 @@ export class AdvancedInputSystem {
                 for (let gamepadIndex = 0; gamepadIndex < 4; gamepadIndex++) {
                     for (const axisIndex of axisConfig.gamepadAxes) {
                         const rawValue = this.gamepadAxes[gamepadIndex][axisIndex];
-                        if (Math.abs(rawValue) > axisConfig.deadzone) {
-                            axisValue += rawValue * axisConfig.sensitivity;
+                        if (Math.abs(rawValue) > (axisConfig.deadzone || 0.1)) {
+                            axisValue += rawValue * (axisConfig.sensitivity || 1);
                         }
                     }
                 }
@@ -668,9 +660,9 @@ export class AdvancedInputSystem {
         }
     }
 
-    private updateHaptics(deltaTime: number): void {
+    private updateHaptics(_deltaTime: number): void {
         // Update haptic patterns
-        for (const [gamepadIndex, haptic] of this.gamepadHaptics.entries()) {
+        for (const [_gamepadIndex, haptic] of this.gamepadHaptics.entries()) {
             if (!haptic) continue;
 
             // Apply active haptic patterns
@@ -678,7 +670,7 @@ export class AdvancedInputSystem {
         }
     }
 
-    private updateAccessibility(deltaTime: number): void {
+    private updateAccessibility(_deltaTime: number): void {
         // Handle sticky keys
         if (this.stickyKeys) {
             // Sticky keys logic would go here
@@ -787,7 +779,7 @@ export class AdvancedInputSystem {
         if (gamepad.index < 4) {
             this.gamepads[gamepad.index] = gamepad;
             this.gamepadConnected[gamepad.index] = true;
-            this.gamepadHaptics[gamepad.index] = gamepad.hapticActuators ? gamepad.hapticActuators[0] : null;
+            this.gamepadHaptics[gamepad.index] = (gamepad as any).hapticActuators ? (gamepad as any).hapticActuators[0] : null;
             console.log(`[AdvancedInputSystem] Gamepad ${gamepad.index} connected: ${gamepad.id}`);
         }
     }
@@ -797,7 +789,7 @@ export class AdvancedInputSystem {
         if (gamepadIndex < 4) {
             this.gamepads[gamepadIndex] = null;
             this.gamepadConnected[gamepadIndex] = false;
-            this.gamepadHaptics[gamepadIndex] = null;
+            this.gamepadHaptics[gamepadIndex] = undefined as any;
             console.log(`[AdvancedInputSystem] Gamepad ${gamepadIndex} disconnected`);
         }
     }
@@ -859,19 +851,19 @@ export class AdvancedInputSystem {
         e.preventDefault();
     }
 
-    private onTouchCancel(e: TouchEvent): void {
-        this.onTouchEnd(e);
+    private onTouchCancel(_e: TouchEvent): void {
+        this.onTouchEnd(_e);
     }
 
-    private onPointerDown(e: PointerEvent): void {
+    private onPointerDown(_e: PointerEvent): void {
         // Unified pointer handling
     }
 
-    private onPointerUp(e: PointerEvent): void {
+    private onPointerUp(_e: PointerEvent): void {
         // Unified pointer handling
     }
 
-    private onPointerMove(e: PointerEvent): void {
+    private onPointerMove(_e: PointerEvent): void {
         // Unified pointer handling
     }
 
@@ -891,7 +883,7 @@ export class AdvancedInputSystem {
         }
     }
 
-    private onCompositionStart(e: CompositionEvent): void {
+    private onCompositionStart(_e: CompositionEvent): void {
         this.imeActive = true;
         this.textComposition = '';
     }
@@ -1065,7 +1057,7 @@ export class AdvancedInputSystem {
 
         this.playback = true;
         this.playbackIndex = 0;
-        this.playbackStartTime = performance.now();
+        this.playbackIndex = 0;
         console.log('[AdvancedInputSystem] Started input playback');
     }
 
@@ -1160,16 +1152,14 @@ export class AdvancedInputSystem {
         this.slowKeys = enabled;
     }
 
-    setSlowKeysDelay(delay: number): void {
-        this.slowKeysDelay = Math.max(100, delay);
+    setSlowKeysDelay(_delay: number): void {
     }
 
     enableBounceKeys(enabled: boolean): void {
         this.bounceKeys = enabled;
     }
 
-    setBounceKeysDelay(delay: number): void {
-        this.bounceKeysDelay = Math.max(100, delay);
+    setBounceKeysDelay(_delay: number): void {
     }
 
     // Text input methods
@@ -1268,7 +1258,6 @@ export class AdvancedInputSystem {
         this.hapticPatterns.clear();
         this.inputMaps.clear();
         this.actionStates.clear();
-        this.eventListeners.clear();
 
         console.log('[AdvancedInputSystem] Disposed');
     }

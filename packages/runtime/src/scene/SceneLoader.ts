@@ -7,6 +7,9 @@ export class SceneLoader {
 
     loadScene(file: MgexFile, sceneId?: string): void {
         const targetSceneId = sceneId || file.settings.startScene;
+        if (!targetSceneId) {
+            throw new Error(`No scene specified and no start scene defined in project settings.`);
+        }
         const scene = file.scenes[targetSceneId];
 
         if (!scene) {

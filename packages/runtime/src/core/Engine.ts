@@ -81,7 +81,7 @@ export class Engine {
         this.raycaster = new Raycaster(this.physicsSystem.getPlanckWorld());
         this.audioManager = new AudioManager();
         this.assetPreloader = new AssetPreloader(this.gl, this.audioManager);
-        this.resourceManager = new ResourceManager(this.assetPreloader, this.audioManager);
+        this.resourceManager = new ResourceManager(this.assetPreloader);
         this.sceneManager = new SceneManager(this.world, this);
         this.pluginAPI = new PluginAPI(this);
         this.scriptSystem = new ScriptSystem(this.inputManager, this.physicsSystem, this.audioManager, this.eventBus, this.sceneManager);

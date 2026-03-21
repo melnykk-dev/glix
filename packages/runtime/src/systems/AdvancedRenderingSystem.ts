@@ -297,7 +297,7 @@ export class AdvancedRenderingSystem {
     private renderShadowMaps(scene: any, _camera: any): void {
         const gl = this.gl;
 
-        for (const [lightId, shadowMap] of this.shadowMaps) {
+        for (const [_lightId, shadowMap] of this.shadowMaps) {
             gl.bindFramebuffer(gl.FRAMEBUFFER, shadowMap.framebuffer);
             gl.viewport(0, 0, shadowMap.resolution, shadowMap.resolution);
             gl.clear(gl.DEPTH_BUFFER_BIT);
@@ -653,7 +653,8 @@ class BloomEffect implements PostProcessEffect {
         gl.bindFramebuffer(gl.FRAMEBUFFER, this.fbo);
         gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, this.textures[0], 0);
 
-        gl.uniform1i(gl.getUniformLocation(this.program, 'u_texture'), 0);
+        gl.activeTexture(gl.TEXTURE0);
+        gl.bindTexture(gl.TEXTURE_2D, inputTexture);
         gl.uniform1f(gl.getUniformLocation(this.program, 'u_threshold'), 0.8);
         gl.uniform1f(gl.getUniformLocation(this.program, 'u_intensity'), 1.0);
 
@@ -697,7 +698,7 @@ class ToneMappingEffect implements PostProcessEffect {
         // gl not used in this implementation
     }
 
-    apply(inputFBO: WebGLFramebuffer, inputTexture: WebGLTexture): void {
+    apply(_inputFBO: WebGLFramebuffer, _inputTexture: WebGLTexture): void {
         // Apply Reinhard tone mapping
         // Implementation would go here
     }

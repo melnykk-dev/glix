@@ -1,14 +1,12 @@
 import { World } from '../core/World';
 import { MgexFile } from '@glix/shared';
 import { AssetPreloader } from './AssetPreloader';
-import { AudioManager } from './AudioManager';
 
 export class ResourceManager {
     private project: MgexFile | null = null;
 
     constructor(
-        private preloader: AssetPreloader,
-        private audioManager: AudioManager
+        private preloader: AssetPreloader
     ) { }
 
     public setProject(project: MgexFile): void {
@@ -21,7 +19,6 @@ export class ResourceManager {
 
     public garbageCollect(world: World): void {
         const activeTextures = new Set<string>();
-        const activeAudio = new Set<string>();
 
         const allEntities = world.getEntitiesWithComponents();
         for (const entity of allEntities) {

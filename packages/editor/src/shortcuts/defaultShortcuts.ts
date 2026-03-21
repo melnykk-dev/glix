@@ -116,10 +116,11 @@ export const registerDefaultShortcuts = () => {
 
             updateProject(project => {
                 const startSceneId = project.settings.startScene;
+                if (!startSceneId) return project;
                 const scene = project.scenes[startSceneId];
                 if (scene) {
                     const remaining = world.getEntitiesWithComponents();
-                    scene.entities = scene.entities.filter(e => remaining.includes(e.id));
+                    scene.entities = scene.entities.filter((e: any) => remaining.includes(e.id));
                 }
                 return { ...project };
             });

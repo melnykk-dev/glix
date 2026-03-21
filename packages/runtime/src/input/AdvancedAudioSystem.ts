@@ -161,6 +161,7 @@ export class AdvancedAudioSystem {
     }
 
     private onMIDIMessage(message: MIDIMessageEvent): void {
+        if (!message.data || message.data.length < 3) return;
         const [command, note, velocity] = message.data;
 
         // Emit MIDI events for scripts to handle
@@ -542,7 +543,6 @@ export class AdvancedAudioSystem {
 
     private createReverbEffect(options: any): AudioEffect {
         const convolver = this.audioContext!.createConvolver();
-        const gain = this.audioContext!.createGain();
 
         // Create impulse response for reverb
         const decay = options.decay || 2;
@@ -550,13 +550,17 @@ export class AdvancedAudioSystem {
         const mix = options.mix || 0.3;
         const impulseResponse = this.generateReverbImpulse(decay, wetness);
 
+        const wetGain = this.audioContext!.createGain();
+        const dryGain = this.audioContext!.createGain();
+
         convolver.buffer = impulseResponse;
-        gain.gain.value = mix;
+        wetGain.gain.value = mix;
+        dryGain.gain.value = 1 - mix;
 
         return {
             input: convolver,
             output: wetGain,
-            nodes: [wetGain, convolver],
+            nodes: [wetGain, dryGain, convolver],
             parameters: {
                 decay,
                 wetness,
@@ -676,7 +680,10 @@ export class AdvancedAudioSystem {
                 ratio: options.ratio || 12,
                 attack: options.attack || 0.003,
                 release: options.release || 0.25
-            }
+            },
+            id: 'compressor',
+            type: 'compressor',
+            enabled: true
         };
     }
 
@@ -710,7 +717,10 @@ export class AdvancedAudioSystem {
             parameters: {
                 bands,
                 gains: new Array(bands.length).fill(0)
-            }
+            },
+            id: 'equalizer',
+            type: 'equalizer',
+            enabled: true
         };
     }
 
@@ -746,7 +756,10 @@ export class AdvancedAudioSystem {
                 feedback: options.feedback || 0.2,
                 wetness: options.wetness || 0.3,
                 dryness: options.dryness || 0.7
-            }
+            },
+            id: 'chorus',
+            type: 'chorus',
+            enabled: true
         };
     }
 
@@ -782,7 +795,10 @@ export class AdvancedAudioSystem {
                 feedback: options.feedback || 0.5,
                 wetness: options.wetness || 0.5,
                 dryness: options.dryness || 0.5
-            }
+            },
+            id: 'flanger',
+            type: 'flanger',
+            enabled: true
         };
     }
 
@@ -830,7 +846,10 @@ export class AdvancedAudioSystem {
                 stages: options.stages || 4,
                 rate: options.rate || 0.5,
                 depth: options.depth || 1000
-            }
+            },
+            id: 'phaser',
+            type: 'phaser',
+            enabled: true
         };
     }
 
@@ -845,7 +864,10 @@ export class AdvancedAudioSystem {
             nodes: [pitchShift],
             parameters: {
                 pitch: options.pitch || 1.0
-            }
+            },
+            id: 'pitch_shift',
+            type: 'pitch_shift',
+            enabled: true
         };
     }
 
@@ -1100,7 +1122,7 @@ export class AdvancedAudioSystem {
         }
     }
 
-    private evaluateMusicCondition(condition: any): boolean {
+    private evaluateMusicCondition(_condition: any): boolean {
         // Evaluate condition based on parameters
         // Simplified implementation
         return true;
@@ -1275,25 +1297,28 @@ export class AdvancedAudioSystem {
 
     stopSpeech(): void {
         if (this.speechSynthesizer) {
-
-this.speechSynthesizer.speak(text, options);
-}
-
-stopSpeech(): void {
-if (this.speechSynthesizer) {
-    this.speechSynthesizer.stop();
-}
-}
+            this.speechSynthesizer.stop();
+        }
+    }
 
 // Audio analysis
 getFrequencyData(): Uint8Array | null {
 if (!this.analyser) return null;
 
 if (this.frequencyData) {
-    this.analyser!.getByteFrequencyData(this.frequencyData);
-    this.analyser!.getByteTimeDomainData(this.timeData!);
+    this.analyser!.getByteFrequencyData(this.frequencyData as any);
+    this.analyser!.getByteTimeDomainData(this.timeData! as any);
 }
 return this.frequencyData;
+}
+
+getTimeData(): Uint8Array | null {
+    if (!this.analyser) return null;
+    if (this.timeData) {
+        this.analyser.getByteTimeDomainData(this.timeData as any);
+        return this.timeData;
+    }
+    return null;
 }
 
     getRMSLevel(): number {
@@ -1367,7 +1392,7 @@ return this.frequencyData;
         }
     }
 
-    private applyZoneEffects(source: PlayingAudioSource, zone: AudioZone, listenerPosition: Vec3): void {
+    private applyZoneEffects(_source: PlayingAudioSource, _zone: AudioZone, _listenerPosition: Vec3): void {
         // Apply zone-specific audio processing
         // This could include reverb, filtering, volume adjustments, etc.
     }
@@ -1696,7 +1721,7 @@ interface SpeechSynthesizer {
 }
 
 class SpeechSynthesizer {
-    constructor(private audioContext: AudioContext) {}
+    constructor(_audioContext: AudioContext) {}
 
     speak(text: string, options: SpeechSynthesisOptions = {}): void {
         if (!('speechSynthesis' in window)) return;

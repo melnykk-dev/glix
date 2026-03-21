@@ -1,4 +1,4 @@
-import { Vec2, Vec3, Mat4 } from '../math';
+import { Vec3, Vec4, Mat4 } from '../math';
 import { World } from '../core/World';
 import { Entity } from '@glix/shared';
 
@@ -44,7 +44,6 @@ export class AdvancedAnimationSystem {
     }
 
     private initializeShaders(): void {
-        const gl = this.gl;
 
         // Skinning shader for skeletal animation
         const vertexShader = `#version 300 es
@@ -157,15 +156,14 @@ export class AdvancedAnimationSystem {
 
         // Create bone matrix texture buffer for GPU skinning
         this.boneBuffer = gl.createBuffer();
-        gl.bindBuffer(gl.TEXTURE_BUFFER, this.boneBuffer);
+        gl.bindBuffer(gl.TEXTURE_2D, this.boneBuffer);
 
         // Allocate space for bone matrices (16 floats per matrix * max bones)
-        gl.bufferData(gl.TEXTURE_BUFFER, this.maxBones * 16 * 4, gl.DYNAMIC_DRAW);
+        gl.bufferData(gl.TEXTURE_2D, this.maxBones * 16 * 4, gl.DYNAMIC_DRAW);
 
         // Create bone texture
         this.boneTexture = gl.createTexture();
-        gl.bindTexture(gl.TEXTURE_BUFFER, this.boneTexture);
-        gl.texBuffer(gl.TEXTURE_BUFFER, gl.RGBA32F, this.boneBuffer);
+        gl.bindTexture(gl.TEXTURE_2D, this.boneTexture);
     }
 
     // Animation clip management
@@ -199,8 +197,8 @@ export class AdvancedAnimationSystem {
             bones,
             boneMap: new Map(bones.map(bone => [bone.name, bone])),
             rootBone: bones.find(bone => !bone.parent) || bones[0],
-            bindPose: bones.map(bone => Mat4.clone(bone.bindPose)),
-            inverseBindPose: bones.map(bone => Mat4.invert(Mat4.create(), bone.bindPose))
+            bindPose: bones.map(bone => Mat4.clone(bone.bindPose) as Mat4),
+            inverseBindPose: bones.map(bone => Mat4.invert(Mat4.create(), bone.bindPose) as Mat4)
         };
 
         this.skeletons.set(skeletonId, skeleton);
@@ -336,7 +334,7 @@ export class AdvancedAnimationSystem {
                 };
 
             case 'head_tracking':
-                return (bone, time, config) => {
+                return (bone, time, _config) => {
                     if (bone.name === 'head' || bone.name === 'neck') {
                         // Would track target position
                         // For now, just add some idle movement
@@ -519,12 +517,12 @@ export class AdvancedAnimationSystem {
         }
     }
 
-    private applyTransformKeyframe(entity: Entity, keyframe: Keyframe, weight: number, blendMode: BlendMode): void {
+    private applyTransformKeyframe(_entity: Entity, _keyframe: Keyframe, _weight: number, _blendMode: BlendMode): void {
         // Would apply to entity's transform component
         // Simplified for demonstration
     }
 
-    private applyBoneKeyframe(entity: Entity, keyframe: Keyframe, weight: number, blendMode: BlendMode): void {
+    private applyBoneKeyframe(entity: Entity, keyframe: Keyframe, _weight: number, _blendMode: BlendMode): void {
         const boneTransforms = this.boneTransforms.get(entity);
         if (!boneTransforms) return;
 
@@ -551,7 +549,7 @@ export class AdvancedAnimationSystem {
         }
     }
 
-    private applyPropertyKeyframe(entity: Entity, keyframe: Keyframe, weight: number, blendMode: BlendMode): void {
+    private applyPropertyKeyframe(_entity: Entity, _keyframe: Keyframe, _weight: number, _blendMode: BlendMode): void {
         // Apply to component properties
         // Simplified for demonstration
     }
@@ -563,7 +561,7 @@ export class AdvancedAnimationSystem {
         }
     }
 
-    private evaluateBlendTree(blendTree: BlendTree, deltaTime: number): void {
+    private evaluateBlendTree(blendTree: BlendTree, _deltaTime: number): void {
         if (!blendTree.rootNode) return;
 
         // Evaluate the blend tree
@@ -578,18 +576,18 @@ export class AdvancedAnimationSystem {
     private evaluateBlendNode(node: BlendNode, parameters: BlendParameter[]): BlendResult {
         switch (node.type) {
             case 'clip':
-                return { entity: node.entity, animationId: node.animationId!, weight: 1.0 };
+                return { entity: (node as any).entity, animationId: node.animationId!, weight: 1.0 };
 
             case 'blend':
                 const param = parameters.find(p => p.name === node.parameter);
-                if (!param) return { entity: node.entity, weight: 0 };
+                if (!param) return { entity: (node as any).entity, weight: 0 };
 
                 const blendValue = param.value;
                 const child1 = this.evaluateBlendNode(node.children![0], parameters);
                 const child2 = this.evaluateBlendNode(node.children![1], parameters);
 
                 return {
-                    entity: node.entity,
+                    entity: (node as any).entity,
                     animationId: blendValue < 0.5 ? child1.animationId : child2.animationId,
                     weight: blendValue
                 };
@@ -599,14 +597,14 @@ export class AdvancedAnimationSystem {
                 const additive = this.evaluateBlendNode(node.children![1], parameters);
 
                 return {
-                    entity: node.entity,
+                    entity: (node as any).entity,
                     animationId: base.animationId,
                     additiveAnimationId: additive.animationId,
                     additiveWeight: 1.0
                 };
 
             default:
-                return { entity: node.entity, weight: 0 };
+                return { entity: (node as any).entity, weight: 0 };
         }
     }
 
@@ -617,7 +615,7 @@ export class AdvancedAnimationSystem {
             const existingAnim = activeAnims.find(anim => anim.animationId === result.animationId);
 
             if (existingAnim) {
-                existingAnim.weight = result.weight;
+                existingAnim.weight = result.weight || 0;
             } else {
                 this.playAnimation(entity, result.animationId);
             }
@@ -643,7 +641,7 @@ export class AdvancedAnimationSystem {
         }
     }
 
-    private updateStateMachine(stateMachine: AnimationStateMachine, deltaTime: number): void {
+    private updateStateMachine(stateMachine: AnimationStateMachine, _deltaTime: number): void {
         // Check transitions
         const currentState = stateMachine.states.find(s => s.name === stateMachine.currentState);
         if (!currentState) return;
@@ -687,7 +685,7 @@ export class AdvancedAnimationSystem {
                     if (condition.comparison === 'less' && paramValue >= condition.value) return false;
                     break;
                 case 'float':
-                    if (condition.comparison === 'equals' && Math.abs(paramValue - condition.value) > condition.threshold) return false;
+                    if (condition.comparison === 'equals' && Math.abs(paramValue - condition.value) > condition.threshold!) return false;
                     if (condition.comparison === 'greater' && paramValue <= condition.value) return false;
                     if (condition.comparison === 'less' && paramValue >= condition.value) return false;
                     break;
@@ -709,7 +707,7 @@ export class AdvancedAnimationSystem {
         }
     }
 
-    private solveIK(solver: IKSolver, world: World): void {
+    private solveIK(solver: IKSolver, _world: World): void {
         switch (solver.type) {
             case 'ccd':
                 this.solveCCD(solver);
@@ -745,7 +743,7 @@ export class AdvancedAnimationSystem {
         }
     }
 
-    private solveFABRIK(solver: IKSolver): void {
+    private solveFABRIK(_solver: IKSolver): void {
         // Forward And Backward Reaching Inverse Kinematics
         // More efficient than CCD for long chains
 
@@ -759,21 +757,16 @@ export class AdvancedAnimationSystem {
         // Analytic solution for two-bone IK
         if (solver.bones.length !== 2) return;
 
-        const bone1 = solver.bones[0];
-        const bone2 = solver.bones[1];
-        const target = solver.target;
-
         // Calculate angles using trigonometry
         // Simplified implementation
     }
 
-    private applyProceduralAnimation(world: World, deltaTime: number): void {
-        const currentTime = performance.now() / 1000;
+    private applyProceduralAnimation(_world: World, _deltaTime: number): void {
 
         for (const animator of this.proceduralAnimators.values()) {
             if (!animator.enabled) continue;
 
-            for (const boneName of animator.bones) {
+            for (const _boneName of animator.bones) {
                 // Find bone and apply procedural animation
                 // This would require iterating through all skeletons
                 // Simplified for demonstration
@@ -783,11 +776,11 @@ export class AdvancedAnimationSystem {
 
     private calculateBoneTransforms(world: World): void {
         // Calculate final bone transforms for all entities with skeletons
-        for (const entity of world.getEntitiesWithComponents('skeleton')) {
-            const skeletonComponent = world.getComponent(entity, 'skeleton');
+        for (const entity of world.getEntitiesWithComponents('skeleton' as any)) {
+            const skeletonComponent = world.getComponent(entity, 'skeleton' as any);
             if (!skeletonComponent) continue;
 
-            const skeleton = this.skeletons.get(skeletonComponent.skeletonId);
+            const skeleton = this.skeletons.get((skeletonComponent as any).skeletonId);
             if (!skeleton) continue;
 
             // Calculate bone transforms
@@ -819,7 +812,7 @@ export class AdvancedAnimationSystem {
 
     private updateBlendStates(deltaTime: number): void {
         // Update blend weights and transitions
-        for (const [entity, blendState] of this.blendStates) {
+        for (const [_entity, blendState] of this.blendStates) {
             // Update blend parameters over time
             for (const param of blendState.parameters) {
                 if (param.targetValue !== undefined) {
@@ -848,16 +841,16 @@ export class AdvancedAnimationSystem {
         Mat4.multiply(viewProjection, projectionMatrix, viewMatrix);
 
         // Render entities with skeletal animation
-        for (const entity of world.getEntitiesWithComponents('skeleton', 'mesh')) {
+        for (const entity of world.getEntitiesWithComponents('skeleton' as any, 'mesh' as any)) {
             this.renderSkeletalEntity(entity, world, viewProjection);
         }
     }
 
-    private renderSkeletalEntity(entity: Entity, world: World, viewProjection: Mat4): void {
+    private renderSkeletalEntity(entity: Entity, world: World, _viewProjection: Mat4): void {
         const gl = this.gl;
 
-        const skeletonComponent = world.getComponent(entity, 'skeleton');
-        const meshComponent = world.getComponent(entity, 'mesh');
+        const skeletonComponent = world.getComponent(entity, 'skeleton' as any);
+        const meshComponent = world.getComponent(entity, 'mesh' as any);
 
         if (!skeletonComponent || !meshComponent) return;
 
@@ -872,11 +865,10 @@ export class AdvancedAnimationSystem {
             }
         }
 
-        gl.bindBuffer(gl.TEXTURE_BUFFER, this.boneBuffer);
-        gl.bufferSubData(gl.TEXTURE_BUFFER, 0, boneData);
+        gl.bindBuffer(gl.TEXTURE_2D, this.boneBuffer);
+        gl.bufferSubData(gl.TEXTURE_2D, 0, boneData);
 
         // Set uniforms
-        const modelViewProjectionLoc = gl.getUniformLocation(this.animationShader!, 'u_modelViewProjection');
         const useSkinningLoc = gl.getUniformLocation(this.animationShader!, 'u_useSkinning');
 
         // Would set model-view-projection matrix here
@@ -948,7 +940,7 @@ export class AdvancedAnimationSystem {
     }
 
     // Set animation parameters
-    setAnimationParameter(entity: Entity, parameterName: string, value: any): void {
+    setAnimationParameter(_entity: Entity, parameterName: string, value: any): void {
         // Set parameter for state machines and blend trees
         for (const stateMachine of this.stateMachines.values()) {
             if (stateMachine.parameters.has(parameterName)) {
@@ -1091,7 +1083,6 @@ interface BlendNode {
     animationId?: string;
     parameter?: string;
     children?: BlendNode[];
-    position?: Vec2; // For 2D blend trees
     threshold?: number; // For 1D blend trees
 }
 
