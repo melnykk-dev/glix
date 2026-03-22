@@ -11,7 +11,7 @@ export const ComponentRegistry: { [K in ComponentType]: ComponentMap[K] } = {
     },
     sprite: {
         textureId: '',
-        tintColor: '#6366F1',  // visible indigo by default when no texture
+        tintColor: '#6366F1',
         width: 1,
         height: 1,
         pivotX: 0.5,
@@ -51,23 +51,21 @@ export const ComponentRegistry: { [K in ComponentType]: ComponentMap[K] } = {
         friction: 0.2,
     },
     script: {
-        src: `// Move with Arrow Keys or WASD
-class MyScript extends ScriptComponent {
-  speed = 5;
-
-  onUpdate(dt: number) {
-    const moveX =
-      (this.input.isKeyDown('ArrowRight') || this.input.isKeyDown('KeyD') ? 1 : 0) -
-      (this.input.isKeyDown('ArrowLeft')  || this.input.isKeyDown('KeyA') ? 1 : 0);
-    const moveY =
-      (this.input.isKeyDown('ArrowUp')   || this.input.isKeyDown('KeyW') ? 1 : 0) -
-      (this.input.isKeyDown('ArrowDown') || this.input.isKeyDown('KeyS') ? 1 : 0);
-
-    this.setVelocity(moveX * this.speed, moveY * this.speed);
+        src: `class MyScript extends ScriptComponent {
+  onStart() {
+    // Called once when the game starts
   }
 
-  onCollision(other: string) {
-    // console.log('Hit:', other);
+  onUpdate(dt: number) {
+    // Called every frame — dt is delta time in seconds
+  }
+
+  onCollision(other: Entity) {
+    // Called when this entity touches another
+  }
+
+  onCollisionExit(other: Entity) {
+    // Called when this entity stops touching another
   }
 }
 
@@ -168,6 +166,13 @@ void main() {
     stateMachine: {
         states: {},
         currentState: '',
+    },
+    camera: {
+        followTarget: undefined,
+        zoom: 1,
+        smooth: 5,
+        offsetX: 0,
+        offsetY: 0,
     },
 };
 

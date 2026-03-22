@@ -24,9 +24,6 @@ export interface EngineConfig {
     inputConfig?: InputMapConfig;
 }
 
-/**
- * The core Engine class that manages the game loop, systems, and world.
- */
 export class Engine {
     private gl: WebGL2RenderingContext;
     private world: World;
@@ -84,7 +81,14 @@ export class Engine {
         this.resourceManager = new ResourceManager(this.assetPreloader);
         this.sceneManager = new SceneManager(this.world, this);
         this.pluginAPI = new PluginAPI(this);
-        this.scriptSystem = new ScriptSystem(this.inputManager, this.physicsSystem, this.audioManager, this.eventBus, this.sceneManager);
+        this.scriptSystem = new ScriptSystem(
+            this.inputManager,
+            this.physicsSystem,
+            this.audioManager,
+            this.eventBus,
+            this.sceneManager
+        );
+        this.scriptSystem.setEngine(this);
         this.timestep = 1000 / (config.targetFPS || 60);
     }
 
@@ -103,11 +107,24 @@ export class Engine {
     setProject(project: any): void {
         this.resourceManager.setProject(project);
 
-        // Apply physics gravity from project settings
         const gravity = project?.settings?.physics?.gravity;
         if (gravity) {
             this.physicsSystem.setGravity(gravity.x, gravity.y);
         }
+
+        const bgColor = project?.settings?.backgroundColor;
+        if (bgColor) {
+            this.setBackgroundColor(bgColor);
+        }
+    }
+
+    private bgColor: [number, number, number] = [0.06, 0.07, 0.09];
+
+    setBackgroundColor(hex: string): void {
+        const r = parseInt(hex.slice(1, 3), 16) / 255;
+        const g = parseInt(hex.slice(3, 5), 16) / 255;
+        const b = parseInt(hex.slice(5, 7), 16) / 255;
+        this.bgColor = [r, g, b];
     }
 
     getEventBus(): EventBus {
@@ -169,7 +186,6 @@ export class Engine {
     resume(): void {
         if (this.isRunning) return;
         this.isRunning = true;
-        // Clear script errors on resume to prevent stale errors
         this.scriptSystem.clearErrors();
         this.scriptSystem.init(this.world);
         this.lastTime = performance.now();
@@ -179,9 +195,34 @@ export class Engine {
     stop(): void {
         this.isRunning = false;
         this.scriptSystem.destroy();
+        this.physicsSystem.reset();
+        this.audioManager.stopAll();
         this.inputManager.reset();
         this.world.clear();
         this.accumulator = 0;
+    }
+
+    private updateCameraFromComponents(dtSeconds: number): void {
+        const cameraEntities = this.world.getEntitiesWithComponents('camera');
+        if (cameraEntities.length === 0) return;
+
+        const camComp = this.world.getComponent(cameraEntities[0], 'camera')!;
+
+        if (camComp.followTarget) {
+            const targetTransform = this.world.getComponent(camComp.followTarget, 'transform');
+            if (targetTransform) {
+                const lerpSpeed = camComp.smooth ?? 5;
+                const alpha = Math.min(lerpSpeed * dtSeconds, 1);
+                const targetX = targetTransform.x + (camComp.offsetX ?? 0);
+                const targetY = targetTransform.y + (camComp.offsetY ?? 0);
+                this.cameraPosition[0] += (targetX - this.cameraPosition[0]) * alpha;
+                this.cameraPosition[1] += (targetY - this.cameraPosition[1]) * alpha;
+            }
+        }
+
+        if (camComp.zoom !== undefined && camComp.zoom > 0) {
+            this.cameraZoom = camComp.zoom;
+        }
     }
 
     private loop = (currentTime: number): void => {
@@ -192,11 +233,8 @@ export class Engine {
         this.accumulator += deltaTime;
         const dtSeconds = deltaTime / 1000;
 
-        // Keep InputManager camera in sync so getMouseWorldPosition() works in scripts
         this.inputManager.cameraPosition = this.cameraPosition;
         this.inputManager.cameraZoom = this.cameraZoom;
-
-        // Process input consumption once per frame
         this.inputManager.update();
 
         while (this.accumulator >= this.timestep) {
@@ -221,19 +259,17 @@ export class Engine {
             this.accumulator -= this.timestep;
         }
 
+        this.updateCameraFromComponents(dtSeconds);
+
         this.render(dtSeconds);
         requestAnimationFrame(this.loop);
     };
 
-    /**
-     * Renders the scene. Called on every frame.
-     */
     public render(dtSeconds: number = 0): void {
         const startRender = performance.now();
-        this.gl.clearColor(0.06, 0.07, 0.09, 1.0);
+        this.gl.clearColor(this.bgColor[0], this.bgColor[1], this.bgColor[2], 1.0);
         this.gl.clear(this.gl.COLOR_BUFFER_BIT);
 
-        // Sync camera to input manager for script world-space queries
         this.inputManager.cameraPosition = this.cameraPosition;
         this.inputManager.cameraZoom = this.cameraZoom;
 
@@ -245,7 +281,7 @@ export class Engine {
         const view = Mat4.create();
         Mat4.translate(view, view, [-this.cameraPosition[0], -this.cameraPosition[1], 0]);
 
-        const ppConfig = this.resourceManager.getProject()?.settings.postProcess || { bloom: true };
+        const ppConfig = this.resourceManager.getProject()?.settings.postProcess || { bloom: false };
 
         this.renderSystem.update(
             this.world,
@@ -260,7 +296,6 @@ export class Engine {
             ppConfig
         );
 
-        // UI pass
         this.uiRenderer.render(
             this.world,
             this.gl.canvas.width,

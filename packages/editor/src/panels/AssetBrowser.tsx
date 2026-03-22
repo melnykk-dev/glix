@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { useSceneStore } from '../store/useSceneStore';
-import { useHistoryStore } from '../store/useHistoryStore';
 import { useProjectStore } from '../store/useProjectStore';
+import { useHistoryStore } from '../store/useHistoryStore';
 import { CreateEntityCommand } from '../history/commands/CreateEntityCommand';
-import { Upload, Image as ImageIcon, Box, Grid, Paintbrush } from 'lucide-react';
+import { Upload, Image as ImageIcon, Box, Grid, Paintbrush, Music } from 'lucide-react';
 import { AssetDef } from '@glix/shared';
 import { PixelEditor } from '../components/PixelEditor';
 import { editorBridge } from '../bridge/EditorBridge';
@@ -40,7 +40,7 @@ export const AssetBrowser: React.FC = () => {
         }
     };
 
-    const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (!file) return;
 
@@ -76,7 +76,6 @@ export const AssetBrowser: React.FC = () => {
                 proj.assets[id] = asset;
                 proj.assets[tilesetId] = tileset;
 
-                // Load the texture into the engine's asset preloader
                 const engine = editorBridge.getEngine();
                 if (engine) {
                     const assetPreloader = engine.getAssetPreloader();
@@ -84,19 +83,53 @@ export const AssetBrowser: React.FC = () => {
                     assetPreloader.loadTileset(tilesetId, JSON.parse(tileset.data));
                 }
 
-                setAssetCount(prev => prev + 1); // Force re-render
+                setAssetCount(prev => prev + 1);
                 return { ...proj };
             });
         };
         reader.readAsDataURL(file);
+        e.target.value = '';
+    };
+
+    const handleAudioUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = async () => {
+            const dataUrl = reader.result as string;
+            const baseName = file.name.split('.')[0];
+            const id = baseName + '_' + Date.now();
+            const asset: AssetDef = {
+                id,
+                name: file.name,
+                type: 'audio',
+                mimeType: file.type,
+                data: dataUrl
+            };
+
+            updateProject(proj => {
+                proj.assets[id] = asset;
+
+                const engine = editorBridge.getEngine();
+                if (engine) {
+                    engine.getAudioManager().loadSound(id, dataUrl).catch(() => {});
+                }
+
+                setAssetCount(prev => prev + 1);
+                return { ...proj };
+            });
+        };
+        reader.readAsDataURL(file);
+        e.target.value = '';
     };
 
     const assets = project?.assets || {};
     const textures = Object.values(assets).filter(a => a.type === 'texture');
     const tilesets = Object.values(assets).filter(a => a.type === 'tileset');
+    const sounds = Object.values(assets).filter(a => a.type === 'audio');
 
     const handlePixelSave = (dataUrl: string) => {
-        console.log('[AssetBrowser] Saving pixel art asset...');
         const id = 'sprite_' + Date.now();
         const asset: AssetDef = {
             id,
@@ -121,9 +154,6 @@ export const AssetBrowser: React.FC = () => {
             }) as any
         };
 
-        console.log('[AssetBrowser] Created asset:', asset);
-        console.log('[AssetBrowser] Created tileset:', tileset);
-
         updateProject(proj => {
             const newProj = {
                 ...proj,
@@ -133,38 +163,35 @@ export const AssetBrowser: React.FC = () => {
                     [tilesetId]: tileset
                 }
             };
-            console.log('[AssetBrowser] Updated project:', newProj);
             return newProj;
         });
 
-        // Load the texture into the engine's asset preloader
         const engine = editorBridge.getEngine();
         if (engine) {
-            console.log('[AssetBrowser] Loading into engine...');
             const assetPreloader = engine.getAssetPreloader();
             assetPreloader.loadTexture(id, dataUrl);
             assetPreloader.loadTileset(tilesetId, JSON.parse(tileset.data));
-            console.log('[AssetBrowser] Loaded into engine');
-        } else {
-            console.warn('[AssetBrowser] No engine available');
         }
 
         setShowPixelEditor(false);
-        console.log('[AssetBrowser] Pixel editor closed');
-        setAssetCount(prev => prev + 1); // Force re-render
+        setAssetCount(prev => prev + 1);
     };
 
     return (
         <div style={{ padding: '10px', height: '100%', display: 'flex', flexDirection: 'column' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
                 <div style={{ fontSize: '11px', fontWeight: 700, color: 'var(--glix-text-dim)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Asset Browser</div>
-                <div style={{ display: 'flex', gap: 4 }}>
+                <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
                     <button onClick={() => setShowPixelEditor(true)} className="btn-primary" disabled={!project} style={{ padding: '4px 8px', fontSize: 10, display: 'flex', alignItems: 'center', gap: 4 }}>
                         <Paintbrush size={10} /> Draw
                     </button>
                     <label className={`btn-primary ${!project ? 'disabled' : ''}`} style={{ padding: '4px 8px', fontSize: 10, display: 'flex', alignItems: 'center', gap: 4, cursor: project ? 'pointer' : 'not-allowed', opacity: project ? 1 : 0.5 }}>
-                        <Upload size={10} /> Import Image
-                        <input type="file" hidden accept="image/*" onChange={handleUpload} disabled={!project} />
+                        <Upload size={10} /> Image
+                        <input type="file" hidden accept="image/*" onChange={handleImageUpload} disabled={!project} />
+                    </label>
+                    <label className={`btn-primary ${!project ? 'disabled' : ''}`} style={{ padding: '4px 8px', fontSize: 10, display: 'flex', alignItems: 'center', gap: 4, cursor: project ? 'pointer' : 'not-allowed', opacity: project ? 1 : 0.5 }}>
+                        <Music size={10} /> Audio
+                        <input type="file" hidden accept="audio/*" onChange={handleAudioUpload} disabled={!project} />
                     </label>
                 </div>
             </div>
@@ -193,6 +220,41 @@ export const AssetBrowser: React.FC = () => {
                                 onDoubleClick={() => startRename(a.id, a.name)}
                             >
                                 <img src={a.data} style={{ width: '100%', height: 32, objectFit: 'contain', marginBottom: 4, pointerEvents: 'none' }} />
+                                {editingId === a.id ? (
+                                    <input
+                                        value={editName}
+                                        onChange={e => setEditName(e.target.value)}
+                                        onBlur={() => finishRename(a.id)}
+                                        onKeyDown={e => { if (e.key === 'Enter') finishRename(a.id) }}
+                                        autoFocus
+                                        onFocus={e => e.target.select()}
+                                        style={{ width: '100%', fontSize: '9px', background: 'transparent', color: '#fff', border: '1px solid #555', textAlign: 'center' }}
+                                    />
+                                ) : (
+                                    <div style={{ fontSize: '9px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', pointerEvents: 'none' }}>{a?.name || 'unnamed'}</div>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Audio */}
+                    <div style={{ fontSize: '10px', color: 'var(--glix-text-muted)', marginBottom: '8px', borderBottom: '1px solid var(--glix-border)', paddingBottom: 2, display: 'flex', alignItems: 'center', gap: 4 }}>
+                        <Music size={10} /> Audio
+                    </div>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(60px, 1fr))', gap: '8px', marginBottom: 20 }}>
+                        {sounds.length === 0 && <div style={{ fontSize: '10px', color: '#555', gridColumn: 'span 100' }}>No audio</div>}
+                        {sounds.map(a => (
+                            <div
+                                key={a.id}
+                                draggable
+                                onDragStart={e => {
+                                    e.dataTransfer.setData('glix/asset', JSON.stringify({ type: 'audio', id: a.id, name: a.name }));
+                                    e.dataTransfer.effectAllowed = 'copy';
+                                }}
+                                style={{ background: '#222', border: '1px solid #333', borderRadius: '4px', padding: '4px', textAlign: 'center', cursor: 'grab' }}
+                                onDoubleClick={() => startRename(a.id, a.name)}
+                            >
+                                <div style={{ fontSize: '20px', marginBottom: 4, pointerEvents: 'none' }}>🔊</div>
                                 {editingId === a.id ? (
                                     <input
                                         value={editName}

@@ -1,8 +1,3 @@
-/**
- * Runtime type declarations surfaced in Monaco IntelliSense.
- * These are automatically available inside Glix scripts — no imports needed.
- */
-
 export const ENGINE_TYPES_DTS = /* ts */ `
 // ─── Glix Engine Type Declarations ────────────────────────────────────────────
 
@@ -103,6 +98,21 @@ declare interface ParticleEmitterComponent {
   texture: string;
 }
 
+declare interface CameraComponent {
+  followTarget?: Entity;
+  zoom: number;
+  smooth: number;
+  offsetX: number;
+  offsetY: number;
+}
+
+declare interface UILabelComponent {
+  text: string;
+  fontSize: number;
+  color: string;
+  fontFamily: string;
+}
+
 declare type ComponentType =
   | 'transform' | 'sprite' | 'frameAnimation'
   | 'rigidBody' | 'boxCollider' | 'circleCollider'
@@ -111,7 +121,7 @@ declare type ComponentType =
   | 'uiCanvas' | 'uiTransform' | 'uiLabel'
   | 'uiImage' | 'uiButton' | 'uiProgressBar'
   | 'uiPanel' | 'persistent' | 'sceneTransition'
-  | 'stateMachine';
+  | 'stateMachine' | 'camera';
 
 // ── World ─────────────────────────────────────────────────────────────────────
 
@@ -123,23 +133,29 @@ declare interface World {
   createEntity(id?: string): Entity;
   removeEntity(entity: Entity): void;
   addComponent(entity: Entity, type: ComponentType, data: any): void;
+  removeComponent(entity: Entity, type: ComponentType): void;
+  findEntityByName(name: string): Entity | undefined;
+  findEntitiesWithName(name: string): Entity[];
+  findEntitiesWithTag(tag: string): Entity[];
+  hasTag(entity: Entity, tag: string): boolean;
+  addTag(entity: Entity, tag: string): void;
+  hasEntity(entity: Entity): boolean;
 }
 
 // ── InputManager ──────────────────────────────────────────────────────────────
 
 declare interface InputManager {
-  /** Is the key currently held down? Pass KeyboardEvent.code, e.g. 'ArrowLeft', 'KeyA', 'Space' */
+  /** Is key held? Use KeyboardEvent.code: 'ArrowLeft', 'KeyA', 'Space', 'Enter' */
   isKeyDown(code: string): boolean;
-  /** Was the key pressed this frame? */
+  /** Was key just pressed this frame? */
   isJustPressed(code: string): boolean;
-  /** Was the key released this frame? */
+  /** Was key just released this frame? */
   isJustReleased(code: string): boolean;
-  /** Is the mouse button currently held? 0=left, 1=middle, 2=right */
+  /** Is mouse button held? 0=left, 1=middle, 2=right */
   isMouseButtonDown(button: number): boolean;
   isMouseDown(button: number): boolean;
-  /** Was the mouse button just pressed this frame? */
+  /** Was mouse button just pressed this frame? */
   isMouseButtonJustPressed(button: number): boolean;
-  /** Alias for isMouseButtonJustPressed */
   isMousePressed(button: number): boolean;
   /** Mouse position in canvas pixels */
   getMousePosition(): { x: number; y: number };
@@ -153,17 +169,32 @@ declare interface PhysicsSystem {
   setVelocity(entity: Entity, x: number, y: number): void;
   getVelocity(entity: Entity): { x: number; y: number };
   applyForce(entity: Entity, x: number, y: number): void;
+  applyImpulse(entity: Entity, x: number, y: number): void;
   teleport(entity: Entity, x: number, y: number): void;
   isGrounded(entity: Entity): boolean;
   setGravity(x: number, y: number): void;
+  setBodyType(entity: Entity, type: 'dynamic' | 'static' | 'kinematic'): void;
+  setAngularVelocity(entity: Entity, omega: number): void;
 }
 
 // ── AudioManager ─────────────────────────────────────────────────────────────
 
 declare interface AudioManager {
+  /** Play a loaded sound by its asset ID */
   playSound(id: string, volume?: number, loop?: boolean): void;
+  /** Alias for playSound */
+  play(id: string, options?: { volume?: number; loop?: boolean }): void;
+  /** Stop a playing sound */
   stopSound(id: string): void;
-  setVolume(id: string, volume: number): void;
+  stop(id: string): void;
+  /** Check if a sound is loaded */
+  hasSound(id: string): boolean;
+  /** Check if a sound is currently playing */
+  isPlaying(id: string): boolean;
+  /** Set master volume 0–1 */
+  setVolume(volume: number): void;
+  /** Set volume for a specific sound 0–1 */
+  setSoundVolume(id: string, volume: number): void;
 }
 
 // ── EventBus ─────────────────────────────────────────────────────────────────
@@ -184,45 +215,89 @@ declare interface SceneManager {
 // ── ScriptComponent base class ────────────────────────────────────────────────
 
 declare abstract class ScriptComponent {
-  /** This entity's ID */
   readonly entity: Entity;
-  /** The ECS world */
   readonly world: World;
-  /** Input manager */
   readonly input: InputManager;
-  /** Physics system */
   readonly physics: PhysicsSystem;
-  /** Audio manager */
   readonly audio: AudioManager;
-  /** Global event bus */
   readonly eventBus: EventBus;
-  /** Scene manager */
   readonly sceneManager: SceneManager;
 
-  // Lifecycle
+  // ── Lifecycle ──────────────────────────────────────────────────────────────
   onStart(): void;
   onUpdate(dt: number): void;
   onCollision(other: Entity): void;
   onCollisionExit(other: Entity): void;
   onDestroy(): void;
 
-  // Physics helpers
+  // ── Physics helpers ────────────────────────────────────────────────────────
   setVelocity(x: number, y: number): void;
   applyForce(x: number, y: number): void;
-  /** Get current velocity */
+  applyImpulse(x: number, y: number): void;
   getVelocity(): { x: number; y: number };
-  /** True when standing on something */
   isGrounded(): boolean;
 
-  // Transform helpers
+  // ── Transform helpers ──────────────────────────────────────────────────────
   getPosition(): { x: number; y: number };
   setPosition(x: number, y: number): void;
   getRotation(): number;
   setRotation(radians: number): void;
+  readonly transform: TransformComponent | undefined;
+  readonly name: string;
 
-  // World helpers
+  // ── Camera helpers ─────────────────────────────────────────────────────────
+  /** Get current camera world position */
+  getCameraPosition(): { x: number; y: number };
+  /** Move the camera to a world position */
+  setCameraPosition(x: number, y: number): void;
+  /** Set camera zoom level */
+  setCameraZoom(zoom: number): void;
+  getCameraZoom(): number;
+  /** Brief camera shake effect */
+  shakeCameraOnce(intensity?: number, duration?: number): void;
+
+  // ── Entity spawning ────────────────────────────────────────────────────────
+  /**
+   * Spawn a new entity with the given components.
+   * @param name   - The name assigned to the new entity
+   * @param components - Map of component type → component data
+   * @returns The new entity ID
+   * @example
+   *   const id = this.spawn('Bullet', {
+   *     transform: { x: 0, y: 0, rotation: 0, scaleX: 1, scaleY: 1 },
+   *     sprite: { textureId: '', tintColor: '#ff0', width: 0.3, height: 0.3, pivotX: 0.5, pivotY: 0.5 },
+   *     rigidBody: { type: 'dynamic', gravityScale: 0, linearDamping: 0, angularDamping: 0, fixedRotation: true },
+   *   });
+   */
+  spawn(name: string, components: Record<string, any>): Entity;
+
+  // ── Entity search ──────────────────────────────────────────────────────────
+  findEntityByName(name: string): Entity | undefined;
+  findEntitiesWithName(name: string): Entity[];
+  findEntitiesWithTag(tag: string): Entity[];
+  addTag(entityId: Entity, tag: string): void;
+  removeTag(entityId: Entity, tag: string): void;
+  hasTag(entityId: Entity, tag: string): boolean;
+  getEntitiesWithComponents(...types: string[]): Entity[];
+
+  // ── Destruction ────────────────────────────────────────────────────────────
+  destroy(): void;
   destroyEntity(entityId: Entity): void;
+  destroyByName(name: string): void;
+
+  // ── Component access ───────────────────────────────────────────────────────
   getComponent<T = any>(entityId: Entity, type: string): T | undefined;
+  addComponent(entityId: Entity, type: string, data: any): void;
+  removeComponent(entityId: Entity, type: string): void;
+  hasComponent(entityId: Entity, type: string): boolean;
+
+  // ── Scene ──────────────────────────────────────────────────────────────────
+  reloadScene(): void;
+  loadScene(sceneId: string): void;
+
+  // ── Timing ────────────────────────────────────────────────────────────────
+  /** Run a callback after N seconds */
+  after(seconds: number, callback: () => void): void;
 }
 `;
 

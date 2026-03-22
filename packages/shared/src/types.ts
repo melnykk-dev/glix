@@ -11,13 +11,12 @@ export interface TransformComponent {
 
 export interface SpriteComponent {
   textureId: string;
-  /** Optional CSS colour used when no texture is set (e.g. '#6366F1'). */
   tintColor?: string;
   width: number;
   height: number;
   pivotX: number;
   pivotY: number;
-  region?: string; // UV region name from SpriteAtlas
+  region?: string;
 }
 
 export interface FrameAnimationComponent {
@@ -58,13 +57,13 @@ export interface CircleColliderComponent {
 }
 
 export interface ScriptComponent {
-  src: string;        // TypeScript source
-  compiledJs: string; // Compiled JS, stored in .glix
+  src: string;
+  compiledJs: string;
 }
 
 export interface TilemapLayer {
   name: string;
-  tiles: number[][]; // 2D array of tile indices, -1 = empty
+  tiles: number[][];
   visible: boolean;
   opacity: number;
 }
@@ -160,6 +159,14 @@ export interface StateMachineComponent {
   currentState: string;
 }
 
+export interface CameraComponent {
+  followTarget?: Entity;
+  zoom: number;
+  smooth: number;
+  offsetX: number;
+  offsetY: number;
+}
+
 export type ComponentMap = {
   transform: TransformComponent;
   sprite: SpriteComponent;
@@ -182,6 +189,7 @@ export type ComponentMap = {
   persistent: PersistentComponent;
   sceneTransition: SceneTransitionComponent;
   stateMachine: StateMachineComponent;
+  camera: CameraComponent;
 };
 
 export type ComponentType = keyof ComponentMap;

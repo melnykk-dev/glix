@@ -7,7 +7,6 @@ export class PhysicsSystem {
     private pWorld: planck.World;
     private bodies: Map<Entity, planck.Body> = new Map();
     private eventBus: EventBus;
-    // Track ground contacts per entity: entity → set of other entity IDs touching from below
     private groundContacts: Map<Entity, Set<Entity>> = new Map();
 
     constructor(eventBus: EventBus) {
@@ -17,15 +16,19 @@ export class PhysicsSystem {
         });
 
         this.eventBus.on('entityDestroyed', (entity: Entity) => {
-            const body = this.bodies.get(entity);
-            if (body) {
-                this.pWorld.destroyBody(body);
-                this.bodies.delete(entity);
-                this.groundContacts.delete(entity);
-            }
+            this.destroyBody(entity);
         });
 
         this.setupCollisionHandlers();
+    }
+
+    private destroyBody(entity: Entity): void {
+        const body = this.bodies.get(entity);
+        if (body) {
+            try { this.pWorld.destroyBody(body); } catch (_) {}
+            this.bodies.delete(entity);
+            this.groundContacts.delete(entity);
+        }
     }
 
     private setupCollisionHandlers() {
@@ -45,7 +48,6 @@ export class PhysicsSystem {
                     isSensor: fixtureA.isSensor() || fixtureB.isSensor()
                 });
 
-                // Track ground contacts (if normal points from A to B and normal.y > 0.5, B is supported by A)
                 const worldManifold = contact.getWorldManifold(null);
                 const normal = worldManifold ? worldManifold.normal : contact.getManifold().localNormal;
                 if (normal.y > 0.5) {
@@ -74,7 +76,6 @@ export class PhysicsSystem {
                     isSensor: fixtureA.isSensor() || fixtureB.isSensor()
                 });
 
-                // Remove ground contact tracking
                 this.groundContacts.get(entityA)?.delete(entityB);
                 this.groundContacts.get(entityB)?.delete(entityA);
             }
@@ -83,30 +84,20 @@ export class PhysicsSystem {
 
     update(world: World, dt: number): void {
         const entitiesWithPhysics = world.getEntitiesWithComponents('rigidBody');
-
-        // 1. Sync bodies (Create/Destroy/Update)
         this.syncBodies(world, entitiesWithPhysics);
-
-        // 2. Step World
         this.pWorld.step(dt);
-
-        // 3. Sync back to Transform
         this.syncTransforms(world, entitiesWithPhysics);
     }
 
     private syncBodies(world: any, entities: Entity[]): void {
         const currentEntities = new Set(entities);
 
-        // Remove bodies for entities that no longer have a RigidBody component or are gone
-        for (const [entity, body] of this.bodies.entries()) {
+        for (const [entity] of this.bodies.entries()) {
             if (!currentEntities.has(entity)) {
-                this.pWorld.destroyBody(body);
-                this.bodies.delete(entity);
-                this.groundContacts.delete(entity);
+                this.destroyBody(entity);
             }
         }
 
-        // Create or update bodies for existing entities
         for (const entity of entities) {
             const rb = world.getComponent(entity, 'rigidBody');
             const transform = world.getComponent(entity, 'transform');
@@ -114,20 +105,18 @@ export class PhysicsSystem {
             if (!rb || !transform) continue;
 
             if (!this.bodies.has(entity)) {
-                // Create body
                 const bodyDef: planck.BodyDef = {
                     type: rb.type as planck.BodyType,
                     position: planck.Vec2(transform.x, transform.y),
-                    linearDamping: rb.linearDamping,
-                    angularDamping: rb.angularDamping,
-                    fixedRotation: rb.fixedRotation,
-                    gravityScale: rb.gravityScale,
+                    linearDamping: rb.linearDamping ?? 0,
+                    angularDamping: rb.angularDamping ?? 0,
+                    fixedRotation: rb.fixedRotation ?? false,
+                    gravityScale: rb.gravityScale ?? 1,
                     userData: entity,
                 };
 
                 const body = this.pWorld.createBody(bodyDef);
 
-                // Add fixture
                 const boxCollider = world.getComponent(entity, 'boxCollider');
                 const circleCollider = world.getComponent(entity, 'circleCollider');
 
@@ -135,27 +124,26 @@ export class PhysicsSystem {
                     const shape = planck.Box(
                         (boxCollider.width * (transform.scaleX || 1)) / 2,
                         (boxCollider.height * (transform.scaleY || 1)) / 2,
-                        planck.Vec2(boxCollider.offsetX, boxCollider.offsetY)
+                        planck.Vec2(boxCollider.offsetX ?? 0, boxCollider.offsetY ?? 0)
                     );
                     body.createFixture({
                         shape,
-                        isSensor: boxCollider.isSensor,
-                        restitution: boxCollider.restitution,
-                        friction: boxCollider.friction,
+                        isSensor: boxCollider.isSensor ?? false,
+                        restitution: boxCollider.restitution ?? 0,
+                        friction: boxCollider.friction ?? 0.2,
                     });
                 } else if (circleCollider) {
                     const shape = planck.Circle(
-                        planck.Vec2(circleCollider.offsetX, circleCollider.offsetY),
+                        planck.Vec2(circleCollider.offsetX ?? 0, circleCollider.offsetY ?? 0),
                         circleCollider.radius * Math.max(transform.scaleX || 1, transform.scaleY || 1)
                     );
                     body.createFixture({
                         shape,
-                        isSensor: circleCollider.isSensor,
-                        restitution: circleCollider.restitution,
-                        friction: circleCollider.friction,
+                        isSensor: circleCollider.isSensor ?? false,
+                        restitution: circleCollider.restitution ?? 0,
+                        friction: circleCollider.friction ?? 0.2,
                     });
                 } else {
-                    // Default fixture
                     body.createFixture({ shape: planck.Box(0.5, 0.5) });
                 }
 
@@ -179,25 +167,33 @@ export class PhysicsSystem {
         }
     }
 
+    reset(): void {
+        for (const body of this.bodies.values()) {
+            try { this.pWorld.destroyBody(body); } catch (_) {}
+        }
+        this.bodies.clear();
+        this.groundContacts.clear();
+    }
+
     getPlanckWorld(): planck.World {
         return this.pWorld;
     }
 
     applyForce(entity: Entity, x: number, y: number): void {
         const body = this.bodies.get(entity);
-        if (body) {
-            body.applyForceToCenter(planck.Vec2(x, y));
-        }
+        if (body) body.applyForceToCenter(planck.Vec2(x, y));
+    }
+
+    applyImpulse(entity: Entity, x: number, y: number): void {
+        const body = this.bodies.get(entity);
+        if (body) body.applyLinearImpulse(planck.Vec2(x, y), body.getWorldCenter());
     }
 
     setVelocity(entity: Entity, x: number, y: number): void {
         const body = this.bodies.get(entity);
-        if (body) {
-            body.setLinearVelocity(planck.Vec2(x, y));
-        }
+        if (body) body.setLinearVelocity(planck.Vec2(x, y));
     }
 
-    /** Returns current linear velocity of the physics body, or {x:0, y:0}. */
     getVelocity(entity: Entity): { x: number; y: number } {
         const body = this.bodies.get(entity);
         if (!body) return { x: 0, y: 0 };
@@ -205,15 +201,10 @@ export class PhysicsSystem {
         return { x: v.x, y: v.y };
     }
 
-    /**
-     * Returns true when the entity has at least one active ground contact
-     * (a collider touching from below). Falls back to velocity heuristic.
-     */
     isGrounded(entity: Entity): boolean {
         const contacts = this.groundContacts.get(entity);
         if (contacts && contacts.size > 0) return true;
 
-        // Fallback: vertical velocity is ~0 and body is not free-falling
         const body = this.bodies.get(entity);
         if (!body) return false;
         const v = body.getLinearVelocity();
@@ -222,12 +213,20 @@ export class PhysicsSystem {
 
     teleport(entity: Entity, x: number, y: number): void {
         const body = this.bodies.get(entity);
-        if (body) {
-            body.setPosition(planck.Vec2(x, y));
-        }
+        if (body) body.setPosition(planck.Vec2(x, y));
+    }
+
+    setAngularVelocity(entity: Entity, omega: number): void {
+        const body = this.bodies.get(entity);
+        if (body) body.setAngularVelocity(omega);
     }
 
     setGravity(x: number, y: number): void {
         this.pWorld.setGravity(planck.Vec2(x, y));
+    }
+
+    setBodyType(entity: Entity, type: 'dynamic' | 'static' | 'kinematic'): void {
+        const body = this.bodies.get(entity);
+        if (body) body.setType(type as planck.BodyType);
     }
 }

@@ -1,11 +1,9 @@
 import { Entity, ComponentType, ComponentMap } from '@glix/shared';
 
-/**
- * Manages entities and their components.
- */
 export class World {
     private entities: Set<Entity> = new Set();
     private names: Map<Entity, string> = new Map();
+    private tags: Map<Entity, Set<string>> = new Map();
     private components: { [K in ComponentType]?: Map<Entity, ComponentMap[K]> } = {};
     private nextEntityId = 0;
 
@@ -13,7 +11,6 @@ export class World {
         if (!id) {
             id = `entity_${this.nextEntityId++}`;
         } else {
-            // Keep nextEntityId in sync if we provide a higher ID manually
             const match = id.match(/entity_(\d+)/);
             if (match) {
                 const num = parseInt(match[1]);
@@ -29,6 +26,7 @@ export class World {
     removeEntity(entity: Entity): void {
         this.entities.delete(entity);
         this.names.delete(entity);
+        this.tags.delete(entity);
         for (const type in this.components) {
             this.components[type as ComponentType]?.delete(entity);
         }
@@ -77,6 +75,7 @@ export class World {
     clear(): void {
         this.entities.clear();
         this.names.clear();
+        this.tags.clear();
         this.components = {};
         this.nextEntityId = 0;
     }
@@ -87,5 +86,45 @@ export class World {
 
     getName(entity: Entity): string | undefined {
         return this.names.get(entity);
+    }
+
+    findEntityByName(name: string): Entity | undefined {
+        for (const [entity, entityName] of this.names) {
+            if (entityName === name) return entity;
+        }
+        return undefined;
+    }
+
+    findEntitiesWithName(name: string): Entity[] {
+        const result: Entity[] = [];
+        for (const [entity, entityName] of this.names) {
+            if (entityName === name) result.push(entity);
+        }
+        return result;
+    }
+
+    addTag(entity: Entity, tag: string): void {
+        if (!this.tags.has(entity)) this.tags.set(entity, new Set());
+        this.tags.get(entity)!.add(tag);
+    }
+
+    removeTag(entity: Entity, tag: string): void {
+        this.tags.get(entity)?.delete(tag);
+    }
+
+    hasTag(entity: Entity, tag: string): boolean {
+        return this.tags.get(entity)?.has(tag) ?? false;
+    }
+
+    findEntitiesWithTag(tag: string): Entity[] {
+        const result: Entity[] = [];
+        for (const [entity, tagSet] of this.tags) {
+            if (tagSet.has(tag)) result.push(entity);
+        }
+        return result;
+    }
+
+    hasEntity(entity: Entity): boolean {
+        return this.entities.has(entity);
     }
 }

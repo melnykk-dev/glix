@@ -5,6 +5,7 @@ import { SceneTransitionComponent, MgexFile } from '@glix/shared';
 export class SceneManager {
     private fileData: MgexFile | null = null;
     private transitionEntity: string | null = null;
+    private currentSceneId: string = '';
 
     constructor(private world: World, private engine: Engine) { }
 
@@ -13,7 +14,12 @@ export class SceneManager {
         const startScene = fileData.settings.startScene;
         if (startScene && fileData.scenes[startScene]) {
             this.addScene(startScene);
+            this.currentSceneId = startScene;
         }
+    }
+
+    public getCurrentSceneId(): string {
+        return this.currentSceneId;
     }
 
     public async loadScene(id: string) {
@@ -29,7 +35,6 @@ export class SceneManager {
         if (transitionComp) {
             await this.playTransitionOut(transitionComp);
         } else {
-            // Brief black frame
             const engineRenderer = (this.engine as any).renderSystem;
             if (engineRenderer) {
                 const gl = (engineRenderer as any).gl as WebGL2RenderingContext;
@@ -41,6 +46,7 @@ export class SceneManager {
 
         this.unloadScene();
         this.addScene(id);
+        this.currentSceneId = id;
 
         if (transitionComp) {
             await this.playTransitionIn(transitionComp);
@@ -54,6 +60,9 @@ export class SceneManager {
 
         for (const entityDef of scene.entities) {
             const entity = this.world.createEntity();
+            if (entityDef.name) {
+                this.world.setName(entity, entityDef.name);
+            }
             for (const [type, data] of Object.entries(entityDef.components)) {
                 this.world.addComponent(entity, type as any, JSON.parse(JSON.stringify(data)));
             }
@@ -64,7 +73,6 @@ export class SceneManager {
         const allEntities = this.world.getEntitiesWithComponents();
         for (const e of allEntities) {
             if (!this.world.getComponent(e, 'persistent')) {
-                // Don't remove the transition overlay we just made, if any
                 if (e !== this.transitionEntity) {
                     this.world.removeEntity(e);
                 }
@@ -93,12 +101,9 @@ export class SceneManager {
             const { r, g, b } = this.parseColor(trans.color);
             this.transitionEntity = this.world.createEntity();
             this.world.addComponent(this.transitionEntity, 'persistent', {});
-            // Cover the whole screen
             this.world.addComponent(this.transitionEntity, 'uiTransform', {
                 anchorX: 0, anchorY: 0, pivotX: 0, pivotY: 0, offsetX: 0, offsetY: 0
             });
-            // Assume canvas size ~2000 to cover screen for now, since we don't have direct access to canvas width here
-            // Alternatively, pull canvas size from Engine
             const gl = (this.engine as any).gl;
             const w = gl ? gl.canvas.width : 2000;
             const h = gl ? gl.canvas.height : 2000;
@@ -106,11 +111,10 @@ export class SceneManager {
             this.world.addComponent(this.transitionEntity, 'uiPanel', {
                 width: w, height: h, color: `rgba(${r},${g},${b},0)`, borderRadius: 0
             });
-            // put on highest layer
             this.world.addComponent(this.transitionEntity, 'sortingLayer', { layer: 999, orderInLayer: 999 });
 
             let alpha = 0;
-            const step = 0.05 / trans.duration; // roughly 60fps * duration
+            const step = 0.05 / trans.duration;
             const interval = setInterval(() => {
                 alpha += step;
                 if (alpha >= 1) {
