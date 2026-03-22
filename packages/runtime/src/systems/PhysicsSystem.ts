@@ -241,8 +241,8 @@ export class PhysicsSystem {
         const body = this.bodies.get(entity);
         if (!body) return false;
         const v = body.getLinearVelocity();
-        // Allow slightly higher vertical velocity for "grounded" state to handle small bumps
-        return Math.abs(v.y) < 0.25;
+        // Even more lenient vertical velocity threshold for "grounded" state
+        return Math.abs(v.y) < 0.4;
     }
 
     teleport(entity: Entity, x: number, y: number): void {
