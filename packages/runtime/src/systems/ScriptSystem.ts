@@ -202,10 +202,12 @@ export class ScriptSystem {
 
     private startScript(entity: Entity, world: World): void {
         const scriptComp = world.getComponent(entity, 'script');
-        if (!scriptComp || !scriptComp.compiledJs) return;
+        if (!scriptComp) return;
+        const code = scriptComp.compiledJs || scriptComp.src;
+        if (!code) return;
 
         try {
-            const instance = ScriptSandbox.instantiate(scriptComp.compiledJs);
+            const instance = ScriptSandbox.instantiate(code);
 
             if ((instance as any).__init) {
                 (instance as any).__init(

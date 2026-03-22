@@ -18,6 +18,18 @@ export class ScriptSandbox {
      * @returns           An instance of the user script class (extends ScriptComponent).
      */
     static instantiate(compiledJs: string): ScriptComponent {
+        // Fallback for raw source (not yet compiled by editor)
+        // If it looks like a class definition but lacks the module.exports boilerplate, wrap it.
+        if (compiledJs.includes('class') && !compiledJs.includes('module.exports')) {
+            // Replace 'export default class' with local assignment
+            if (compiledJs.includes('export default class')) {
+                compiledJs = compiledJs.replace('export default class', 'module.exports.default = class');
+            } else if (compiledJs.includes('export default')) {
+                // Handle 'export default Foo' at the end
+                compiledJs = compiledJs.replace(/export default\s+([a-zA-Z0-9_$]+)/, 'module.exports.default = $1');
+            }
+        }
+
         // A minimal CommonJS-like environment
         const module = { exports: {} as any };
         const exports = module.exports;

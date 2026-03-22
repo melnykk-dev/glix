@@ -8,6 +8,10 @@ export class PhysicsSystem {
     private bodies: Map<Entity, planck.Body> = new Map();
     private eventBus: EventBus;
     private groundContacts: Map<Entity, Set<Entity>> = new Map();
+    private pendingVelocities: Map<Entity, planck.Vec2> = new Map();
+    private pendingForces: Map<Entity, planck.Vec2> = new Map();
+    private pendingImpulses: Map<Entity, planck.Vec2> = new Map();
+
 
     constructor(eventBus: EventBus) {
         this.eventBus = eventBus;
@@ -28,6 +32,9 @@ export class PhysicsSystem {
             try { this.pWorld.destroyBody(body); } catch (_) {}
             this.bodies.delete(entity);
             this.groundContacts.delete(entity);
+            this.pendingVelocities.delete(entity);
+            this.pendingForces.delete(entity);
+            this.pendingImpulses.delete(entity);
         }
     }
 
@@ -148,6 +155,20 @@ export class PhysicsSystem {
                 }
 
                 this.bodies.set(entity, body);
+
+                // Apply pending operations
+                if (this.pendingVelocities.has(entity)) {
+                    body.setLinearVelocity(this.pendingVelocities.get(entity)!);
+                    this.pendingVelocities.delete(entity);
+                }
+                if (this.pendingForces.has(entity)) {
+                    body.applyForceToCenter(this.pendingForces.get(entity)!);
+                    this.pendingForces.delete(entity);
+                }
+                if (this.pendingImpulses.has(entity)) {
+                    body.applyLinearImpulse(this.pendingImpulses.get(entity)!, body.getWorldCenter());
+                    this.pendingImpulses.delete(entity);
+                }
             }
         }
     }
@@ -181,17 +202,29 @@ export class PhysicsSystem {
 
     applyForce(entity: Entity, x: number, y: number): void {
         const body = this.bodies.get(entity);
-        if (body) body.applyForceToCenter(planck.Vec2(x, y));
+        if (body) {
+            body.applyForceToCenter(planck.Vec2(x, y));
+        } else {
+            this.pendingForces.set(entity, planck.Vec2(x, y));
+        }
     }
 
     applyImpulse(entity: Entity, x: number, y: number): void {
         const body = this.bodies.get(entity);
-        if (body) body.applyLinearImpulse(planck.Vec2(x, y), body.getWorldCenter());
+        if (body) {
+            body.applyLinearImpulse(planck.Vec2(x, y), body.getWorldCenter());
+        } else {
+            this.pendingImpulses.set(entity, planck.Vec2(x, y));
+        }
     }
 
     setVelocity(entity: Entity, x: number, y: number): void {
         const body = this.bodies.get(entity);
-        if (body) body.setLinearVelocity(planck.Vec2(x, y));
+        if (body) {
+            body.setLinearVelocity(planck.Vec2(x, y));
+        } else {
+            this.pendingVelocities.set(entity, planck.Vec2(x, y));
+        }
     }
 
     getVelocity(entity: Entity): { x: number; y: number } {
@@ -208,7 +241,8 @@ export class PhysicsSystem {
         const body = this.bodies.get(entity);
         if (!body) return false;
         const v = body.getLinearVelocity();
-        return Math.abs(v.y) < 0.15;
+        // Allow slightly higher vertical velocity for "grounded" state to handle small bumps
+        return Math.abs(v.y) < 0.25;
     }
 
     teleport(entity: Entity, x: number, y: number): void {
