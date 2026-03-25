@@ -1,4 +1,4 @@
-# Glix
+# Glix | glix.localplayer.dev/
 
 Ultra-fast, local-first game engine for the modern web.
 Powerful ECS architecture meets an intuitive visual editor.
