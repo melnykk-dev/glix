@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { Engine, SceneLoader, Mat4 } from '@glix/runtime';
+import { Engine, SceneLoader, Mat4, VirtualGamepad } from '@glix/runtime';
 import type { ScriptError } from '@glix/runtime';
 import { editorBridge } from '../bridge/EditorBridge';
 import { useEditorStore } from '../store/useEditorStore';
@@ -14,6 +14,7 @@ import { GizmoRenderer } from '../gizmos/GizmoRenderer';
 import { CreateEntityCommand } from '../history/commands/CreateEntityCommand';
 import { AddComponentCommand } from '../history/commands/AddComponentCommand';
 import { MoveEntityCommand } from '../history/commands/MoveEntityCommand';
+import { Gamepad2 } from 'lucide-react';
 
 export const Viewport: React.FC = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -22,6 +23,7 @@ export const Viewport: React.FC = () => {
     const { undo, redo, pushCommand } = useHistoryStore();
     const [scriptErrors, setScriptErrors] = useState<ScriptError[]>([]);
     const [isDraggingOver, setIsDraggingOver] = useState(false);
+    const playState = useSceneStore((s) => s.playState);
 
     // ── Engine bootstrap ─────────────────────────────────────────────────────
     useEffect(() => {
@@ -340,10 +342,22 @@ export const Viewport: React.FC = () => {
         window.addEventListener('glix-focus-selection', onFocusSelection);
 
         // ── React to playState changes ────────────────────────────────────────
+        let gamepad: VirtualGamepad | null = null;
+        const onToggleGamepad = () => {
+            if (gamepad && gamepad.isAttached()) gamepad.setHidden(!gamepad.isHidden());
+        };
+        window.addEventListener('glix-toggle-gamepad', onToggleGamepad);
         const unsubPlayState = useSceneStore.subscribe((state, prev) => {
             if (state.playState === prev.playState) return;
             if (state.playState === 'stopped') {
+                gamepad?.detach();
+                gamepad = null;
                 requestAnimationFrame(() => engine.render(0));
+            } else {
+                // On-screen touch controls while playing (auto-shows on touch devices).
+                const touchMode = (useProjectStore.getState().project?.settings as any)?.touchControls || 'auto';
+                gamepad = new VirtualGamepad(canvas, { mode: touchMode });
+                gamepad.attach();
             }
         });
 
@@ -378,6 +392,7 @@ export const Viewport: React.FC = () => {
         });
 
         return () => {
+            gamepad?.detach();
             resizeObserver.disconnect();
             unsubEditor();
             unsubProject();
@@ -388,6 +403,7 @@ export const Viewport: React.FC = () => {
             canvas.removeEventListener('wheel', onWheel, { passive: false } as any);
             window.removeEventListener('keydown', handleKeyDown);
             window.removeEventListener('keyup', handleKeyUp);
+            window.removeEventListener('glix-toggle-gamepad', onToggleGamepad);
             window.removeEventListener('glix-focus-selection', onFocusSelection);
         };
     }, [undo, redo, setSelectedEntityIds, setSelectionRect, pushCommand]);
@@ -490,6 +506,22 @@ export const Viewport: React.FC = () => {
             }}
         >
             <canvas ref={canvasRef} style={{ display: 'block', width: '100%', height: '100%' }} />
+
+            {/* Touch-controls toggle while playing (gamepad auto-shows on touch devices). */}
+            {playState !== 'stopped' && (
+                <button
+                    className="icon-btn"
+                    onClick={() => window.dispatchEvent(new Event('glix-toggle-gamepad'))}
+                    title="Toggle touch controls"
+                    style={{
+                        position: 'absolute', top: 10, right: 10, zIndex: 40,
+                        background: 'rgba(12,16,26,0.55)', border: '1px solid var(--glix-border-md)',
+                        borderRadius: 8, padding: 7,
+                    }}
+                >
+                    <Gamepad2 size={16} />
+                </button>
+            )}
 
             {scriptErrors.length > 0 && (
                 <div style={{

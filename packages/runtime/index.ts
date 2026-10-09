@@ -7,3 +7,4 @@ export * from './src/scene/SceneSerializer';
 export * from './src/scripting/ScriptComponent';
 export * from './src/scripting/ScriptSandbox';
 export * from './src/systems/ScriptSystem';
+export * from './src/input/VirtualGamepad';

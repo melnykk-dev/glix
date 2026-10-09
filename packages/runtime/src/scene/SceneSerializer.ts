@@ -45,7 +45,8 @@ export class SceneSerializer {
                     bloomThreshold: 0.8,
                     vignetteStrength: 0.3
                 },
-                input: {}
+                input: {},
+                touchControls: 'auto'
             }
         };
     }

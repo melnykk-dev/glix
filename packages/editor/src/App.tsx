@@ -21,6 +21,7 @@ import { CommandPalette } from './components/CommandPalette';
 import { HomePage } from './components/HomePage';
 import { RuntimeErrorToast } from './components/RuntimeErrorToast';
 import './index.css';
+import './mobile.css';
 
 const App: React.FC = () => {
     const {
@@ -32,6 +33,8 @@ const App: React.FC = () => {
         hasEnteredEditor,
         gizmoMode, setGizmoMode,
         editorMode,
+        mobileLeftOpen, setMobileLeftOpen,
+        mobileRightOpen, setMobileRightOpen,
     } = useEditorStore();
 
     React.useEffect(() => {
@@ -43,6 +46,14 @@ const App: React.FC = () => {
         window.addEventListener('glix-toggle-shortcuts', onToggle);
         return () => window.removeEventListener('glix-toggle-shortcuts', onToggle);
     }, [showShortcuts, setShowShortcuts]);
+
+    // Mobile drawers: reflect open state on <body> so CSS can slide panels in.
+    React.useEffect(() => {
+        document.body.classList.toggle('glix-left-open', mobileLeftOpen);
+        document.body.classList.toggle('glix-right-open', mobileRightOpen);
+    }, [mobileLeftOpen, mobileRightOpen]);
+
+    const closeDrawers = () => { setMobileLeftOpen(false); setMobileRightOpen(false); };
 
     if (!hasEnteredEditor) {
         return <HomePage />;
@@ -56,6 +67,9 @@ const App: React.FC = () => {
             {showShortcuts && <ShortcutsDialog onClose={() => setShowShortcuts(false)} />}
             <RestoreDialog />
             {showNewProjectDialog && <NewProjectDialog onClose={() => setShowNewProjectDialog(false)} />}
+            {(mobileLeftOpen || mobileRightOpen) && (
+                <div className="glix-drawer-scrim" onClick={closeDrawers} />
+            )}
 
             <Layout
                 top={<Toolbar />}

@@ -17,6 +17,9 @@ interface EditorState {
     snappingEnabled: boolean;
     snapSize: number;
     selectionRect: { x1: number, y1: number, x2: number, y2: number } | null;
+    /** Mobile (<700px) drawer state for the side panels. Not persisted. */
+    mobileLeftOpen: boolean;
+    mobileRightOpen: boolean;
 
     setLeftPanelWidth: (width: number) => void;
     setRightPanelWidth: (width: number) => void;
@@ -34,6 +37,8 @@ interface EditorState {
     setSnappingEnabled: (enabled: boolean) => void;
     setSnapSize: (size: number) => void;
     setSelectionRect: (rect: { x1: number, y1: number, x2: number, y2: number } | null) => void;
+    setMobileLeftOpen: (open: boolean) => void;
+    setMobileRightOpen: (open: boolean) => void;
 }
 
 export const useEditorStore = create<EditorState>()(
@@ -54,6 +59,8 @@ export const useEditorStore = create<EditorState>()(
             snappingEnabled: true,
             snapSize: 0.5,
             selectionRect: null,
+            mobileLeftOpen: false,
+            mobileRightOpen: false,
 
             setLeftPanelWidth: (leftPanelWidth) => set({ leftPanelWidth }),
             setRightPanelWidth: (rightPanelWidth) => set({ rightPanelWidth }),
@@ -81,6 +88,8 @@ export const useEditorStore = create<EditorState>()(
             setSnappingEnabled: (snappingEnabled) => set({ snappingEnabled }),
             setSnapSize: (snapSize) => set({ snapSize }),
             setSelectionRect: (selectionRect) => set({ selectionRect }),
+            setMobileLeftOpen: (mobileLeftOpen) => set({ mobileLeftOpen }),
+            setMobileRightOpen: (mobileRightOpen) => set({ mobileRightOpen }),
         }),
         {
             name: 'glix-editor-storage',

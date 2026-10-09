@@ -37,6 +37,7 @@ export const Layout: React.FC<LayoutProps> = ({ left, center, right, top }) => {
 
     const divider = (side: 'left' | 'right') => (
         <div
+            className={`glix-divider glix-divider-${side}`}
             onMouseDown={() => startResize(side)}
             style={{
                 width: 4,
@@ -59,7 +60,7 @@ export const Layout: React.FC<LayoutProps> = ({ left, center, right, top }) => {
             {/* Main body */}
             <div style={{ flex: 1, display: 'flex', overflow: 'hidden', minHeight: 0 }}>
                 {/* Left */}
-                <div style={{
+                <div className="glix-panel-left" style={{
                     width: leftPanelWidth,
                     flexShrink: 0,
                     background: 'var(--glix-bg-panel)',
@@ -75,14 +76,14 @@ export const Layout: React.FC<LayoutProps> = ({ left, center, right, top }) => {
                 {divider('left')}
 
                 {/* Viewport */}
-                <div style={{ flex: 1, background: '#050608', position: 'relative', overflow: 'hidden', minWidth: 0 }}>
+                <div className="glix-panel-center" style={{ flex: 1, background: '#050608', position: 'relative', overflow: 'hidden', minWidth: 0 }}>
                     {center}
                 </div>
 
                 {divider('right')}
 
                 {/* Right */}
-                <div style={{
+                <div className="glix-panel-right" style={{
                     width: rightPanelWidth,
                     flexShrink: 0,
                     background: 'var(--glix-bg-panel)',

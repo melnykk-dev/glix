@@ -5,7 +5,7 @@
   "description": "A browser-based 2D game engine",
   "scripts": {
     "dev": "pnpm -F @glix/editor dev",
-    "build": "pnpm -F @glix/editor build",
+    "build": "pnpm -F @glix/runtime build && pnpm -F @glix/editor build",
     "preview": "pnpm -F @glix/editor preview"
   },
   "devDependencies": {

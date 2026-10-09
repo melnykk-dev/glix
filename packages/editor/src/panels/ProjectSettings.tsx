@@ -95,6 +95,18 @@ export const ProjectSettings: React.FC = () => {
                             ))}
                         </select>
                     </label>
+                    <label style={labelStyle}>
+                        Touch Controls
+                        <select
+                            value={(project.settings as any).touchControls || 'auto'}
+                            onChange={(e) => handleSettingChange('touchControls', e.target.value)}
+                            style={inputStyle}
+                        >
+                            <option value="auto">Auto (touch devices)</option>
+                            <option value="always">Always show</option>
+                            <option value="never">Never show</option>
+                        </select>
+                    </label>
                 </div>
             </div>
 

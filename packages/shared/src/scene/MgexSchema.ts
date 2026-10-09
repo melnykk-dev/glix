@@ -48,6 +48,7 @@ export const MgexSchema = z.object({
             vignetteStrength: z.number().default(0.3),
         }).default({ bloom: true, vignette: false, crt: false, bloomThreshold: 0.8, vignetteStrength: 0.3 }),
         input: z.record(z.array(z.string())).default({}),
+        touchControls: z.enum(['auto', 'always', 'never']).default('auto'),
     }).default({ physics: { gravity: { x: 0, y: 9.8 } } }),
 });
 

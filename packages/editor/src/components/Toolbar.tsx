@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Play, Pause, Square, FilePlus, FolderOpen, Save, Download, Sun, Moon, Zap, Code, Move, RotateCcw, Maximize, Home, Magnet, Share } from 'lucide-react';
+import { Play, Pause, Square, FilePlus, FolderOpen, Save, Download, Sun, Moon, Zap, Code, Move, RotateCcw, Maximize, Home, Magnet, Share, PanelLeft, PanelRight } from 'lucide-react';
 import { useSceneStore } from '../store/useSceneStore';
 import { useProjectStore } from '../store/useProjectStore';
 import { useEditorStore } from '../store/useEditorStore';
@@ -16,7 +16,9 @@ export const Toolbar: React.FC = () => {
         gizmoMode, setGizmoMode,
         setHasEnteredEditor,
         snappingEnabled, setSnappingEnabled,
-        snapSize, setSnapSize
+        snapSize, setSnapSize,
+        mobileLeftOpen, setMobileLeftOpen,
+        mobileRightOpen, setMobileRightOpen,
     } = useEditorStore();
 
     // ── Play / Pause / Stop helpers ──────────────────────────────────────────
@@ -88,12 +90,21 @@ export const Toolbar: React.FC = () => {
     const isStopped = playState === 'stopped';
 
     return (
-        <div style={{
+        <div className="glix-toolbar" style={{
             display: 'flex', alignItems: 'center', height: '100%',
             padding: '0 8px', gap: '2px',
             background: 'var(--glix-bg-deep)',
             borderBottom: '1px solid var(--glix-border)',
+            position: 'relative',
         }}>
+            {/* Mobile drawer toggles (desktop: hidden via CSS) */}
+            <button
+                className={`icon-btn tb-mobile-only${mobileLeftOpen ? ' active' : ''}`}
+                onClick={() => { setMobileLeftOpen(!mobileLeftOpen); setMobileRightOpen(false); }}
+                title="Toggle project panel"
+            >
+                <PanelLeft size={18} />
+            </button>
             {/* Home / Logo */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', paddingRight: '12px', marginRight: '4px', borderRight: '1px solid var(--glix-border)' }}>
                 <button
@@ -113,16 +124,16 @@ export const Toolbar: React.FC = () => {
                     <rect x="25" y="42" width="14" height="14" rx="2" fill="#533483" />
                     <rect x="42" y="42" width="14" height="14" rx="2" fill="#533483" />
                 </svg>
-                <span style={{ fontSize: '13px', fontWeight: 700, color: 'var(--glix-text)', letterSpacing: '0.04em' }}>GLIX</span>
+                <span className="tb-hide-mobile" style={{ fontSize: '13px', fontWeight: 700, color: 'var(--glix-text)', letterSpacing: '0.04em' }}>GLIX</span>
                 {project && (
-                    <span style={{ fontSize: '11px', color: 'var(--glix-text-muted)', maxWidth: 140, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    <span className="tb-hide-mobile" style={{ fontSize: '11px', color: 'var(--glix-text-muted)', maxWidth: 140, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                         {project.meta?.name || 'Untitled'}{isDirty ? ' ●' : ''}
                     </span>
                 )}
             </div>
 
             {/* File ops */}
-            <div style={{ display: 'flex', gap: '1px', paddingRight: '8px', marginRight: '4px', borderRight: '1px solid var(--glix-border)' }}>
+            <div className="tb-group tb-hide-mobile" style={{ display: 'flex', gap: '1px', paddingRight: '8px', marginRight: '4px', borderRight: '1px solid var(--glix-border)' }}>
                 <button className="icon-btn" onClick={() => setShowNewProjectDialog(true)} title="New project (Ctrl+N)"><FilePlus size={14} /></button>
                 <button className="icon-btn" onClick={() => loadProject().catch(err => alert(err.message))} title="Open .glix (Ctrl+O)"><FolderOpen size={14} /></button>
                 <button className="icon-btn" onClick={() => project && saveProject(project, fileHandle)} title="Save Project (Overwrite) (Ctrl+S)" disabled={!project}>
@@ -134,7 +145,7 @@ export const Toolbar: React.FC = () => {
             </div>
 
             {/* Editor mode */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: 4, paddingRight: '8px', marginRight: '4px', borderRight: '1px solid var(--glix-border)' }}>
+            <div className="tb-group tb-hide-mobile" style={{ display: 'flex', alignItems: 'center', gap: 4, paddingRight: '8px', marginRight: '4px', borderRight: '1px solid var(--glix-border)' }}>
                 <button
                     className={`icon-btn ${editorMode === 'starter' ? 'active' : ''}`}
                     onClick={() => setEditorMode('starter')}
@@ -152,7 +163,7 @@ export const Toolbar: React.FC = () => {
             </div>
 
             {/* Snap Settings */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: 4, paddingRight: '8px', marginRight: '4px', borderRight: '1px solid var(--glix-border)' }}>
+            <div className="tb-group tb-hide-mobile" style={{ display: 'flex', alignItems: 'center', gap: 4, paddingRight: '8px', marginRight: '4px', borderRight: '1px solid var(--glix-border)' }}>
                 <button
                     className={`icon-btn ${snappingEnabled ? 'active' : ''}`}
                     onClick={() => setSnappingEnabled(!snappingEnabled)}
@@ -178,7 +189,7 @@ export const Toolbar: React.FC = () => {
             </div>
 
             {/* Playback controls — centred */}
-            <div style={{
+            <div className="tb-playback" style={{
                 position: 'absolute',
                 left: '50%',
                 transform: 'translateX(-50%)',
@@ -210,7 +221,7 @@ export const Toolbar: React.FC = () => {
             </div>
 
             {/* Right side */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginLeft: 'auto' }}>
+            <div className="tb-group tb-hide-mobile" style={{ display: 'flex', alignItems: 'center', gap: 12, marginLeft: 'auto' }}>
                 {/* Gizmo mode */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
                     <button
@@ -243,6 +254,15 @@ export const Toolbar: React.FC = () => {
                 </button>
                 <span style={{ fontSize: '9px', color: 'var(--glix-text-dim)', padding: '0 6px' }}>v0.1.0</span>
             </div>
+
+            {/* Mobile drawer toggle (right) — desktop: hidden via CSS */}
+            <button
+                className={`icon-btn tb-mobile-only tb-mobile-right${mobileRightOpen ? ' active' : ''}`}
+                onClick={() => { setMobileRightOpen(!mobileRightOpen); setMobileLeftOpen(false); }}
+                title="Toggle inspector panel"
+            >
+                <PanelRight size={18} />
+            </button>
         </div>
     );
 };
