@@ -49,6 +49,9 @@ export class Engine {
     private timestep: number;
     private isRunning = false;
     private profilerEnabled = false;
+    private frameCount = 0;
+    private lastLoopError: { message: string; stack?: string; at: number } | null = null;
+    private errorListeners: Array<(err: { message: string; stack?: string }) => void> = [];
     private profilerData = {
         render: 0,
         physics: 0,
@@ -163,9 +166,40 @@ export class Engine {
         return this.isRunning;
     }
 
+    /** Number of game-loop frames executed since the last start(). */
+    getFrameCount(): number {
+        return this.frameCount;
+    }
+
+    /** The last error thrown inside the game loop, if any. */
+    getLastLoopError(): { message: string; stack?: string; at: number } | null {
+        return this.lastLoopError;
+    }
+
+    /** Subscribe to game-loop errors (a loop error stops the loop cleanly). */
+    onLoopError(cb: (err: { message: string; stack?: string }) => void): () => void {
+        this.errorListeners.push(cb);
+        return () => {
+            const i = this.errorListeners.indexOf(cb);
+            if (i >= 0) this.errorListeners.splice(i, 1);
+        };
+    }
+
+    private reportLoopError(err: unknown): void {
+        const message = err instanceof Error ? err.message : String(err);
+        const stack = err instanceof Error ? err.stack : undefined;
+        this.lastLoopError = { message, stack, at: Date.now() };
+        console.error('[Glix] Game loop error — loop stopped:', err);
+        for (const cb of this.errorListeners) {
+            try { cb({ message, stack }); } catch (_) { /* listener must not break the engine */ }
+        }
+    }
+
     start(): void {
         if (this.isRunning) return;
         this.isRunning = true;
+        this.frameCount = 0;
+        this.lastLoopError = null;
         this.scriptSystem.init(this.world);
         this.lastTime = performance.now();
         requestAnimationFrame(this.loop);
@@ -186,6 +220,7 @@ export class Engine {
     resume(): void {
         if (this.isRunning) return;
         this.isRunning = true;
+        this.lastLoopError = null;
         this.scriptSystem.clearErrors();
         this.scriptSystem.init(this.world);
         this.lastTime = performance.now();
@@ -228,6 +263,18 @@ export class Engine {
     private loop = (currentTime: number): void => {
         if (!this.isRunning) return;
 
+        try {
+            this.tick(currentTime);
+        } catch (err) {
+            // Never let one bad frame kill the game silently: report and stop cleanly.
+            this.isRunning = false;
+            this.reportLoopError(err);
+            return;
+        }
+        requestAnimationFrame(this.loop);
+    };
+
+    private tick(currentTime: number): void {
         const deltaTime = currentTime - this.lastTime;
         this.lastTime = currentTime;
         this.accumulator += deltaTime;
@@ -262,7 +309,7 @@ export class Engine {
         this.updateCameraFromComponents(dtSeconds);
 
         this.render(dtSeconds);
-        requestAnimationFrame(this.loop);
+        this.frameCount++;
     };
 
     public render(dtSeconds: number = 0): void {

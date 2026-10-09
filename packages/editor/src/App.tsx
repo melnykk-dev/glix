@@ -19,6 +19,7 @@ import { ShortcutsDialog } from './panels/ShortcutsDialog';
 import { Move, RotateCcw, Maximize2, Monitor } from 'lucide-react';
 import { CommandPalette } from './components/CommandPalette';
 import { HomePage } from './components/HomePage';
+import { RuntimeErrorToast } from './components/RuntimeErrorToast';
 import './index.css';
 
 const App: React.FC = () => {
@@ -50,6 +51,7 @@ const App: React.FC = () => {
     return (
         <div className="glix-editor" style={{ width: '100vw', height: '100vh', display: 'flex' }}>
             <CommandPalette />
+            <RuntimeErrorToast />
             {!hasSeenWelcome && <WelcomeScreen onClose={() => setHasSeenWelcome(true)} />}
             {showShortcuts && <ShortcutsDialog onClose={() => setShowShortcuts(false)} />}
             <RestoreDialog />
