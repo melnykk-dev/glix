@@ -1,0 +1,717 @@
+{
+  "version": "1.0.0",
+  "meta": {
+    "name": "Platformer",
+    "resolution": {
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "assets": {
+    "platformer-tiles": {
+      "id": "platformer-tiles",
+      "type": "texture",
+      "name": "Pixel Platformer tileset sheet (20x9)",
+      "mimeType": "image/png",
+      "data": "data:image/png;base64,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"
+    },
+    "platformer-tileset": {
+      "id": "platformer-tileset",
+      "type": "tileset",
+      "name": "Pixel Platformer tileset",
+      "mimeType": "application/json",
+      "data": "{\"textureId\": \"platformer-tiles\", \"tileWidth\": 18, \"tileHeight\": 18, \"columns\": 20, \"rows\": 9, \"spacing\": 0}"
+    },
+    "platformer-chars-tex": {
+      "id": "platformer-chars-tex",
+      "type": "texture",
+      "name": "Pixel Platformer characters (6x5)",
+      "mimeType": "image/png",
+      "data": "data:image/png;base64,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"
+    },
+    "platformer-chars": {
+      "id": "platformer-chars",
+      "type": "spriteatlas",
+      "name": "Platformer characters atlas",
+      "mimeType": "application/json",
+      "data": "{\"textureId\": \"platformer-chars-tex\", \"regions\": {\"char00\": {\"x\": 0.0, \"y\": 0.0, \"w\": 0.166667, \"h\": 0.2}, \"char01\": {\"x\": 0.166667, \"y\": 0.0, \"w\": 0.166667, \"h\": 0.2}, \"char02\": {\"x\": 0.333333, \"y\": 0.0, \"w\": 0.166667, \"h\": 0.2}, \"char03\": {\"x\": 0.5, \"y\": 0.0, \"w\": 0.166667, \"h\": 0.2}, \"char04\": {\"x\": 0.666667, \"y\": 0.0, \"w\": 0.166667, \"h\": 0.2}, \"char05\": {\"x\": 0.833333, \"y\": 0.0, \"w\": 0.166667, \"h\": 0.2}, \"char06\": {\"x\": 0.0, \"y\": 0.2, \"w\": 0.166667, \"h\": 0.2}, \"char07\": {\"x\": 0.166667, \"y\": 0.2, \"w\": 0.166667, \"h\": 0.2}, \"char08\": {\"x\": 0.333333, \"y\": 0.2, \"w\": 0.166667, \"h\": 0.2}, \"char09\": {\"x\": 0.5, \"y\": 0.2, \"w\": 0.166667, \"h\": 0.2}, \"char10\": {\"x\": 0.666667, \"y\": 0.2, \"w\": 0.166667, \"h\": 0.2}, \"char11\": {\"x\": 0.833333, \"y\": 0.2, \"w\": 0.166667, \"h\": 0.2}, \"char12\": {\"x\": 0.0, \"y\": 0.4, \"w\": 0.166667, \"h\": 0.2}, \"char13\": {\"x\": 0.166667, \"y\": 0.4, \"w\": 0.166667, \"h\": 0.2}, \"char14\": {\"x\": 0.333333, \"y\": 0.4, \"w\": 0.166667, \"h\": 0.2}, \"char15\": {\"x\": 0.5, \"y\": 0.4, \"w\": 0.166667, \"h\": 0.2}, \"char16\": {\"x\": 0.666667, \"y\": 0.4, \"w\": 0.166667, \"h\": 0.2}, \"char17\": {\"x\": 0.833333, \"y\": 0.4, \"w\": 0.166667, \"h\": 0.2}, \"char18\": {\"x\": 0.0, \"y\": 0.6, \"w\": 0.166667, \"h\": 0.2}, \"char19\": {\"x\": 0.166667, \"y\": 0.6, \"w\": 0.166667, \"h\": 0.2}, \"char20\": {\"x\": 0.333333, \"y\": 0.6, \"w\": 0.166667, \"h\": 0.2}, \"char21\": {\"x\": 0.5, \"y\": 0.6, \"w\": 0.166667, \"h\": 0.2}, \"char22\": {\"x\": 0.666667, \"y\": 0.6, \"w\": 0.166667, \"h\": 0.2}, \"char23\": {\"x\": 0.833333, \"y\": 0.6, \"w\": 0.166667, \"h\": 0.2}, \"char24\": {\"x\": 0.0, \"y\": 0.8, \"w\": 0.166667, \"h\": 0.2}, \"char25\": {\"x\": 0.166667, \"y\": 0.8, \"w\": 0.166667, \"h\": 0.2}, \"char26\": {\"x\": 0.333333, \"y\": 0.8, \"w\": 0.166667, \"h\": 0.2}}}"
+    },
+    "platformer-props-tex": {
+      "id": "platformer-props-tex",
+      "type": "texture",
+      "name": "Platformer props (coin/gem/door/heart)",
+      "mimeType": "image/png",
+      "data": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAAASCAYAAAD4+JjWAAACR0lEQVR42t2YP0gCURzHvxdBEYFDYEJRg0VFQUZEUy1CQ2tjRg0SiENbIYGDIEFbRATSkFBja0PgkpNEaFBUmENSYEJEEFKTDfGOd+f7d6em9QXB+9077r0P39/v/d5paDKtzXrLAODz9uix6/sP4TNjQ536/6PEMwBg5zyh1WI+LWhyyeCojrGrVvwRrRyfAABy+QIAwN3nAgAcLi7U9b2tIpvzpGJf7/xyWWUCidO4pVRw97mQyxeQyxd0SCoKTwwa5hNJZzVRnJtiMjgqY1ThiMaOjLYLIdFusgqHxHhxroPohUfX75gv29we1seynEQv+GrOL5z4+NmB/ozMSWbHECdZgROedv64JFU0jjHFwxODZeIkZooROB2eVUO8lIkhun6nQxLpas4P19SkeAwFyazbm0/DdTIURLKKWkIgkP86DE5cWqTNcEislInhP4gGU9UuRoCwgMlUuLiseiF0j9MI1W2bHz87wMvmvhAYL73qoUiqiPC0E48P78z7/QOOivRSAmTVOYnTuEYKdXc0UAGJBUdUoHlN4MzWnuH67XCDDSad1UihjqSKWO5q4wJkbfUtstSSxWS9TXc0YBtOzdxDLTj++lVxn45J+yB6Ky9lYoYffc8upFrBSYaCSIaC2F3yYXfJZxuSCA4AaHYaRSuHQV4jyINjPqzKzlmZp5+aQsbLDqus5pAHh+kglYVbOSmzQKg4R9RJ0/L0OuDpddhKNxkcbpGu1acCVuH+jZpjB1LDT/NWwZBOutF9UNN/D2q0vgFs0R2CFL1A6QAAAABJRU5ErkJggg=="
+    },
+    "platformer-props": {
+      "id": "platformer-props",
+      "type": "spriteatlas",
+      "name": "Platformer props atlas",
+      "mimeType": "application/json",
+      "data": "{\"textureId\": \"platformer-props-tex\", \"regions\": {\"coin\": {\"x\": 0.0, \"y\": 0.0, \"w\": 0.25, \"h\": 1.0}, \"gem\": {\"x\": 0.25, \"y\": 0.0, \"w\": 0.25, \"h\": 1.0}, \"door\": {\"x\": 0.5, \"y\": 0.0, \"w\": 0.25, \"h\": 1.0}, \"heart\": {\"x\": 0.75, \"y\": 0.0, \"w\": 0.25, \"h\": 1.0}}}"
+    },
+    "pickup": {
+      "id": "pickup",
+      "type": "audio",
+      "name": "Pickup blip (Kenney Interface Sounds)",
+      "mimeType": "audio/ogg",
+      "data": "data:audio/ogg;base64,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AJABAMAYg5BBBiFjEEIIIYQQQggJAAAYcAAACDChDBQashIASAUAAAxSijEHpaQUKcWYcxBKSSlSijHnIJSSUsWYcxBKSam1ijHnIJSSUmudcxBKSam1GDvnIJSSUmsxhhBKSam1GGMMIZSSUmsx1lpKSam1GGvMtZSSUmsx1lprSq21GGutNeeUWmsx1lpzzgUAIDQ4AIAd2LA6wknRWGChISsBgDwAAEgpxhhjjDGlFGOMMcaYUooxxhhjjDHGGGOMMaYYY4wxxhhjjDHGGGOMMcYYY4wxxhhjjDHmGGOMMcYYY8w5xhhjjDnmHGOMMcacc04AAFCBAwBAgI0imxOMBBUashIACAcAAIxhzDnnIJSQSqOUcxBCKCWVVhqlnIMSQikptZY5JyWlUlJqLbbMOSkplZJSay12ElJqLaXWYqyxg5BSa6m1FmONHYRSWootxhpz7SCUklprMcZaayilpdhirLHWmkMpqbUWY60151xSai3GWmvNteeSUmsxxlprrbmn1mKssdZcc+89tRZjjbXmnHvOBQCYPDgAQCXYOMNK0lnhaHChISsBgNwAAEYpxpxzDkIIIYQQQgiVUow55xyEEEIIIYQQKqUYc845CCGEEEIIIWSMOeccdBBCCCGEEELIGHPOOQghhBBCCCGE0DnnHIQQQgghhFBCKaVzzjkHIYQQQgghhFBK5xyEEEIIIYQSSiillM45CCGEEEIIpYRSSikhhBBCCCGEEkoppZRSOgghhBBCCKWUUkoppYQQQgghhBBKKaWUUkoJIYQQQgghlFJKKaWUEkIIIYQSSimllFJKKSWEEEIIoZRSSimllFJKCCGEUkoppZRSSimllBBCKCGUUkoppZRSSikhhBJKKKWUUkoppZRSQggllFJKKaWUUkoppYQQQiillFJKKaWUUkoJIZRSSimllFJKKaWUUgAA0IEDAECAEZUWYqcZVx6BIwoZJqBCQ1YCAOEAAAAhlFJKKaWUUmokpZRSSimllFIjJaWUUkoppZRSSimllFJKKaWUUkoppZRSSimllFJKKaWUUkoppZRSSimllFJKKaWUUkoppZRSSimllFJKKaWUUkoppZRSSimllFJKKaWUUkoppZRSSimllFJKKaWUUkoppZRSSqWUUkoppZRSSimllFJKKaWUUkoppQCoywwHwOgJG2dYSTorHA0uNGQl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"
+    }
+  },
+  "prefabs": {},
+  "scenes": {
+    "main": {
+      "id": "main",
+      "name": "Main Scene",
+      "entities": [
+        {
+          "id": "player",
+          "name": "Player",
+          "components": {
+            "transform": {
+              "x": -8,
+              "y": 2,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "platformer-chars-tex",
+              "width": 1.0,
+              "height": 1.0,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "char00"
+            },
+            "rigidBody": {
+              "type": "dynamic",
+              "gravityScale": 1.2,
+              "linearDamping": 0.0,
+              "angularDamping": 0.1,
+              "fixedRotation": true
+            },
+            "boxCollider": {
+              "width": 0.8,
+              "height": 0.8,
+              "offsetX": 0,
+              "offsetY": 0,
+              "isSensor": false,
+              "restitution": 0,
+              "friction": 0.5
+            },
+            "script": {
+              "src": "// Platformer Controller\nclass PlatformerController extends ScriptComponent {\n  speed = 7;\n  jumpForce = 12;\n  acceleration = 15;\n  airAcceleration = 8;\n  coyoteTime = 0.15;\n  coyoteTimer = 0;\n\n  onUpdate(dt) {\n    const moveX =\n      (this.input.isKeyDown('ArrowRight') || this.input.isKeyDown('KeyD') ? 1 : 0) -\n      (this.input.isKeyDown('ArrowLeft')  || this.input.isKeyDown('KeyA') ? 1 : 0);\n\n    const vel = this.getVelocity();\n    const grounded = this.isGrounded();\n    \n    if (grounded) {\n      this.coyoteTimer = this.coyoteTime;\n    } else {\n      this.coyoteTimer -= dt;\n    }\n\n    // Smooth X movement\n    const accel = grounded ? this.acceleration : this.airAcceleration;\n    const newVelX = vel.x + (moveX * this.speed - vel.x) * accel * dt;\n    \n    this.setVelocity(newVelX, vel.y);\n\n    const wantsJump = this.input.isJustPressed('Space') || this.input.isJustPressed('ArrowUp') || this.input.isJustPressed('KeyW');\n    if (wantsJump && this.coyoteTimer > 0) {\n      this.setVelocity(newVelX, this.jumpForce);\n      this.coyoteTimer = 0; // Consume coyote time\n    }\n\n    // Death height check\n    if (this.transform && this.transform.y < -10) {\n       this.setPosition(-8, 2);\n       this.setVelocity(0, 0);\n    }\n  }\n}\nexport default PlatformerController;",
+              "compiledJs": "var __defProp = Object.defineProperty;\nvar __getOwnPropDesc = Object.getOwnPropertyDescriptor;\nvar __getOwnPropNames = Object.getOwnPropertyNames;\nvar __hasOwnProp = Object.prototype.hasOwnProperty;\nvar __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;\nvar __export = (target, all) => {\n  for (var name in all)\n    __defProp(target, name, { get: all[name], enumerable: true });\n};\nvar __copyProps = (to, from, except, desc) => {\n  if (from && typeof from === \"object\" || typeof from === \"function\") {\n    for (let key of __getOwnPropNames(from))\n      if (!__hasOwnProp.call(to, key) && key !== except)\n        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });\n  }\n  return to;\n};\nvar __toCommonJS = (mod) => __copyProps(__defProp({}, \"__esModule\", { value: true }), mod);\nvar __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== \"symbol\" ? key + \"\" : key, value);\nvar stdin_exports = {};\n__export(stdin_exports, {\n  default: () => stdin_default\n});\nmodule.exports = __toCommonJS(stdin_exports);\nclass PlatformerController extends ScriptComponent {\n  constructor() {\n    super(...arguments);\n    __publicField(this, \"speed\", 7);\n    __publicField(this, \"jumpForce\", 12);\n    __publicField(this, \"acceleration\", 15);\n    __publicField(this, \"airAcceleration\", 8);\n    __publicField(this, \"coyoteTime\", 0.15);\n    __publicField(this, \"coyoteTimer\", 0);\n  }\n  onUpdate(dt) {\n    const moveX = (this.input.isKeyDown(\"ArrowRight\") || this.input.isKeyDown(\"KeyD\") ? 1 : 0) - (this.input.isKeyDown(\"ArrowLeft\") || this.input.isKeyDown(\"KeyA\") ? 1 : 0);\n    const vel = this.getVelocity();\n    const grounded = this.isGrounded();\n    if (grounded) {\n      this.coyoteTimer = this.coyoteTime;\n    } else {\n      this.coyoteTimer -= dt;\n    }\n    const accel = grounded ? this.acceleration : this.airAcceleration;\n    const newVelX = vel.x + (moveX * this.speed - vel.x) * accel * dt;\n    this.setVelocity(newVelX, vel.y);\n    const wantsJump = this.input.isJustPressed(\"Space\") || this.input.isJustPressed(\"ArrowUp\") || this.input.isJustPressed(\"KeyW\");\n    if (wantsJump && this.coyoteTimer > 0) {\n      this.setVelocity(newVelX, this.jumpForce);\n      this.coyoteTimer = 0;\n    }\n    if (this.transform && this.transform.y < -10) {\n      this.setPosition(-8, 2);\n      this.setVelocity(0, 0);\n    }\n  }\n}\nvar stdin_default = PlatformerController;\n//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsiPHN0ZGluPiJdLAogICJzb3VyY2VzQ29udGVudCI6IFsiLy8gUGxhdGZvcm1lciBDb250cm9sbGVyXG5jbGFzcyBQbGF0Zm9ybWVyQ29udHJvbGxlciBleHRlbmRzIFNjcmlwdENvbXBvbmVudCB7XG4gIHNwZWVkID0gNztcbiAganVtcEZvcmNlID0gMTI7XG4gIGFjY2VsZXJhdGlvbiA9IDE1O1xuICBhaXJBY2NlbGVyYXRpb24gPSA4O1xuICBjb3lvdGVUaW1lID0gMC4xNTtcbiAgY295b3RlVGltZXIgPSAwO1xuXG4gIG9uVXBkYXRlKGR0KSB7XG4gICAgY29uc3QgbW92ZVggPVxuICAgICAgKHRoaXMuaW5wdXQuaXNLZXlEb3duKCdBcnJvd1JpZ2h0JykgfHwgdGhpcy5pbnB1dC5pc0tleURvd24oJ0tleUQnKSA/IDEgOiAwKSAtXG4gICAgICAodGhpcy5pbnB1dC5pc0tleURvd24oJ0Fycm93TGVmdCcpICB8fCB0aGlzLmlucHV0LmlzS2V5RG93bignS2V5QScpID8gMSA6IDApO1xuXG4gICAgY29uc3QgdmVsID0gdGhpcy5nZXRWZWxvY2l0eSgpO1xuICAgIGNvbnN0IGdyb3VuZGVkID0gdGhpcy5pc0dyb3VuZGVkKCk7XG4gICAgXG4gICAgaWYgKGdyb3VuZGVkKSB7XG4gICAgICB0aGlzLmNveW90ZVRpbWVyID0gdGhpcy5jb3lvdGVUaW1lO1xuICAgIH0gZWxzZSB7XG4gICAgICB0aGlzLmNveW90ZVRpbWVyIC09IGR0O1xuICAgIH1cblxuICAgIC8vIFNtb290aCBYIG1vdmVtZW50XG4gICAgY29uc3QgYWNjZWwgPSBncm91bmRlZCA/IHRoaXMuYWNjZWxlcmF0aW9uIDogdGhpcy5haXJBY2NlbGVyYXRpb247XG4gICAgY29uc3QgbmV3VmVsWCA9IHZlbC54ICsgKG1vdmVYICogdGhpcy5zcGVlZCAtIHZlbC54KSAqIGFjY2VsICogZHQ7XG4gICAgXG4gICAgdGhpcy5zZXRWZWxvY2l0eShuZXdWZWxYLCB2ZWwueSk7XG5cbiAgICBjb25zdCB3YW50c0p1bXAgPSB0aGlzLmlucHV0LmlzSnVzdFByZXNzZWQoJ1NwYWNlJykgfHwgdGhpcy5pbnB1dC5pc0p1c3RQcmVzc2VkKCdBcnJvd1VwJykgfHwgdGhpcy5pbnB1dC5pc0p1c3RQcmVzc2VkKCdLZXlXJyk7XG4gICAgaWYgKHdhbnRzSnVtcCAmJiB0aGlzLmNveW90ZVRpbWVyID4gMCkge1xuICAgICAgdGhpcy5zZXRWZWxvY2l0eShuZXdWZWxYLCB0aGlzLmp1bXBGb3JjZSk7XG4gICAgICB0aGlzLmNveW90ZVRpbWVyID0gMDsgLy8gQ29uc3VtZSBjb3lvdGUgdGltZVxuICAgIH1cblxuICAgIC8vIERlYXRoIGhlaWdodCBjaGVja1xuICAgIGlmICh0aGlzLnRyYW5zZm9ybSAmJiB0aGlzLnRyYW5zZm9ybS55IDwgLTEwKSB7XG4gICAgICAgdGhpcy5zZXRQb3NpdGlvbigtOCwgMik7XG4gICAgICAgdGhpcy5zZXRWZWxvY2l0eSgwLCAwKTtcbiAgICB9XG4gIH1cbn1cbmV4cG9ydCBkZWZhdWx0IFBsYXRmb3JtZXJDb250cm9sbGVyOyJdLAogICJtYXBwaW5ncyI6ICI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQ0EsTUFBTSw2QkFBNkIsZ0JBQWdCO0FBQUEsRUFBbkQ7QUFBQTtBQUNFLGlDQUFRO0FBQ1IscUNBQVk7QUFDWix3Q0FBZTtBQUNmLDJDQUFrQjtBQUNsQixzQ0FBYTtBQUNiLHVDQUFjO0FBQUE7QUFBQSxFQUVkLFNBQVMsSUFBSTtBQUNYLFVBQU0sU0FDSCxLQUFLLE1BQU0sVUFBVSxZQUFZLEtBQUssS0FBSyxNQUFNLFVBQVUsTUFBTSxJQUFJLElBQUksTUFDekUsS0FBSyxNQUFNLFVBQVUsV0FBVyxLQUFNLEtBQUssTUFBTSxVQUFVLE1BQU0sSUFBSSxJQUFJO0FBRTVFLFVBQU0sTUFBTSxLQUFLLFlBQVk7QUFDN0IsVUFBTSxXQUFXLEtBQUssV0FBVztBQUVqQyxRQUFJLFVBQVU7QUFDWixXQUFLLGNBQWMsS0FBSztBQUFBLElBQzFCLE9BQU87QUFDTCxXQUFLLGVBQWU7QUFBQSxJQUN0QjtBQUdBLFVBQU0sUUFBUSxXQUFXLEtBQUssZUFBZSxLQUFLO0FBQ2xELFVBQU0sVUFBVSxJQUFJLEtBQUssUUFBUSxLQUFLLFFBQVEsSUFBSSxLQUFLLFFBQVE7QUFFL0QsU0FBSyxZQUFZLFNBQVMsSUFBSSxDQUFDO0FBRS9CLFVBQU0sWUFBWSxLQUFLLE1BQU0sY0FBYyxPQUFPLEtBQUssS0FBSyxNQUFNLGNBQWMsU0FBUyxLQUFLLEtBQUssTUFBTSxjQUFjLE1BQU07QUFDN0gsUUFBSSxhQUFhLEtBQUssY0FBYyxHQUFHO0FBQ3JDLFdBQUssWUFBWSxTQUFTLEtBQUssU0FBUztBQUN4QyxXQUFLLGNBQWM7QUFBQSxJQUNyQjtBQUdBLFFBQUksS0FBSyxhQUFhLEtBQUssVUFBVSxJQUFJLEtBQUs7QUFDM0MsV0FBSyxZQUFZLElBQUksQ0FBQztBQUN0QixXQUFLLFlBQVksR0FBRyxDQUFDO0FBQUEsSUFDeEI7QUFBQSxFQUNGO0FBQ0Y7QUFDQSxJQUFPLGdCQUFROyIsCiAgIm5hbWVzIjogW10KfQo=\n"
+            },
+            "frameAnimation": {
+              "atlasId": "platformer-chars",
+              "frames": [
+                "char00",
+                "char01"
+              ],
+              "fps": 6,
+              "loop": true,
+              "currentFrame": 0,
+              "elapsed": 0,
+              "isPlaying": true
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 10,
+              "ySort": false
+            }
+          }
+        },
+        {
+          "id": "ground_start",
+          "name": "Ground Start",
+          "components": {
+            "transform": {
+              "x": -8,
+              "y": -5,
+              "rotation": 0,
+              "scaleX": 8,
+              "scaleY": 1
+            },
+            "rigidBody": {
+              "type": "static"
+            },
+            "boxCollider": {
+              "width": 1,
+              "height": 1
+            }
+          }
+        },
+        {
+          "id": "spikes",
+          "name": "Spikes",
+          "components": {
+            "transform": {
+              "x": 0,
+              "y": -6,
+              "rotation": 0,
+              "scaleX": 10,
+              "scaleY": 2
+            },
+            "rigidBody": {
+              "type": "static"
+            },
+            "boxCollider": {
+              "width": 1,
+              "height": 1,
+              "isSensor": true
+            },
+            "script": {
+              "src": "class Spikes extends ScriptComponent {\n  onCollision(otherId) {\n    if (this.world.getName(otherId) === 'Player') {\n       this.physics.teleport(otherId, -8, 2);\n       this.physics.setVelocity(otherId, 0, 0);\n    }\n  }\n}\nexport default Spikes;",
+              "compiledJs": "var __defProp = Object.defineProperty;\nvar __getOwnPropDesc = Object.getOwnPropertyDescriptor;\nvar __getOwnPropNames = Object.getOwnPropertyNames;\nvar __hasOwnProp = Object.prototype.hasOwnProperty;\nvar __export = (target, all) => {\n  for (var name in all)\n    __defProp(target, name, { get: all[name], enumerable: true });\n};\nvar __copyProps = (to, from, except, desc) => {\n  if (from && typeof from === \"object\" || typeof from === \"function\") {\n    for (let key of __getOwnPropNames(from))\n      if (!__hasOwnProp.call(to, key) && key !== except)\n        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });\n  }\n  return to;\n};\nvar __toCommonJS = (mod) => __copyProps(__defProp({}, \"__esModule\", { value: true }), mod);\nvar stdin_exports = {};\n__export(stdin_exports, {\n  default: () => stdin_default\n});\nmodule.exports = __toCommonJS(stdin_exports);\nclass Spikes extends ScriptComponent {\n  onCollision(otherId) {\n    if (this.world.getName(otherId) === \"Player\") {\n      this.physics.teleport(otherId, -8, 2);\n      this.physics.setVelocity(otherId, 0, 0);\n    }\n  }\n}\nvar stdin_default = Spikes;\n//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsiPHN0ZGluPiJdLAogICJzb3VyY2VzQ29udGVudCI6IFsiY2xhc3MgU3Bpa2VzIGV4dGVuZHMgU2NyaXB0Q29tcG9uZW50IHtcbiAgb25Db2xsaXNpb24ob3RoZXJJZCkge1xuICAgIGlmICh0aGlzLndvcmxkLmdldE5hbWUob3RoZXJJZCkgPT09ICdQbGF5ZXInKSB7XG4gICAgICAgdGhpcy5waHlzaWNzLnRlbGVwb3J0KG90aGVySWQsIC04LCAyKTtcbiAgICAgICB0aGlzLnBoeXNpY3Muc2V0VmVsb2NpdHkob3RoZXJJZCwgMCwgMCk7XG4gICAgfVxuICB9XG59XG5leHBvcnQgZGVmYXVsdCBTcGlrZXM7Il0sCiAgIm1hcHBpbmdzIjogIjs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUEsTUFBTSxlQUFlLGdCQUFnQjtBQUFBLEVBQ25DLFlBQVksU0FBUztBQUNuQixRQUFJLEtBQUssTUFBTSxRQUFRLE9BQU8sTUFBTSxVQUFVO0FBQzNDLFdBQUssUUFBUSxTQUFTLFNBQVMsSUFBSSxDQUFDO0FBQ3BDLFdBQUssUUFBUSxZQUFZLFNBQVMsR0FBRyxDQUFDO0FBQUEsSUFDekM7QUFBQSxFQUNGO0FBQ0Y7QUFDQSxJQUFPLGdCQUFROyIsCiAgIm5hbWVzIjogW10KfQo=\n"
+            }
+          }
+        },
+        {
+          "id": "platform_1",
+          "name": "Platform",
+          "components": {
+            "transform": {
+              "x": -2,
+              "y": -1,
+              "rotation": 0,
+              "scaleX": 3,
+              "scaleY": 0.5
+            },
+            "rigidBody": {
+              "type": "static"
+            },
+            "boxCollider": {
+              "width": 1,
+              "height": 1
+            }
+          }
+        },
+        {
+          "id": "platform_2",
+          "name": "Platform High",
+          "components": {
+            "transform": {
+              "x": 3,
+              "y": 1,
+              "rotation": 0,
+              "scaleX": 3,
+              "scaleY": 0.5
+            },
+            "rigidBody": {
+              "type": "static"
+            },
+            "boxCollider": {
+              "width": 1,
+              "height": 1
+            }
+          }
+        },
+        {
+          "id": "ground_finish",
+          "name": "Ground Finish",
+          "components": {
+            "transform": {
+              "x": 10,
+              "y": -2,
+              "rotation": 0,
+              "scaleX": 6,
+              "scaleY": 1
+            },
+            "rigidBody": {
+              "type": "static"
+            },
+            "boxCollider": {
+              "width": 1,
+              "height": 1
+            }
+          }
+        },
+        {
+          "id": "goal",
+          "name": "Goal",
+          "components": {
+            "transform": {
+              "x": 11,
+              "y": -1,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "platformer-props-tex",
+              "width": 1.0,
+              "height": 1.0,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "door"
+            },
+            "rigidBody": {
+              "type": "static"
+            },
+            "boxCollider": {
+              "width": 1,
+              "height": 1,
+              "isSensor": true
+            },
+            "script": {
+              "src": "class Goal extends ScriptComponent {\n  onCollision(otherId) {\n    if (this.world.getName(otherId) === 'Player') {\n      alert('You reached the Goal!');\n    }\n  }\n}\nexport default Goal;",
+              "compiledJs": "var __defProp = Object.defineProperty;\nvar __getOwnPropDesc = Object.getOwnPropertyDescriptor;\nvar __getOwnPropNames = Object.getOwnPropertyNames;\nvar __hasOwnProp = Object.prototype.hasOwnProperty;\nvar __export = (target, all) => {\n  for (var name in all)\n    __defProp(target, name, { get: all[name], enumerable: true });\n};\nvar __copyProps = (to, from, except, desc) => {\n  if (from && typeof from === \"object\" || typeof from === \"function\") {\n    for (let key of __getOwnPropNames(from))\n      if (!__hasOwnProp.call(to, key) && key !== except)\n        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });\n  }\n  return to;\n};\nvar __toCommonJS = (mod) => __copyProps(__defProp({}, \"__esModule\", { value: true }), mod);\nvar stdin_exports = {};\n__export(stdin_exports, {\n  default: () => stdin_default\n});\nmodule.exports = __toCommonJS(stdin_exports);\nclass Goal extends ScriptComponent {\n  onCollision(otherId) {\n    if (this.world.getName(otherId) === \"Player\") {\n      alert(\"You reached the Goal!\");\n    }\n  }\n}\nvar stdin_default = Goal;\n//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsiPHN0ZGluPiJdLAogICJzb3VyY2VzQ29udGVudCI6IFsiY2xhc3MgR29hbCBleHRlbmRzIFNjcmlwdENvbXBvbmVudCB7XG4gIG9uQ29sbGlzaW9uKG90aGVySWQpIHtcbiAgICBpZiAodGhpcy53b3JsZC5nZXROYW1lKG90aGVySWQpID09PSAnUGxheWVyJykge1xuICAgICAgYWxlcnQoJ1lvdSByZWFjaGVkIHRoZSBHb2FsIScpO1xuICAgIH1cbiAgfVxufVxuZXhwb3J0IGRlZmF1bHQgR29hbDsiXSwKICAibWFwcGluZ3MiOiAiOzs7Ozs7Ozs7Ozs7Ozs7OztBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQSxNQUFNLGFBQWEsZ0JBQWdCO0FBQUEsRUFDakMsWUFBWSxTQUFTO0FBQ25CLFFBQUksS0FBSyxNQUFNLFFBQVEsT0FBTyxNQUFNLFVBQVU7QUFDNUMsWUFBTSx1QkFBdUI7QUFBQSxJQUMvQjtBQUFBLEVBQ0Y7QUFDRjtBQUNBLElBQU8sZ0JBQVE7IiwKICAibmFtZXMiOiBbXQp9Cg==\n"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 5,
+              "ySort": false
+            }
+          }
+        },
+        {
+          "id": "ground-start-tiles",
+          "name": "Ground Start Tiles",
+          "components": {
+            "transform": {
+              "x": -12,
+              "y": -4.5,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "tilemap": {
+              "tilesetId": "platformer-tileset",
+              "layers": [
+                {
+                  "name": "Ground",
+                  "tiles": [
+                    [
+                      0,
+                      1,
+                      1,
+                      1,
+                      1,
+                      1,
+                      1,
+                      2
+                    ],
+                    [
+                      3,
+                      3,
+                      3,
+                      3,
+                      3,
+                      3,
+                      3,
+                      3
+                    ]
+                  ],
+                  "visible": true,
+                  "opacity": 1.0
+                }
+              ],
+              "tileWidth": 1,
+              "tileHeight": 1
+            },
+            "sortingLayer": {
+              "layer": 0,
+              "orderInLayer": 0,
+              "ySort": false
+            }
+          }
+        },
+        {
+          "id": "ground-finish-tiles",
+          "name": "Ground Finish Tiles",
+          "components": {
+            "transform": {
+              "x": 7,
+              "y": -1.5,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "tilemap": {
+              "tilesetId": "platformer-tileset",
+              "layers": [
+                {
+                  "name": "Ground",
+                  "tiles": [
+                    [
+                      0,
+                      1,
+                      1,
+                      1,
+                      1,
+                      2
+                    ],
+                    [
+                      3,
+                      3,
+                      3,
+                      3,
+                      3,
+                      3
+                    ]
+                  ],
+                  "visible": true,
+                  "opacity": 1.0
+                }
+              ],
+              "tileWidth": 1,
+              "tileHeight": 1
+            },
+            "sortingLayer": {
+              "layer": 0,
+              "orderInLayer": 0,
+              "ySort": false
+            }
+          }
+        },
+        {
+          "id": "platform-1-tiles",
+          "name": "Platform 1 Tiles",
+          "components": {
+            "transform": {
+              "x": -3.5,
+              "y": -0.5,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "tilemap": {
+              "tilesetId": "platformer-tileset",
+              "layers": [
+                {
+                  "name": "Ground",
+                  "tiles": [
+                    [
+                      40,
+                      41,
+                      42
+                    ]
+                  ],
+                  "visible": true,
+                  "opacity": 1.0
+                }
+              ],
+              "tileWidth": 1,
+              "tileHeight": 1
+            },
+            "sortingLayer": {
+              "layer": 0,
+              "orderInLayer": 0,
+              "ySort": false
+            }
+          }
+        },
+        {
+          "id": "platform-2-tiles",
+          "name": "Platform 2 Tiles",
+          "components": {
+            "transform": {
+              "x": 1.5,
+              "y": 1.5,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "tilemap": {
+              "tilesetId": "platformer-tileset",
+              "layers": [
+                {
+                  "name": "Ground",
+                  "tiles": [
+                    [
+                      40,
+                      41,
+                      42
+                    ]
+                  ],
+                  "visible": true,
+                  "opacity": 1.0
+                }
+              ],
+              "tileWidth": 1,
+              "tileHeight": 1
+            },
+            "sortingLayer": {
+              "layer": 0,
+              "orderInLayer": 0,
+              "ySort": false
+            }
+          }
+        },
+        {
+          "id": "spikes-tiles",
+          "name": "Spikes Tiles",
+          "components": {
+            "transform": {
+              "x": -5,
+              "y": -5,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "tilemap": {
+              "tilesetId": "platformer-tileset",
+              "layers": [
+                {
+                  "name": "Spikes",
+                  "tiles": [
+                    [
+                      65,
+                      65,
+                      65,
+                      65,
+                      65,
+                      65,
+                      65,
+                      65,
+                      65,
+                      65
+                    ]
+                  ],
+                  "visible": true,
+                  "opacity": 1.0
+                }
+              ],
+              "tileWidth": 1,
+              "tileHeight": 1
+            },
+            "sortingLayer": {
+              "layer": 0,
+              "orderInLayer": 0,
+              "ySort": false
+            }
+          }
+        },
+        {
+          "id": "coin-1",
+          "name": "Coin",
+          "components": {
+            "transform": {
+              "x": -5,
+              "y": -3.5,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "platformer-props-tex",
+              "width": 0.5,
+              "height": 0.5,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "coin"
+            },
+            "rigidBody": {
+              "type": "static",
+              "gravityScale": 0,
+              "linearDamping": 0,
+              "angularDamping": 0,
+              "fixedRotation": true
+            },
+            "boxCollider": {
+              "width": 0.5,
+              "height": 0.5,
+              "isSensor": true
+            },
+            "script": {
+              "src": "class Coin extends ScriptComponent {\n  collected = false;\n  onCollision(otherId) {\n    // Guard first: onCollision can fire on consecutive fixed steps before\n    // destroy() takes the coin out of the world \u2014 without this, one pickup\n    // plays the sound twice (and would score twice).\n    if (this.collected) return;\n    if (this.world.getName(otherId) === 'Player') {\n      this.collected = true;\n      this.audio.playSound('pickup');\n      this.destroy();\n    }\n  }\n}\nexport default Coin;",
+              "compiledJs": "var __defProp = Object.defineProperty;\nvar __getOwnPropDesc = Object.getOwnPropertyDescriptor;\nvar __getOwnPropNames = Object.getOwnPropertyNames;\nvar __hasOwnProp = Object.prototype.hasOwnProperty;\nvar __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;\nvar __export = (target, all) => {\n  for (var name in all)\n    __defProp(target, name, { get: all[name], enumerable: true });\n};\nvar __copyProps = (to, from, except, desc) => {\n  if (from && typeof from === \"object\" || typeof from === \"function\") {\n    for (let key of __getOwnPropNames(from))\n      if (!__hasOwnProp.call(to, key) && key !== except)\n        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });\n  }\n  return to;\n};\nvar __toCommonJS = (mod) => __copyProps(__defProp({}, \"__esModule\", { value: true }), mod);\nvar __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== \"symbol\" ? key + \"\" : key, value);\nvar stdin_exports = {};\n__export(stdin_exports, {\n  default: () => stdin_default\n});\nmodule.exports = __toCommonJS(stdin_exports);\nclass Coin extends ScriptComponent {\n  constructor() {\n    super(...arguments);\n    __publicField(this, \"collected\", false);\n  }\n  onCollision(otherId) {\n    if (this.collected) return;\n    if (this.world.getName(otherId) === \"Player\") {\n      this.collected = true;\n      this.audio.playSound(\"pickup\");\n      this.destroy();\n    }\n  }\n}\nvar stdin_default = Coin;\n//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsiPHN0ZGluPiJdLAogICJzb3VyY2VzQ29udGVudCI6IFsiY2xhc3MgQ29pbiBleHRlbmRzIFNjcmlwdENvbXBvbmVudCB7XG4gIGNvbGxlY3RlZCA9IGZhbHNlO1xuICBvbkNvbGxpc2lvbihvdGhlcklkKSB7XG4gICAgLy8gR3VhcmQgZmlyc3Q6IG9uQ29sbGlzaW9uIGNhbiBmaXJlIG9uIGNvbnNlY3V0aXZlIGZpeGVkIHN0ZXBzIGJlZm9yZVxuICAgIC8vIGRlc3Ryb3koKSB0YWtlcyB0aGUgY29pbiBvdXQgb2YgdGhlIHdvcmxkIFx1MjAxNCB3aXRob3V0IHRoaXMsIG9uZSBwaWNrdXBcbiAgICAvLyBwbGF5cyB0aGUgc291bmQgdHdpY2UgKGFuZCB3b3VsZCBzY29yZSB0d2ljZSkuXG4gICAgaWYgKHRoaXMuY29sbGVjdGVkKSByZXR1cm47XG4gICAgaWYgKHRoaXMud29ybGQuZ2V0TmFtZShvdGhlcklkKSA9PT0gJ1BsYXllcicpIHtcbiAgICAgIHRoaXMuY29sbGVjdGVkID0gdHJ1ZTtcbiAgICAgIHRoaXMuYXVkaW8ucGxheVNvdW5kKCdwaWNrdXAnKTtcbiAgICAgIHRoaXMuZGVzdHJveSgpO1xuICAgIH1cbiAgfVxufVxuZXhwb3J0IGRlZmF1bHQgQ29pbjsiXSwKICAibWFwcGluZ3MiOiAiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBLE1BQU0sYUFBYSxnQkFBZ0I7QUFBQSxFQUFuQztBQUFBO0FBQ0UscUNBQVk7QUFBQTtBQUFBLEVBQ1osWUFBWSxTQUFTO0FBSW5CLFFBQUksS0FBSyxVQUFXO0FBQ3BCLFFBQUksS0FBSyxNQUFNLFFBQVEsT0FBTyxNQUFNLFVBQVU7QUFDNUMsV0FBSyxZQUFZO0FBQ2pCLFdBQUssTUFBTSxVQUFVLFFBQVE7QUFDN0IsV0FBSyxRQUFRO0FBQUEsSUFDZjtBQUFBLEVBQ0Y7QUFDRjtBQUNBLElBQU8sZ0JBQVE7IiwKICAibmFtZXMiOiBbXQp9Cg==\n"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": false
+            }
+          }
+        },
+        {
+          "id": "coin-2",
+          "name": "Coin",
+          "components": {
+            "transform": {
+              "x": -2,
+              "y": 0.2,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "platformer-props-tex",
+              "width": 0.5,
+              "height": 0.5,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "coin"
+            },
+            "rigidBody": {
+              "type": "static",
+              "gravityScale": 0,
+              "linearDamping": 0,
+              "angularDamping": 0,
+              "fixedRotation": true
+            },
+            "boxCollider": {
+              "width": 0.5,
+              "height": 0.5,
+              "isSensor": true
+            },
+            "script": {
+              "src": "class Coin extends ScriptComponent {\n  collected = false;\n  onCollision(otherId) {\n    // Guard first: onCollision can fire on consecutive fixed steps before\n    // destroy() takes the coin out of the world \u2014 without this, one pickup\n    // plays the sound twice (and would score twice).\n    if (this.collected) return;\n    if (this.world.getName(otherId) === 'Player') {\n      this.collected = true;\n      this.audio.playSound('pickup');\n      this.destroy();\n    }\n  }\n}\nexport default Coin;",
+              "compiledJs": "var __defProp = Object.defineProperty;\nvar __getOwnPropDesc = Object.getOwnPropertyDescriptor;\nvar __getOwnPropNames = Object.getOwnPropertyNames;\nvar __hasOwnProp = Object.prototype.hasOwnProperty;\nvar __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;\nvar __export = (target, all) => {\n  for (var name in all)\n    __defProp(target, name, { get: all[name], enumerable: true });\n};\nvar __copyProps = (to, from, except, desc) => {\n  if (from && typeof from === \"object\" || typeof from === \"function\") {\n    for (let key of __getOwnPropNames(from))\n      if (!__hasOwnProp.call(to, key) && key !== except)\n        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });\n  }\n  return to;\n};\nvar __toCommonJS = (mod) => __copyProps(__defProp({}, \"__esModule\", { value: true }), mod);\nvar __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== \"symbol\" ? key + \"\" : key, value);\nvar stdin_exports = {};\n__export(stdin_exports, {\n  default: () => stdin_default\n});\nmodule.exports = __toCommonJS(stdin_exports);\nclass Coin extends ScriptComponent {\n  constructor() {\n    super(...arguments);\n    __publicField(this, \"collected\", false);\n  }\n  onCollision(otherId) {\n    if (this.collected) return;\n    if (this.world.getName(otherId) === \"Player\") {\n      this.collected = true;\n      this.audio.playSound(\"pickup\");\n      this.destroy();\n    }\n  }\n}\nvar stdin_default = Coin;\n//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsiPHN0ZGluPiJdLAogICJzb3VyY2VzQ29udGVudCI6IFsiY2xhc3MgQ29pbiBleHRlbmRzIFNjcmlwdENvbXBvbmVudCB7XG4gIGNvbGxlY3RlZCA9IGZhbHNlO1xuICBvbkNvbGxpc2lvbihvdGhlcklkKSB7XG4gICAgLy8gR3VhcmQgZmlyc3Q6IG9uQ29sbGlzaW9uIGNhbiBmaXJlIG9uIGNvbnNlY3V0aXZlIGZpeGVkIHN0ZXBzIGJlZm9yZVxuICAgIC8vIGRlc3Ryb3koKSB0YWtlcyB0aGUgY29pbiBvdXQgb2YgdGhlIHdvcmxkIFx1MjAxNCB3aXRob3V0IHRoaXMsIG9uZSBwaWNrdXBcbiAgICAvLyBwbGF5cyB0aGUgc291bmQgdHdpY2UgKGFuZCB3b3VsZCBzY29yZSB0d2ljZSkuXG4gICAgaWYgKHRoaXMuY29sbGVjdGVkKSByZXR1cm47XG4gICAgaWYgKHRoaXMud29ybGQuZ2V0TmFtZShvdGhlcklkKSA9PT0gJ1BsYXllcicpIHtcbiAgICAgIHRoaXMuY29sbGVjdGVkID0gdHJ1ZTtcbiAgICAgIHRoaXMuYXVkaW8ucGxheVNvdW5kKCdwaWNrdXAnKTtcbiAgICAgIHRoaXMuZGVzdHJveSgpO1xuICAgIH1cbiAgfVxufVxuZXhwb3J0IGRlZmF1bHQgQ29pbjsiXSwKICAibWFwcGluZ3MiOiAiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBLE1BQU0sYUFBYSxnQkFBZ0I7QUFBQSxFQUFuQztBQUFBO0FBQ0UscUNBQVk7QUFBQTtBQUFBLEVBQ1osWUFBWSxTQUFTO0FBSW5CLFFBQUksS0FBSyxVQUFXO0FBQ3BCLFFBQUksS0FBSyxNQUFNLFFBQVEsT0FBTyxNQUFNLFVBQVU7QUFDNUMsV0FBSyxZQUFZO0FBQ2pCLFdBQUssTUFBTSxVQUFVLFFBQVE7QUFDN0IsV0FBSyxRQUFRO0FBQUEsSUFDZjtBQUFBLEVBQ0Y7QUFDRjtBQUNBLElBQU8sZ0JBQVE7IiwKICAibmFtZXMiOiBbXQp9Cg==\n"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": false
+            }
+          }
+        },
+        {
+          "id": "coin-3",
+          "name": "Coin",
+          "components": {
+            "transform": {
+              "x": 9,
+              "y": -0.5,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "platformer-props-tex",
+              "width": 0.5,
+              "height": 0.5,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "coin"
+            },
+            "rigidBody": {
+              "type": "static",
+              "gravityScale": 0,
+              "linearDamping": 0,
+              "angularDamping": 0,
+              "fixedRotation": true
+            },
+            "boxCollider": {
+              "width": 0.5,
+              "height": 0.5,
+              "isSensor": true
+            },
+            "script": {
+              "src": "class Coin extends ScriptComponent {\n  collected = false;\n  onCollision(otherId) {\n    // Guard first: onCollision can fire on consecutive fixed steps before\n    // destroy() takes the coin out of the world \u2014 without this, one pickup\n    // plays the sound twice (and would score twice).\n    if (this.collected) return;\n    if (this.world.getName(otherId) === 'Player') {\n      this.collected = true;\n      this.audio.playSound('pickup');\n      this.destroy();\n    }\n  }\n}\nexport default Coin;",
+              "compiledJs": "var __defProp = Object.defineProperty;\nvar __getOwnPropDesc = Object.getOwnPropertyDescriptor;\nvar __getOwnPropNames = Object.getOwnPropertyNames;\nvar __hasOwnProp = Object.prototype.hasOwnProperty;\nvar __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;\nvar __export = (target, all) => {\n  for (var name in all)\n    __defProp(target, name, { get: all[name], enumerable: true });\n};\nvar __copyProps = (to, from, except, desc) => {\n  if (from && typeof from === \"object\" || typeof from === \"function\") {\n    for (let key of __getOwnPropNames(from))\n      if (!__hasOwnProp.call(to, key) && key !== except)\n        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });\n  }\n  return to;\n};\nvar __toCommonJS = (mod) => __copyProps(__defProp({}, \"__esModule\", { value: true }), mod);\nvar __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== \"symbol\" ? key + \"\" : key, value);\nvar stdin_exports = {};\n__export(stdin_exports, {\n  default: () => stdin_default\n});\nmodule.exports = __toCommonJS(stdin_exports);\nclass Coin extends ScriptComponent {\n  constructor() {\n    super(...arguments);\n    __publicField(this, \"collected\", false);\n  }\n  onCollision(otherId) {\n    if (this.collected) return;\n    if (this.world.getName(otherId) === \"Player\") {\n      this.collected = true;\n      this.audio.playSound(\"pickup\");\n      this.destroy();\n    }\n  }\n}\nvar stdin_default = Coin;\n//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsiPHN0ZGluPiJdLAogICJzb3VyY2VzQ29udGVudCI6IFsiY2xhc3MgQ29pbiBleHRlbmRzIFNjcmlwdENvbXBvbmVudCB7XG4gIGNvbGxlY3RlZCA9IGZhbHNlO1xuICBvbkNvbGxpc2lvbihvdGhlcklkKSB7XG4gICAgLy8gR3VhcmQgZmlyc3Q6IG9uQ29sbGlzaW9uIGNhbiBmaXJlIG9uIGNvbnNlY3V0aXZlIGZpeGVkIHN0ZXBzIGJlZm9yZVxuICAgIC8vIGRlc3Ryb3koKSB0YWtlcyB0aGUgY29pbiBvdXQgb2YgdGhlIHdvcmxkIFx1MjAxNCB3aXRob3V0IHRoaXMsIG9uZSBwaWNrdXBcbiAgICAvLyBwbGF5cyB0aGUgc291bmQgdHdpY2UgKGFuZCB3b3VsZCBzY29yZSB0d2ljZSkuXG4gICAgaWYgKHRoaXMuY29sbGVjdGVkKSByZXR1cm47XG4gICAgaWYgKHRoaXMud29ybGQuZ2V0TmFtZShvdGhlcklkKSA9PT0gJ1BsYXllcicpIHtcbiAgICAgIHRoaXMuY29sbGVjdGVkID0gdHJ1ZTtcbiAgICAgIHRoaXMuYXVkaW8ucGxheVNvdW5kKCdwaWNrdXAnKTtcbiAgICAgIHRoaXMuZGVzdHJveSgpO1xuICAgIH1cbiAgfVxufVxuZXhwb3J0IGRlZmF1bHQgQ29pbjsiXSwKICAibWFwcGluZ3MiOiAiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBLE1BQU0sYUFBYSxnQkFBZ0I7QUFBQSxFQUFuQztBQUFBO0FBQ0UscUNBQVk7QUFBQTtBQUFBLEVBQ1osWUFBWSxTQUFTO0FBSW5CLFFBQUksS0FBSyxVQUFXO0FBQ3BCLFFBQUksS0FBSyxNQUFNLFFBQVEsT0FBTyxNQUFNLFVBQVU7QUFDNUMsV0FBSyxZQUFZO0FBQ2pCLFdBQUssTUFBTSxVQUFVLFFBQVE7QUFDN0IsV0FBSyxRQUFRO0FBQUEsSUFDZjtBQUFBLEVBQ0Y7QUFDRjtBQUNBLElBQU8sZ0JBQVE7IiwKICAibmFtZXMiOiBbXQp9Cg==\n"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": false
+            }
+          }
+        },
+        {
+          "id": "gem-1",
+          "name": "Blue Gem",
+          "components": {
+            "transform": {
+              "x": 3,
+              "y": 2.5,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "platformer-props-tex",
+              "width": 0.5,
+              "height": 0.5,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "gem"
+            },
+            "rigidBody": {
+              "type": "static",
+              "gravityScale": 0,
+              "linearDamping": 0,
+              "angularDamping": 0,
+              "fixedRotation": true
+            },
+            "boxCollider": {
+              "width": 0.5,
+              "height": 0.5,
+              "isSensor": true
+            },
+            "script": {
+              "src": "class Coin extends ScriptComponent {\n  collected = false;\n  onCollision(otherId) {\n    // Guard first: onCollision can fire on consecutive fixed steps before\n    // destroy() takes the coin out of the world \u2014 without this, one pickup\n    // plays the sound twice (and would score twice).\n    if (this.collected) return;\n    if (this.world.getName(otherId) === 'Player') {\n      this.collected = true;\n      this.audio.playSound('pickup');\n      this.destroy();\n    }\n  }\n}\nexport default Coin;",
+              "compiledJs": "var __defProp = Object.defineProperty;\nvar __getOwnPropDesc = Object.getOwnPropertyDescriptor;\nvar __getOwnPropNames = Object.getOwnPropertyNames;\nvar __hasOwnProp = Object.prototype.hasOwnProperty;\nvar __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;\nvar __export = (target, all) => {\n  for (var name in all)\n    __defProp(target, name, { get: all[name], enumerable: true });\n};\nvar __copyProps = (to, from, except, desc) => {\n  if (from && typeof from === \"object\" || typeof from === \"function\") {\n    for (let key of __getOwnPropNames(from))\n      if (!__hasOwnProp.call(to, key) && key !== except)\n        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });\n  }\n  return to;\n};\nvar __toCommonJS = (mod) => __copyProps(__defProp({}, \"__esModule\", { value: true }), mod);\nvar __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== \"symbol\" ? key + \"\" : key, value);\nvar stdin_exports = {};\n__export(stdin_exports, {\n  default: () => stdin_default\n});\nmodule.exports = __toCommonJS(stdin_exports);\nclass Coin extends ScriptComponent {\n  constructor() {\n    super(...arguments);\n    __publicField(this, \"collected\", false);\n  }\n  onCollision(otherId) {\n    if (this.collected) return;\n    if (this.world.getName(otherId) === \"Player\") {\n      this.collected = true;\n      this.audio.playSound(\"pickup\");\n      this.destroy();\n    }\n  }\n}\nvar stdin_default = Coin;\n//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsiPHN0ZGluPiJdLAogICJzb3VyY2VzQ29udGVudCI6IFsiY2xhc3MgQ29pbiBleHRlbmRzIFNjcmlwdENvbXBvbmVudCB7XG4gIGNvbGxlY3RlZCA9IGZhbHNlO1xuICBvbkNvbGxpc2lvbihvdGhlcklkKSB7XG4gICAgLy8gR3VhcmQgZmlyc3Q6IG9uQ29sbGlzaW9uIGNhbiBmaXJlIG9uIGNvbnNlY3V0aXZlIGZpeGVkIHN0ZXBzIGJlZm9yZVxuICAgIC8vIGRlc3Ryb3koKSB0YWtlcyB0aGUgY29pbiBvdXQgb2YgdGhlIHdvcmxkIFx1MjAxNCB3aXRob3V0IHRoaXMsIG9uZSBwaWNrdXBcbiAgICAvLyBwbGF5cyB0aGUgc291bmQgdHdpY2UgKGFuZCB3b3VsZCBzY29yZSB0d2ljZSkuXG4gICAgaWYgKHRoaXMuY29sbGVjdGVkKSByZXR1cm47XG4gICAgaWYgKHRoaXMud29ybGQuZ2V0TmFtZShvdGhlcklkKSA9PT0gJ1BsYXllcicpIHtcbiAgICAgIHRoaXMuY29sbGVjdGVkID0gdHJ1ZTtcbiAgICAgIHRoaXMuYXVkaW8ucGxheVNvdW5kKCdwaWNrdXAnKTtcbiAgICAgIHRoaXMuZGVzdHJveSgpO1xuICAgIH1cbiAgfVxufVxuZXhwb3J0IGRlZmF1bHQgQ29pbjsiXSwKICAibWFwcGluZ3MiOiAiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBLE1BQU0sYUFBYSxnQkFBZ0I7QUFBQSxFQUFuQztBQUFBO0FBQ0UscUNBQVk7QUFBQTtBQUFBLEVBQ1osWUFBWSxTQUFTO0FBSW5CLFFBQUksS0FBSyxVQUFXO0FBQ3BCLFFBQUksS0FBSyxNQUFNLFFBQVEsT0FBTyxNQUFNLFVBQVU7QUFDNUMsV0FBSyxZQUFZO0FBQ2pCLFdBQUssTUFBTSxVQUFVLFFBQVE7QUFDN0IsV0FBSyxRQUFRO0FBQUEsSUFDZjtBQUFBLEVBQ0Y7QUFDRjtBQUNBLElBQU8sZ0JBQVE7IiwKICAibmFtZXMiOiBbXQp9Cg==\n"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": false
+            }
+          }
+        },
+        {
+          "id": "ghost-1",
+          "name": "Ghost",
+          "components": {
+            "transform": {
+              "x": 5,
+              "y": 0.5,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "platformer-chars-tex",
+              "width": 1.0,
+              "height": 1.0,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "char08"
+            },
+            "rigidBody": {
+              "type": "dynamic",
+              "gravityScale": 0,
+              "linearDamping": 0,
+              "angularDamping": 0,
+              "fixedRotation": true
+            },
+            "boxCollider": {
+              "width": 0.8,
+              "height": 0.8,
+              "isSensor": true
+            },
+            "script": {
+              "src": "class Ghost extends ScriptComponent {\n  timer = 0;\n  onUpdate(dt) {\n    this.timer += dt;\n    this.setVelocity(Math.sin(this.timer * 0.8) * 2, 0);\n  }\n  onCollision(otherId) {\n    if (this.world.getName(otherId) === 'Player') {\n      this.physics.teleport(otherId, -8, 2);\n      this.physics.setVelocity(otherId, 0, 0);\n    }\n  }\n}\nexport default Ghost;",
+              "compiledJs": "var __defProp = Object.defineProperty;\nvar __getOwnPropDesc = Object.getOwnPropertyDescriptor;\nvar __getOwnPropNames = Object.getOwnPropertyNames;\nvar __hasOwnProp = Object.prototype.hasOwnProperty;\nvar __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;\nvar __export = (target, all) => {\n  for (var name in all)\n    __defProp(target, name, { get: all[name], enumerable: true });\n};\nvar __copyProps = (to, from, except, desc) => {\n  if (from && typeof from === \"object\" || typeof from === \"function\") {\n    for (let key of __getOwnPropNames(from))\n      if (!__hasOwnProp.call(to, key) && key !== except)\n        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });\n  }\n  return to;\n};\nvar __toCommonJS = (mod) => __copyProps(__defProp({}, \"__esModule\", { value: true }), mod);\nvar __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== \"symbol\" ? key + \"\" : key, value);\nvar stdin_exports = {};\n__export(stdin_exports, {\n  default: () => stdin_default\n});\nmodule.exports = __toCommonJS(stdin_exports);\nclass Ghost extends ScriptComponent {\n  constructor() {\n    super(...arguments);\n    __publicField(this, \"timer\", 0);\n  }\n  onUpdate(dt) {\n    this.timer += dt;\n    this.setVelocity(Math.sin(this.timer * 0.8) * 2, 0);\n  }\n  onCollision(otherId) {\n    if (this.world.getName(otherId) === \"Player\") {\n      this.physics.teleport(otherId, -8, 2);\n      this.physics.setVelocity(otherId, 0, 0);\n    }\n  }\n}\nvar stdin_default = Ghost;\n//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsiPHN0ZGluPiJdLAogICJzb3VyY2VzQ29udGVudCI6IFsiY2xhc3MgR2hvc3QgZXh0ZW5kcyBTY3JpcHRDb21wb25lbnQge1xuICB0aW1lciA9IDA7XG4gIG9uVXBkYXRlKGR0KSB7XG4gICAgdGhpcy50aW1lciArPSBkdDtcbiAgICB0aGlzLnNldFZlbG9jaXR5KE1hdGguc2luKHRoaXMudGltZXIgKiAwLjgpICogMiwgMCk7XG4gIH1cbiAgb25Db2xsaXNpb24ob3RoZXJJZCkge1xuICAgIGlmICh0aGlzLndvcmxkLmdldE5hbWUob3RoZXJJZCkgPT09ICdQbGF5ZXInKSB7XG4gICAgICB0aGlzLnBoeXNpY3MudGVsZXBvcnQob3RoZXJJZCwgLTgsIDIpO1xuICAgICAgdGhpcy5waHlzaWNzLnNldFZlbG9jaXR5KG90aGVySWQsIDAsIDApO1xuICAgIH1cbiAgfVxufVxuZXhwb3J0IGRlZmF1bHQgR2hvc3Q7Il0sCiAgIm1hcHBpbmdzIjogIjs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQSxNQUFNLGNBQWMsZ0JBQWdCO0FBQUEsRUFBcEM7QUFBQTtBQUNFLGlDQUFRO0FBQUE7QUFBQSxFQUNSLFNBQVMsSUFBSTtBQUNYLFNBQUssU0FBUztBQUNkLFNBQUssWUFBWSxLQUFLLElBQUksS0FBSyxRQUFRLEdBQUcsSUFBSSxHQUFHLENBQUM7QUFBQSxFQUNwRDtBQUFBLEVBQ0EsWUFBWSxTQUFTO0FBQ25CLFFBQUksS0FBSyxNQUFNLFFBQVEsT0FBTyxNQUFNLFVBQVU7QUFDNUMsV0FBSyxRQUFRLFNBQVMsU0FBUyxJQUFJLENBQUM7QUFDcEMsV0FBSyxRQUFRLFlBQVksU0FBUyxHQUFHLENBQUM7QUFBQSxJQUN4QztBQUFBLEVBQ0Y7QUFDRjtBQUNBLElBQU8sZ0JBQVE7IiwKICAibmFtZXMiOiBbXQp9Cg==\n"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": false
+            }
+          }
+        }
+      ]
+    }
+  },
+  "settings": {
+    "startScene": "main",
+    "physics": {
+      "gravity": {
+        "x": 0,
+        "y": -20
+      }
+    },
+    "postProcess": {
+      "bloom": false,
+      "vignette": false,
+      "crt": false,
+      "bloomThreshold": 0.8,
+      "vignetteStrength": 0.3
+    },
+    "input": {},
+    "backgroundColor": "#7FB8DC"
+  }
+}

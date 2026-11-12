@@ -1,0 +1,140 @@
+{
+ "format": "v2-asset-layout (hash-named files; loader not implemented yet \u2014 templates embed the same bytes as base64 until then)",
+ "assets": [
+  {
+   "asset_id": "farm-tiles",
+   "file": "27ac2a41bf3349df3f279751bce4ee2d10ae060f6016c998ab37d524a1c3fa0c.png",
+   "sha256": "27ac2a41bf3349df3f279751bce4ee2d10ae060f6016c998ab37d524a1c3fa0c",
+   "bytes": 12364,
+   "pack": "Tiny Farm + Tiny Town",
+   "source": "tiny-farm/Tiles/tile_*.png (12x11 sheet; index 0=tiny-town/tile_0000 grass, index 1=tiny-town/tile_0013 dirt)",
+   "license": "CC0 1.0"
+  },
+  {
+   "asset_id": "farm-atlas-tex",
+   "file": "ce36c7d2135699a1f5fc5df615a2f5a1ed61ed74e9f0a254a6aa1eb2e7f2ed93.png",
+   "sha256": "ce36c7d2135699a1f5fc5df615a2f5a1ed61ed74e9f0a254a6aa1eb2e7f2ed93",
+   "bytes": 4037,
+   "pack": "Tiny Farm",
+   "source": "tiny-farm/Tiles (31 regions: props + trees + barn)",
+   "license": "CC0 1.0"
+  },
+  {
+   "asset_id": "platformer-tiles",
+   "file": "411d55273c85d458e45ba8fc9980cb1c94f13937f8ac982fa172878cf09c010b.png",
+   "sha256": "411d55273c85d458e45ba8fc9980cb1c94f13937f8ac982fa172878cf09c010b",
+   "bytes": 11186,
+   "pack": "Pixel Platformer",
+   "source": "pixel-platformer/Tiles/tile_*.png (composed 20x9 sheet)",
+   "license": "CC0 1.0"
+  },
+  {
+   "asset_id": "platformer-chars-tex",
+   "file": "8f404a40fc9ece8f51d0cdbda5b8ffc77ce81f75a7dc1ab212136b8d82a3e909.png",
+   "sha256": "8f404a40fc9ece8f51d0cdbda5b8ffc77ce81f75a7dc1ab212136b8d82a3e909",
+   "bytes": 4055,
+   "pack": "Pixel Platformer",
+   "source": "pixel-platformer/Tiles/Characters/*.png (composed 6x5 sheet)",
+   "license": "CC0 1.0"
+  },
+  {
+   "asset_id": "platformer-props-tex",
+   "file": "7349a572ff6f32dc32656b230b51f229876d0aaa19dda4fa3c512f35919a7b3c.png",
+   "sha256": "7349a572ff6f32dc32656b230b51f229876d0aaa19dda4fa3c512f35919a7b3c",
+   "bytes": 640,
+   "pack": "Pixel Platformer",
+   "source": "pixel-platformer/Tiles (coin/gem/door/heart)",
+   "license": "CC0 1.0"
+  },
+  {
+   "asset_id": "player-ship",
+   "file": "648ec1635979fb867d08bfd0c56f011d6559dd953a13c73109c6186a3069f7ee.png",
+   "sha256": "648ec1635979fb867d08bfd0c56f011d6559dd953a13c73109c6186a3069f7ee",
+   "bytes": 2698,
+   "pack": "Space Shooter Remastered",
+   "source": "space-shooter-remastered/PNG/playerShip1_blue.png",
+   "license": "CC0 1.0"
+  },
+  {
+   "asset_id": "enemy-black",
+   "file": "2aaa39e6aa389bc334df6b57f147e5db2ba5c1648d138fdc55568ccf80d91d5b.png",
+   "sha256": "2aaa39e6aa389bc334df6b57f147e5db2ba5c1648d138fdc55568ccf80d91d5b",
+   "bytes": 3019,
+   "pack": "Space Shooter Remastered",
+   "source": "space-shooter-remastered/PNG/Enemies/enemyBlack1.png",
+   "license": "CC0 1.0"
+  },
+  {
+   "asset_id": "laser-blue",
+   "file": "eced881c4ebd76a13e48c388c3d8a82c7c177085b053b40124de517d9c563a3a.png",
+   "sha256": "eced881c4ebd76a13e48c388c3d8a82c7c177085b053b40124de517d9c563a3a",
+   "bytes": 744,
+   "pack": "Space Shooter Remastered",
+   "source": "space-shooter-remastered/PNG/Lasers/laserBlue01.png",
+   "license": "CC0 1.0"
+  },
+  {
+   "asset_id": "meteor-brown",
+   "file": "1ec7a519ecc1e52af8b84511cc502047952bbc30ec93e1739a8c88946c6c6580.png",
+   "sha256": "1ec7a519ecc1e52af8b84511cc502047952bbc30ec93e1739a8c88946c6c6580",
+   "bytes": 1804,
+   "pack": "Space Shooter Remastered",
+   "source": "space-shooter-remastered/PNG/Meteors/meteorBrown_big1.png",
+   "license": "CC0 1.0"
+  },
+  {
+   "asset_id": "powerup-bolt",
+   "file": "370b7002f2c4403aeb24f5c7b8680862aea73ec2124fdbff472ecec49c04a603.png",
+   "sha256": "370b7002f2c4403aeb24f5c7b8680862aea73ec2124fdbff472ecec49c04a603",
+   "bytes": 601,
+   "pack": "Space Shooter Remastered",
+   "source": "space-shooter-remastered/PNG/Power-ups/powerupBlue_bolt.png",
+   "license": "CC0 1.0"
+  },
+  {
+   "asset_id": "bg-stars",
+   "file": "8245e3d8c5341981135b1699de877fdc994e52cc180ad63ebc18948f63241e61.png",
+   "sha256": "8245e3d8c5341981135b1699de877fdc994e52cc180ad63ebc18948f63241e61",
+   "bytes": 2880,
+   "pack": "Space Shooter Remastered",
+   "source": "space-shooter-remastered/Backgrounds/darkPurple.png",
+   "license": "CC0 1.0"
+  },
+  {
+   "asset_id": "sfx-laser",
+   "file": "910a0ad63ca51685b541e285550c5cc13ff04be2b48a77314d0bf138b044e3d6.ogg",
+   "sha256": "910a0ad63ca51685b541e285550c5cc13ff04be2b48a77314d0bf138b044e3d6",
+   "bytes": 15891,
+   "pack": "Space Shooter Remastered",
+   "source": "space-shooter-remastered/Bonus/sfx_laser1.ogg",
+   "license": "CC0 1.0"
+  },
+  {
+   "asset_id": "ui-click",
+   "file": "ccfb7fa0cccdd9faec0eb16033c732b1e308d139d80f799161495d58f7adcdb9.ogg",
+   "sha256": "ccfb7fa0cccdd9faec0eb16033c732b1e308d139d80f799161495d58f7adcdb9",
+   "bytes": 4876,
+   "pack": "Interface Sounds",
+   "source": "interface-sounds/Audio/click_001.ogg",
+   "license": "CC0 1.0"
+  },
+  {
+   "asset_id": "pickup",
+   "file": "063564703b6094d70718a3e787a55cc9141611e4ecd6b6637f8828f79b4a8c3a.ogg",
+   "sha256": "063564703b6094d70718a3e787a55cc9141611e4ecd6b6637f8828f79b4a8c3a",
+   "bytes": 8968,
+   "pack": "Interface Sounds",
+   "source": "interface-sounds/Audio/confirmation_001.ogg",
+   "license": "CC0 1.0"
+  },
+  {
+   "asset_id": "town-tiles",
+   "file": "f03b5de5083ce3ed70c88d483768bea750a36bd94dec4d6e0408ae8c0a81cf1e.png",
+   "sha256": "f03b5de5083ce3ed70c88d483768bea750a36bd94dec4d6e0408ae8c0a81cf1e",
+   "bytes": 166,
+   "pack": "Tiny Town",
+   "source": "tiny-town/Tiles/tile_0108.png, tile_0109.png, tile_0110.png (pond water, packed into a 3-wide sheet by harvest-valley/build.py)",
+   "license": "CC0 1.0"
+  }
+ ]
+}

@@ -1,0 +1,2504 @@
+{
+ "version": "1.0.0",
+ "meta": {
+  "name": "Harvest Valley",
+  "resolution": {
+   "width": 1280,
+   "height": 720
+  }
+ },
+ "assets": {
+  "farm-tiles": {
+   "id": "farm-tiles",
+   "type": "texture",
+   "name": "Farm tileset sheet 12x11 (Tiny Farm; grass+dirt from Tiny Town)",
+   "mimeType": "image/png",
+   "data": "data:image/png;base64,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"
+  },
+  "farm-tileset": {
+   "id": "farm-tileset",
+   "type": "tileset",
+   "name": "Tiny Farm tileset",
+   "mimeType": "application/json",
+   "data": "{\"textureId\": \"farm-tiles\", \"tileWidth\": 16, \"tileHeight\": 16, \"columns\": 12, \"rows\": 11, \"spacing\": 0}"
+  },
+  "farm-atlas-tex": {
+   "id": "farm-atlas-tex",
+   "type": "texture",
+   "name": "Tiny Farm props atlas (9x4, 31 regions)",
+   "mimeType": "image/png",
+   "data": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJAAAABACAYAAAD1eP6XAAAPjElEQVR42u1df0xV1x3/QHCpSReTilVmiRax2K3kgaHKk07ETssiayKVrilq2Gb6YzS0NjWrVWEgzm52szVz1k5bUmRryqpp1ZXiAtL1wUOJ8Ep/gEUdIjKtmrgsqfaH7o/HOXzveeece+5796Gu75u8cO+553vvued8zuf745z3iIPLkntH5lXd9ZajnXGISVT7T3cPt/s/zs0XsNN1+hL0fi1HO+PE80gG5HoEcqT953b/OwZQuA0Q9V5cOg0A4LkvHwAQeK8BAPDUrmOugjGa+m6Azwngad3KunppnYriIuMxKFi1PkR/36Z1roMoTtaA2RPG4L7MREvF9zrPof3zr0IaIOtkBiBRRACZzKaGHYuRv2IPL6fnVFcHmIO9Ryzn89JmRjybTZ/t9H1V4BFBpAKQDDjhgEj2TrL6CWKBDDwAgmUCiKg015Yi8F4Dntp1DP9t71e+wItLp8FzXz7ylm01GrCzPQPK89w7Mq+Kpo3K5Ht/ilODp1H8y98ic+ZdAIDOIx/h6owfIq7nn0ZsUD092EVrP/sa1dMTsPazrx0BrbKu3sIcJqzUEeiV3ivLk2Y82HdnzLCcH+7q4cxEQeRk8rD+1gKIgWfOg9lofdPPy+c8mA3Aj/bGIe3DVewDAC/Odtbgyrp6nABwsHfkni0dx1BZNzITqS5lGsoyDDhOfZC9yzMRaOvmQBLBI7aVsoQIHPFcNSAq8Nhdo+xzd8aMkGdV1tVzEJnKuJWTMcuTDAA4UOKXtjlBphgEy8hfS3njHunD8pZtRXNtqVHDKPuIAHhhx35+bcvWGpSVlqCl4xhys6ahpeNYiC+gMlP0PO2uBcia+6PgILz/DyR9dd4WPNXTExBo64bHm47vrtk5fKOZ2vdi7S1YtR5bttaEXKusq8eWrTXw5mTbsgBlEacDL+ufcJz4WZ5k5G7ogMebjrLlmfjJ650hOvEq8Hgef99SLp7LaDhv2VYMBNoxEGjHjJ+/wY/pOQUP1RUBwOSRkseU56aOIAOPeGwiHDyaNjIpKy2xvd/51v1Ri+L2bVoXAsyCVetRsGo9B6EKuE78OK0JO9szgFtnJNv6HyKIWAOYLnCCHNPzDkeD/0rNywCAk39+BLNnJOPAk7dj+Qvn5e0YZqjcrFAzemrwdEjkIAsEDvYewby0mdznoSzW+9EBpfmpKC5Cwar1aPP5UVZagjafPyz22Pu7tSP9PWEMACj9TlWKQxWJmTjQC2qCBHIoMDLWzIwbAWj5Cx14/RngwJO3WwBw4MngNTvJX7EHDTsWI7BtrgVwgW1zLdGUU2FtoSA0lbo//SrEJ9JFawd7j6Cl4xjuIUDs/egArjQvQdPLKZj/2HHp4O3btA7j5yzC4a6eIBuVluBwVw/3jw539WD8nEXGIMjPHB8EUOO/baMhWVTIQCyynjb6GjZZS8cP112Txf0f2eSJF2fg3uWZWNk6EX0fDqL1TT//rGydiL3LM6WUJ+oXv/olWt/04+TbXTj5dhf6PhxE8atfKvWpPLNipIPfem3El8hfsYd/lC+fNY2zD2Mj6kTahciUyUQfBgBaf3/SAh7dgBzu6uHsQ4/Pt+5XmhETVnaSvym9+QhKbz7iWD/Q1o2LmwctzvSCmmzOThYfSBx87sBNmmT5yOrk3pF5Vafv8abD403X6tPGMAf6mRWLOJDeem09crOm4WDvEf6xG3yZGaPgUs5iovvWa+vxwM/W8XJ2zQ6ETnwc3WBWT0/AmBPnMObEOYspdSLp3hSke1McgWftZ19Lo83cDR0oa7qsdqIbdizGmLlTub0r6fue5cOQOWbuVDTsWBxyI1H/lUkPcN1XJj1gqy+yDwUVjcxUpoiVy/wfO10RRBQw9J7f/PqvRmBQMYzTTPBzn1zCc59cCtvsd7cdR3fb8bDAPG7lZH7M2EjmCyXIEDh+ghqdDQYIHj8BaP2gbYT6h491+vPSZqKyrh65dS+NlP39Az7r2XXxhanv0NJxLCQHw45lurLwl4XajP1EEImmUeXH6MJ0UzP0m+/fhNEU2v6LmweBmmTLuMraL/XemaPH6Fg8txMn+rTRLAISs6WsnP1VOY3j5yzC+db9/K+qTDaAYiR2auOdAIDbVn9qOZY930lIHO76mxPwjeYCsnQ9q3xhEgCgajjrLJ5DEwaHox8T9wEg3iNafW27Gi8LL91YhLtWgzFabTF9bnXr41cjec7aOdscL+o6WUC220YT1oqyiRlwIwx1a+batcFNkDk1QW4BKNLxC1c/5OEbm5fySqvzdkEsp2WqRtB8gZiEisR/cDp7mLA1OraMYrIVw2SC2A1C08vBEFrMHVE9NwAk20vE1txYQpEts8j2FFF9up5Jl52aa0tDdlC0HO2Mi5elscXzBTXZ+OaRN9DU32fJSegGbf6UVMt9ZEmocBhEVoeW1VfkoLm2lPtd9RU5RgNRX5FjqSs+x+65VHaVfIFdJV8oz6PFuizirCgu4gnLfZvW4Xzrfl5Oo1GV7yqeB/t0t6VfmX5IGN/U38dZgw187obg0kFZ02XAm45qdGu3NrD7HAoMGAFHBgIAKKr0Sc9l2yBYvcTUDJzr60K6NwXlfPbsDnHgdUBizzFpm2owbissQ9Mf9wUn0xNlOLV7i6Wu26acgUcEgSpVIVuxT/emWPqqviIH9d4Unkui/crqWABEzc2CmmwcCgzw/SBOhALwUGDAkhY3GUCWBKPH6d4U6eBSYeBhf5mYgKeo0ofyhUmWzK2qbdqJM2y2GHjY8bzCH6ApG9KlELeEgaex44z0+sKsiVqA0b5tri219KFKQrZzVE9P4KzDwMPYJtDWjUCbPfvQjpzlSebHJlJU6UNiagbylhXyTGreskIkpmZowcNsdlGlD821uzno7NiOMoFYX2aiutuO27bjWkpjxxn4L1yRflTAEkHYXFuK5trdIROQjQedkPEieJip8njTueliIBLXSVQ0LAOMKYjoLM9bVoi8ZYW2DCC2o6pxyPKSrFNkPg4FiSz1L4LIbm1p/mPHcdr/MeY/UTBS9kRBsCyK7OMmgzFTRfuC9Snt1xAnWiXjVk62RGd2kdRp/8fBiO3SWay+dNZSZiIy6rSj05ajnXGyNjEmYqZNBcL6ihwLOESnWgYwXX7k1O4tmFc4FvMKx1r8n2inMhZmTQzrmk5kO03ZO1h8ILaJii2atazJAgCs2ncGTZ4+y75gO0fQCWBkfowMMImpGQB8Ro64aOupfyS7B/OB7JzqdG8K6r0pWjO2tGZskHWzrefRlIriImTfEm/r5zR2nIG/Ub7ltapxCOULk/gkYROKRWDUwWbjL11M5Y40EFYERuXTfxmRHM946vZWy/I4KjahndDddhzgtttnm2nXOdWiD6C71+Ley8ocmltCn+m/cAWw8XP8F66EsAi9B303uwgshIEW1GTjQImfR0/hytKasTzvcefUK8azkO9ym70i4o6tahxC/fDgywbcxIzoIjKTROIsT7IlHxYtoQBgZkoGfADwD/eFKplKI18TCQnjxbxNy5os5G7o4GZNxz6y2Swy0GisRenMi2476L1HOy0dyjqxfGESdyBN2k/30siy+terMHNNfT/G4KwvxMmYIA68ZemhJlkJGruOZCx059Qro+IDyNp0a3GnK/etksxaU3n+nWZLHizaE4j5Mbr3sJt4PIFrwOBReZkb6QcNovXesi/lyd7/elqND0fiR4MJvg3gEd/RSfY9mv0e7XGIi8YMVK1/6WaiHYs5/UUMasdZLohRs8yBZJHfSKh//Qltm7gyfq3aH+82eGQiRnR2VOtk5dsNxzom4UuC2+CRRSDMFxi3cjKndpMVacZksj1FJiJbDzNhsnN9XTi48V1tnXmrfywtH209+X3etejY3fuaA0gED2McBhzKQBRETpnMDnS6dSsnkpiagSU7M+Cr2g4AGOq/gKQpt/DrOeWPWur7qrbzMqonCtWjOqZ6JqvjtJ3MlCVNabe8g/g+ThLDlgBgeoLehIlfHLSTi5sHOTjoNhB2TK/bCfWjwtmMRk2W6V4gAOj9S3vIwOnAw+Rvv9iorSOCxw5gsjLaNrckXPAw3QS3G8QGm2Vgm/r7RkBUk6w1RzKwzp+Syu9hwkJsGSPc7LPIDjnlj/IB1zGIE71wnxdNMf1pHibMiU8wGUzdoNn5PzIzJ/OD6H0o4zDwsGUWU//JdCurKYio+dANJtVLe3i2JSKKhp6pUBalx6Lvp2O6tIdnW0yjq1GY6P809fdZmINe0wGN/ryIGL2ZmDI3oy06cGw1XzWYdFB8VdtDwmmqN9R/Qfk8nV4konomkz90J/H3VJlS1i5WVwmgSMNoNvjix1Q3nGuUkaj5ihRQlHl0+RVxgGhd0flVMYCdnlsMJJOn04ek/p/MD3s6fciMgUy/TeHEQbarR51wcT+23f0j/dqwatbRgVQ50SpHmzEKLVOxgZ2eW6JjI8p4OeWP2vph8U7DaLtBYwC5uHkQlZ/fhMrPb7KUyXRFP0rGNIcCAxbTZwcG8RsdTkWcdWLHmuj5qrYrZ7VbetFgI5WjL5N4N8Jo1XbSydMmYfK0Scb1KUBU5s/EUQesOxLtvupiGnLbgWi09aLlD4lBw7m+LuXz43UMI9sMZffLEzozYnddZqKcmrFIhUUaKsfXNEmom8FLdq7Wznw6wFSPts1t0IjvkZgaTGz6qrZzv0wGongZMBjj0CiKslCk61I6MyiaOsY+YrkKiKycOtJO9/Pooi0aLbFZmvbwbH5uqsfA4ETPLcl/KFcahakmjwhiGoWFrErbmSsnK+pORfU/N5z8j41wn/ltXY1n96FfJDTJAykTiQwgoq8xGvtbRGBklnciJqMnDHiJ5eYAjLvSvuOqGzMg0o34MnnplnsAAHXJ/a53VjSZ9Nsk8bEuiEkkksBWkfMfykXDGy2Wi7L9JEt2RuYfyLZ4xOQGBpBukY3uJ3FDnP7SR2LqcBrhsnMTFu4vi8QkTBMmsk80RcU+4oAH9vgQ2OMz0pXdK8ZyN7APJJv9ukVVccBV7OEEGDEGGgUTFi3wOJ39IngOBQZwiGUSAvIdjjH5P2WgSEyHCnwxcxQL4x2DR7WsEZPrEEA0AjNdeIs2eGTHMRBdpwCioLHbL2Iqz96fh2fvz4sIPE5ANH9K6qj8nEpMRoGBTIBjB57q6QmW36U2ZSIRRE621MbkOvOBdL+LYwce2bEORM+/0xw15z4mDgAk2y8SDnBW5+1S7iDUgaf0O/8JqW8ColmeZDz/TnMIkGJhf/TkmqzG68Bj9wU3+lwKTqcgia3G36BhfCTgEevEorNrL/8DKpUNaesDV9IAAAAASUVORK5CYII="
+  },
+  "farm-atlas": {
+   "id": "farm-atlas",
+   "type": "spriteatlas",
+   "name": "Tiny Farm props atlas",
+   "mimeType": "application/json",
+   "data": "{\"textureId\": \"farm-atlas-tex\", \"regions\": {\"farmer_f\": {\"x\": 0.0, \"y\": 0.0, \"w\": 0.111111, \"h\": 0.25}, \"farmer_m\": {\"x\": 0.111111, \"y\": 0.0, \"w\": 0.111111, \"h\": 0.25}, \"cow\": {\"x\": 0.222222, \"y\": 0.0, \"w\": 0.111111, \"h\": 0.25}, \"sheep\": {\"x\": 0.333333, \"y\": 0.0, \"w\": 0.111111, \"h\": 0.25}, \"chicken\": {\"x\": 0.444444, \"y\": 0.0, \"w\": 0.111111, \"h\": 0.25}, \"water_can\": {\"x\": 0.555556, \"y\": 0.0, \"w\": 0.111111, \"h\": 0.25}, \"shovel\": {\"x\": 0.666667, \"y\": 0.0, \"w\": 0.111111, \"h\": 0.25}, \"hoe\": {\"x\": 0.777778, \"y\": 0.0, \"w\": 0.111111, \"h\": 0.25}, \"tomato_plant\": {\"x\": 0.888889, \"y\": 0.0, \"w\": 0.111111, \"h\": 0.25}, \"tomato\": {\"x\": 0.0, \"y\": 0.25, \"w\": 0.111111, \"h\": 0.25}, \"carrot\": {\"x\": 0.111111, \"y\": 0.25, \"w\": 0.111111, \"h\": 0.25}, \"pumpkin\": {\"x\": 0.222222, \"y\": 0.25, \"w\": 0.111111, \"h\": 0.25}, \"corn\": {\"x\": 0.333333, \"y\": 0.25, \"w\": 0.111111, \"h\": 0.25}, \"wheat\": {\"x\": 0.444444, \"y\": 0.25, \"w\": 0.111111, \"h\": 0.25}, \"sunflower\": {\"x\": 0.555556, \"y\": 0.25, \"w\": 0.111111, \"h\": 0.25}, \"grass\": {\"x\": 0.666667, \"y\": 0.25, \"w\": 0.111111, \"h\": 0.25}, \"basket\": {\"x\": 0.777778, \"y\": 0.25, \"w\": 0.111111, \"h\": 0.25}, \"hay\": {\"x\": 0.888889, \"y\": 0.25, \"w\": 0.111111, \"h\": 0.25}, \"tree_pine_top\": {\"x\": 0.0, \"y\": 0.5, \"w\": 0.111111, \"h\": 0.25}, \"tree_pine\": {\"x\": 0.111111, \"y\": 0.5, \"w\": 0.111111, \"h\": 0.25}, \"tree_pine_tall\": {\"x\": 0.222222, \"y\": 0.5, \"w\": 0.111111, \"h\": 0.25}, \"tree_trunk\": {\"x\": 0.333333, \"y\": 0.5, \"w\": 0.111111, \"h\": 0.25}, \"barn_wall_x1\": {\"x\": 0.444444, \"y\": 0.5, \"w\": 0.111111, \"h\": 0.25}, \"barn_wall_x2\": {\"x\": 0.555556, \"y\": 0.5, \"w\": 0.111111, \"h\": 0.25}, \"barn_wall_x3\": {\"x\": 0.666667, \"y\": 0.5, \"w\": 0.111111, \"h\": 0.25}, \"barn_wall_v1\": {\"x\": 0.777778, \"y\": 0.5, \"w\": 0.111111, \"h\": 0.25}, \"barn_door\": {\"x\": 0.888889, \"y\": 0.5, \"w\": 0.111111, \"h\": 0.25}, \"barn_wall_v2\": {\"x\": 0.0, \"y\": 0.75, \"w\": 0.111111, \"h\": 0.25}, \"barn_roof_l\": {\"x\": 0.111111, \"y\": 0.75, \"w\": 0.111111, \"h\": 0.25}, \"barn_roof_m\": {\"x\": 0.222222, \"y\": 0.75, \"w\": 0.111111, \"h\": 0.25}, \"barn_roof_r\": {\"x\": 0.333333, \"y\": 0.75, \"w\": 0.111111, \"h\": 0.25}}}"
+  },
+  "ui-click": {
+   "id": "ui-click",
+   "type": "audio",
+   "name": "UI click (Kenney Interface Sounds)",
+   "mimeType": "audio/ogg",
+   "data": "data:audio/ogg;base64,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"
+  },
+  "town-tiles": {
+   "id": "town-tiles",
+   "type": "texture",
+   "name": "town-tiles",
+   "mimeType": "image/png",
+   "data": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAQCAYAAABQrvyxAAAAbUlEQVR42mO0VzP8z8DAwNC4dDUDAwMDQ310KJw92ACy2+qjQxkYGBgYWGCSpy/cYBgKAN2dcA+cP3dlSHgA3Z1wD6QlhUCiZu/KQe0BdHcyMQxxMJoHRvPAaB4YzQOjeWA0D4zmgdE8QEEeAADCz0n1AWpjQwAAAABJRU5ErkJggg=="
+  },
+  "town-tileset": {
+   "id": "town-tileset",
+   "type": "tileset",
+   "name": "town-tileset",
+   "mimeType": "application/json",
+   "data": "{\"textureId\": \"town-tiles\", \"tileWidth\": 16, \"tileHeight\": 16, \"columns\": 3, \"rows\": 1, \"spacing\": 0}"
+  }
+ },
+ "prefabs": {},
+ "scenes": {
+  "main": {
+   "id": "main",
+   "name": "Main Scene",
+   "entities": [
+    {
+     "id": "valley-ground",
+     "name": "Valley Ground",
+     "components": {
+      "transform": {
+       "x": -8,
+       "y": 6.5,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sortingLayer": {
+       "layer": 0,
+       "orderInLayer": 0,
+       "ySort": false
+      },
+      "tilemap": {
+       "tilesetId": "farm-tileset",
+       "layers": [
+        {
+         "name": "Ground",
+         "visible": true,
+         "opacity": 1.0,
+         "tiles": [
+          [
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0
+          ],
+          [
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0
+          ],
+          [
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           12,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0
+          ],
+          [
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           12,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0
+          ],
+          [
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           12,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0
+          ],
+          [
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           12,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0
+          ],
+          [
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           12,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0
+          ],
+          [
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           12,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0
+          ],
+          [
+           24,
+           24,
+           24,
+           24,
+           24,
+           24,
+           24,
+           24,
+           24,
+           24,
+           24,
+           24,
+           24,
+           24,
+           24,
+           24
+          ],
+          [
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           12,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0
+          ],
+          [
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           12,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0
+          ],
+          [
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           12,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0
+          ],
+          [
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0,
+           0
+          ]
+         ]
+        },
+        {
+         "name": "Details",
+         "visible": true,
+         "opacity": 1.0,
+         "tiles": [
+          [
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1
+          ],
+          [
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1
+          ],
+          [
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1
+          ],
+          [
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1
+          ],
+          [
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           110,
+           -1,
+           -1,
+           -1,
+           -1
+          ],
+          [
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1
+          ],
+          [
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1
+          ],
+          [
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           98,
+           99,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1
+          ],
+          [
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1
+          ],
+          [
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1
+          ],
+          [
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1
+          ],
+          [
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1
+          ],
+          [
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1,
+           -1
+          ]
+         ]
+        }
+       ]
+      }
+     }
+    },
+    {
+     "id": "pond",
+     "name": "Pond",
+     "components": {
+      "transform": {
+       "x": -6,
+       "y": -2.5,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sortingLayer": {
+       "layer": 0,
+       "orderInLayer": 1,
+       "ySort": false
+      },
+      "tilemap": {
+       "tilesetId": "town-tileset",
+       "layers": [
+        {
+         "name": "Water",
+         "visible": true,
+         "opacity": 1.0,
+         "tiles": [
+          [
+           0,
+           1,
+           1,
+           2
+          ],
+          [
+           0,
+           1,
+           1,
+           2
+          ]
+         ]
+        }
+       ]
+      }
+     }
+    },
+    {
+     "id": "tree-0",
+     "name": "Pine Tree",
+     "components": {
+      "transform": {
+       "x": -7.5,
+       "y": 4.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "tree_pine"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "tree-1",
+     "name": "Pine Tree",
+     "components": {
+      "transform": {
+       "x": -6.5,
+       "y": 4.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "tree_pine_top"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "tree-2",
+     "name": "Pine Tree",
+     "components": {
+      "transform": {
+       "x": -5.5,
+       "y": 4.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "tree_pine_tall"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "tree-3",
+     "name": "Pine Tree",
+     "components": {
+      "transform": {
+       "x": -4.5,
+       "y": 4.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "tree_pine"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "tree-4",
+     "name": "Pine Tree",
+     "components": {
+      "transform": {
+       "x": -3.5,
+       "y": 4.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "tree_pine_top"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "tree-5",
+     "name": "Pine Tree",
+     "components": {
+      "transform": {
+       "x": -2.5,
+       "y": 4.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "tree_pine_tall"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "tree-6",
+     "name": "Pine Tree",
+     "components": {
+      "transform": {
+       "x": -1.5,
+       "y": 4.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "tree_pine"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "tree-7",
+     "name": "Pine Tree",
+     "components": {
+      "transform": {
+       "x": -0.5,
+       "y": 4.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "tree_pine_top"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "tree-8",
+     "name": "Pine Tree",
+     "components": {
+      "transform": {
+       "x": 0.5,
+       "y": 4.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "tree_pine_tall"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "tree-9",
+     "name": "Pine Tree",
+     "components": {
+      "transform": {
+       "x": 1.5,
+       "y": 4.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "tree_pine"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "tree-10",
+     "name": "Pine Tree",
+     "components": {
+      "transform": {
+       "x": 2.5,
+       "y": 4.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "tree_pine_top"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "tree-11",
+     "name": "Pine Tree",
+     "components": {
+      "transform": {
+       "x": -7.5,
+       "y": 3.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "tree_pine_tall"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "tree-12",
+     "name": "Pine Tree",
+     "components": {
+      "transform": {
+       "x": 7.5,
+       "y": 3.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "tree_pine"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "tree-13",
+     "name": "Pine Tree",
+     "components": {
+      "transform": {
+       "x": -7.5,
+       "y": 2.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "tree_pine_top"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "tree-14",
+     "name": "Pine Tree",
+     "components": {
+      "transform": {
+       "x": 7.5,
+       "y": 2.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "tree_pine_tall"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "tree-15",
+     "name": "Pine Tree",
+     "components": {
+      "transform": {
+       "x": -7.5,
+       "y": 1.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "tree_pine"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "tree-16",
+     "name": "Pine Tree",
+     "components": {
+      "transform": {
+       "x": 7.5,
+       "y": 1.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "tree_pine_top"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "tree-17",
+     "name": "Pine Tree",
+     "components": {
+      "transform": {
+       "x": -7.5,
+       "y": 0.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "tree_pine_tall"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "tree-18",
+     "name": "Pine Tree",
+     "components": {
+      "transform": {
+       "x": 7.5,
+       "y": 0.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "tree_pine"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "tree-19",
+     "name": "Pine Tree",
+     "components": {
+      "transform": {
+       "x": -7.5,
+       "y": -1.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "tree_pine_top"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "tree-20",
+     "name": "Pine Tree",
+     "components": {
+      "transform": {
+       "x": 7.5,
+       "y": -1.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "tree_pine_tall"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "tree-21",
+     "name": "Pine Tree",
+     "components": {
+      "transform": {
+       "x": -7.5,
+       "y": -2.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "tree_pine"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "tree-22",
+     "name": "Pine Tree",
+     "components": {
+      "transform": {
+       "x": 7.5,
+       "y": -2.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "tree_pine_top"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "tree-23",
+     "name": "Pine Tree",
+     "components": {
+      "transform": {
+       "x": -7.5,
+       "y": -3.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "tree_pine_tall"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "tree-24",
+     "name": "Pine Tree",
+     "components": {
+      "transform": {
+       "x": 7.5,
+       "y": -3.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "tree_pine"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "tree-25",
+     "name": "Pine Tree",
+     "components": {
+      "transform": {
+       "x": -7.5,
+       "y": -4.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "tree_pine_top"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "tree-26",
+     "name": "Pine Tree",
+     "components": {
+      "transform": {
+       "x": 7.5,
+       "y": -4.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "tree_pine_tall"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "tree-27",
+     "name": "Pine Tree",
+     "components": {
+      "transform": {
+       "x": -7.5,
+       "y": -5.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "tree_pine"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "tree-28",
+     "name": "Pine Tree",
+     "components": {
+      "transform": {
+       "x": 7.5,
+       "y": -5.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "tree_pine_top"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "tree-29",
+     "name": "Pine Tree",
+     "components": {
+      "transform": {
+       "x": -6.5,
+       "y": -6.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "tree_pine_tall"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "tree-30",
+     "name": "Pine Tree",
+     "components": {
+      "transform": {
+       "x": -5.5,
+       "y": -6.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "tree_pine"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "tree-31",
+     "name": "Pine Tree",
+     "components": {
+      "transform": {
+       "x": -4.5,
+       "y": -6.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "tree_pine_top"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "tree-32",
+     "name": "Pine Tree",
+     "components": {
+      "transform": {
+       "x": -3.5,
+       "y": -6.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "tree_pine_tall"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "tree-33",
+     "name": "Pine Tree",
+     "components": {
+      "transform": {
+       "x": -2.5,
+       "y": -6.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "tree_pine"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "tree-34",
+     "name": "Pine Tree",
+     "components": {
+      "transform": {
+       "x": -1.5,
+       "y": -6.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "tree_pine_top"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "tree-35",
+     "name": "Pine Tree",
+     "components": {
+      "transform": {
+       "x": -0.5,
+       "y": -6.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "tree_pine_tall"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "tree-36",
+     "name": "Pine Tree",
+     "components": {
+      "transform": {
+       "x": 0.5,
+       "y": -6.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "tree_pine"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "tree-37",
+     "name": "Pine Tree",
+     "components": {
+      "transform": {
+       "x": 1.5,
+       "y": -6.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "tree_pine_top"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "tree-38",
+     "name": "Pine Tree",
+     "components": {
+      "transform": {
+       "x": 2.5,
+       "y": -6.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "tree_pine_tall"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "tree-39",
+     "name": "Pine Tree",
+     "components": {
+      "transform": {
+       "x": 3.5,
+       "y": -6.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "tree_pine"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "tree-40",
+     "name": "Pine Tree",
+     "components": {
+      "transform": {
+       "x": 4.5,
+       "y": -6.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "tree_pine_top"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "tree-41",
+     "name": "Pine Tree",
+     "components": {
+      "transform": {
+       "x": 5.5,
+       "y": -6.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "tree_pine_tall"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "tree-42",
+     "name": "Pine Tree",
+     "components": {
+      "transform": {
+       "x": 6.5,
+       "y": -6.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "tree_pine"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "barn-roof-0",
+     "name": "Barn Roof",
+     "components": {
+      "transform": {
+       "x": 3.5,
+       "y": 4.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "barn_roof_l"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "barn-roof-1",
+     "name": "Barn Roof",
+     "components": {
+      "transform": {
+       "x": 4.5,
+       "y": 4.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "barn_roof_m"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "barn-roof-2",
+     "name": "Barn Roof",
+     "components": {
+      "transform": {
+       "x": 5.5,
+       "y": 4.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "barn_roof_r"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "barn-wall-x1",
+     "name": "Barn Wall",
+     "components": {
+      "transform": {
+       "x": 3.5,
+       "y": 3.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "barn_wall_x1"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      },
+      "rigidBody": {
+       "type": "static",
+       "gravityScale": 0,
+       "linearDamping": 0,
+       "angularDamping": 0,
+       "fixedRotation": true
+      },
+      "boxCollider": {
+       "width": 1,
+       "height": 1,
+       "offsetX": 0,
+       "offsetY": 0,
+       "isSensor": false,
+       "restitution": 0,
+       "friction": 0.1
+      }
+     }
+    },
+    {
+     "id": "barn-wall-x2",
+     "name": "Barn Wall",
+     "components": {
+      "transform": {
+       "x": 4.5,
+       "y": 3.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "barn_wall_x2"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "barn-wall-x3",
+     "name": "Barn Wall",
+     "components": {
+      "transform": {
+       "x": 5.5,
+       "y": 3.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 1,
+       "height": 1,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "barn_wall_x3"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      },
+      "rigidBody": {
+       "type": "static",
+       "gravityScale": 0,
+       "linearDamping": 0,
+       "angularDamping": 0,
+       "fixedRotation": true
+      },
+      "boxCollider": {
+       "width": 1,
+       "height": 1,
+       "offsetX": 0,
+       "offsetY": 0,
+       "isSensor": false,
+       "restitution": 0,
+       "friction": 0.1
+      }
+     }
+    },
+    {
+     "id": "wall-top",
+     "name": "Wall Top",
+     "components": {
+      "transform": {
+       "x": 0,
+       "y": 7,
+       "rotation": 0,
+       "scaleX": 17,
+       "scaleY": 1
+      },
+      "rigidBody": {
+       "type": "static",
+       "gravityScale": 0,
+       "linearDamping": 0,
+       "angularDamping": 0,
+       "fixedRotation": true
+      },
+      "boxCollider": {
+       "width": 1,
+       "height": 1,
+       "offsetX": 0,
+       "offsetY": 0,
+       "isSensor": false,
+       "restitution": 0,
+       "friction": 0.1
+      }
+     }
+    },
+    {
+     "id": "wall-bottom",
+     "name": "Wall Bottom",
+     "components": {
+      "transform": {
+       "x": 0,
+       "y": -7,
+       "rotation": 0,
+       "scaleX": 17,
+       "scaleY": 1
+      },
+      "rigidBody": {
+       "type": "static",
+       "gravityScale": 0,
+       "linearDamping": 0,
+       "angularDamping": 0,
+       "fixedRotation": true
+      },
+      "boxCollider": {
+       "width": 1,
+       "height": 1,
+       "offsetX": 0,
+       "offsetY": 0,
+       "isSensor": false,
+       "restitution": 0,
+       "friction": 0.1
+      }
+     }
+    },
+    {
+     "id": "wall-left",
+     "name": "Wall Left",
+     "components": {
+      "transform": {
+       "x": -8.5,
+       "y": 0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 14
+      },
+      "rigidBody": {
+       "type": "static",
+       "gravityScale": 0,
+       "linearDamping": 0,
+       "angularDamping": 0,
+       "fixedRotation": true
+      },
+      "boxCollider": {
+       "width": 1,
+       "height": 1,
+       "offsetX": 0,
+       "offsetY": 0,
+       "isSensor": false,
+       "restitution": 0,
+       "friction": 0.1
+      }
+     }
+    },
+    {
+     "id": "wall-right",
+     "name": "Wall Right",
+     "components": {
+      "transform": {
+       "x": 8.5,
+       "y": 0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 14
+      },
+      "rigidBody": {
+       "type": "static",
+       "gravityScale": 0,
+       "linearDamping": 0,
+       "angularDamping": 0,
+       "fixedRotation": true
+      },
+      "boxCollider": {
+       "width": 1,
+       "height": 1,
+       "offsetX": 0,
+       "offsetY": 0,
+       "isSensor": false,
+       "restitution": 0,
+       "friction": 0.1
+      }
+     }
+    },
+    {
+     "id": "player",
+     "name": "Player",
+     "components": {
+      "transform": {
+       "x": -0.5,
+       "y": 2.5,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 0.9,
+       "height": 0.9,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "farmer_m"
+      },
+      "rigidBody": {
+       "type": "dynamic",
+       "gravityScale": 0,
+       "linearDamping": 8,
+       "angularDamping": 8,
+       "fixedRotation": true
+      },
+      "circleCollider": {
+       "radius": 0.4,
+       "offsetX": 0,
+       "offsetY": 0,
+       "isSensor": false,
+       "restitution": 0,
+       "friction": 0.1
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      },
+      "script": {
+       "src": "// Harvest Valley \u2014 PlayerController\n// Type-only import so the editor's tsc can resolve the base class: at\n// runtime ScriptComponent is a sandbox global provided by ScriptSandbox,\n// never imported. `import type` + `declare const` are both erased by\n// esbuild, so the compiled script has no require() and the sandbox stays\n// intact. All this.* members below are the real ScriptComponent API.\nimport type { ScriptComponent as _ScriptComponent } from '@glix/runtime';\ndeclare const ScriptComponent: typeof _ScriptComponent;\n// Top-down movement (WASD / arrows / touch D-pad via pad: sources) + input\n// dispatch. All game logic lives in GameManager; this script only moves the\n// player and forwards button presses on the event bus:\n//   hv:interact  \u2014 E / Space / pad:a (context action: till, plant, water,\n//                  harvest, talk, shop, fish, sleep)\n//   hv:key       \u2014 { code } for Digit1..Digit4 and KeyQ\n//   hv:cancel    \u2014 Escape / pad:b (close shop / dialogue / fishing)\nclass PlayerController extends ScriptComponent {\n  speed = 5;\n  private frozen = false;\n\n  onStart(): void {\n    this.eventBus.on('hv:freeze', (data: any) => {\n      this.frozen = !!data.frozen;\n    });\n  }\n\n  onUpdate(_dt: number): void {\n    const input = this.input as any;\n\n    // While frozen (shop / fishing open) the player cannot move, but key\n    // presses must still reach the GameManager \u2014 the shop keys, the fishing\n    // catch key and Escape all flow through this script. So freezing stops\n    // movement only; the event forwarding below always runs.\n    if (this.frozen) {\n      this.setVelocity(0, 0);\n    } else {\n      const left =\n        this.input.isKeyDown('ArrowLeft') ||\n        this.input.isKeyDown('KeyA') ||\n        (typeof input.isTouchSourceDown === 'function' && input.isTouchSourceDown('pad:left'));\n      const right =\n        this.input.isKeyDown('ArrowRight') ||\n        this.input.isKeyDown('KeyD') ||\n        (typeof input.isTouchSourceDown === 'function' && input.isTouchSourceDown('pad:right'));\n      const up =\n        this.input.isKeyDown('ArrowUp') ||\n        this.input.isKeyDown('KeyW') ||\n        (typeof input.isTouchSourceDown === 'function' && input.isTouchSourceDown('pad:up'));\n      const down =\n        this.input.isKeyDown('ArrowDown') ||\n        this.input.isKeyDown('KeyS') ||\n        (typeof input.isTouchSourceDown === 'function' && input.isTouchSourceDown('pad:down'));\n\n      let moveX = (right ? 1 : 0) - (left ? 1 : 0);\n      let moveY = (up ? 1 : 0) - (down ? 1 : 0);\n\n      // Gamepad left stick, when a physical gamepad is connected.\n      try {\n        if (typeof input.getGamepadAxis === 'function') {\n          const gx = input.getGamepadAxis(0, 0, 0.25);\n          const gy = input.getGamepadAxis(0, 1, 0.25);\n          if (gx !== 0 || gy !== 0) {\n            moveX = gx;\n            moveY = -gy;\n          }\n        }\n      } catch (e) {\n        // No gamepad support in this build; keyboard/touch still work.\n      }\n\n      const len = Math.sqrt(moveX * moveX + moveY * moveY) || 1;\n      this.setVelocity((moveX / len) * this.speed, (moveY / len) * this.speed);\n\n      if (moveX !== 0 || moveY !== 0) {\n        this.setRotation(Math.atan2(moveY, moveX) - Math.PI / 2);\n      }\n    }\n\n    const pressed =\n      this.input.isJustPressed('KeyE') ||\n      this.input.isJustPressed('Space') ||\n      (typeof input.isTouchSourceJustPressed === 'function' &&\n        input.isTouchSourceJustPressed('pad:a'));\n    if (pressed) {\n      const pos = this.getPosition();\n      this.eventBus.emit('hv:interact', { x: pos.x, y: pos.y });\n    }\n\n    const toolKeys = ['Digit1', 'Digit2', 'Digit3', 'Digit4'];\n    for (const code of toolKeys) {\n      if (this.input.isJustPressed(code)) {\n        this.eventBus.emit('hv:key', { code });\n      }\n    }\n    if (this.input.isJustPressed('KeyQ')) {\n      this.eventBus.emit('hv:key', { code: 'KeyQ' });\n    }\n\n    const cancel =\n      this.input.isJustPressed('Escape') ||\n      (typeof input.isTouchSourceJustPressed === 'function' &&\n        input.isTouchSourceJustPressed('pad:b'));\n    if (cancel) {\n      this.eventBus.emit('hv:cancel', {});\n    }\n  }\n}\n\nexport default PlayerController;\n",
+       "compiledJs": "\"use strict\";\nvar __defProp = Object.defineProperty;\nvar __getOwnPropDesc = Object.getOwnPropertyDescriptor;\nvar __getOwnPropNames = Object.getOwnPropertyNames;\nvar __hasOwnProp = Object.prototype.hasOwnProperty;\nvar __export = (target, all) => {\n  for (var name in all)\n    __defProp(target, name, { get: all[name], enumerable: true });\n};\nvar __copyProps = (to, from, except, desc) => {\n  if (from && typeof from === \"object\" || typeof from === \"function\") {\n    for (let key of __getOwnPropNames(from))\n      if (!__hasOwnProp.call(to, key) && key !== except)\n        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });\n  }\n  return to;\n};\nvar __toCommonJS = (mod) => __copyProps(__defProp({}, \"__esModule\", { value: true }), mod);\nvar PlayerController_exports = {};\n__export(PlayerController_exports, {\n  default: () => PlayerController_default\n});\nmodule.exports = __toCommonJS(PlayerController_exports);\nclass PlayerController extends ScriptComponent {\n  speed = 5;\n  frozen = false;\n  onStart() {\n    this.eventBus.on(\"hv:freeze\", (data) => {\n      this.frozen = !!data.frozen;\n    });\n  }\n  onUpdate(_dt) {\n    const input = this.input;\n    if (this.frozen) {\n      this.setVelocity(0, 0);\n    } else {\n      const left = this.input.isKeyDown(\"ArrowLeft\") || this.input.isKeyDown(\"KeyA\") || typeof input.isTouchSourceDown === \"function\" && input.isTouchSourceDown(\"pad:left\");\n      const right = this.input.isKeyDown(\"ArrowRight\") || this.input.isKeyDown(\"KeyD\") || typeof input.isTouchSourceDown === \"function\" && input.isTouchSourceDown(\"pad:right\");\n      const up = this.input.isKeyDown(\"ArrowUp\") || this.input.isKeyDown(\"KeyW\") || typeof input.isTouchSourceDown === \"function\" && input.isTouchSourceDown(\"pad:up\");\n      const down = this.input.isKeyDown(\"ArrowDown\") || this.input.isKeyDown(\"KeyS\") || typeof input.isTouchSourceDown === \"function\" && input.isTouchSourceDown(\"pad:down\");\n      let moveX = (right ? 1 : 0) - (left ? 1 : 0);\n      let moveY = (up ? 1 : 0) - (down ? 1 : 0);\n      try {\n        if (typeof input.getGamepadAxis === \"function\") {\n          const gx = input.getGamepadAxis(0, 0, 0.25);\n          const gy = input.getGamepadAxis(0, 1, 0.25);\n          if (gx !== 0 || gy !== 0) {\n            moveX = gx;\n            moveY = -gy;\n          }\n        }\n      } catch (e) {\n      }\n      const len = Math.sqrt(moveX * moveX + moveY * moveY) || 1;\n      this.setVelocity(moveX / len * this.speed, moveY / len * this.speed);\n      if (moveX !== 0 || moveY !== 0) {\n        this.setRotation(Math.atan2(moveY, moveX) - Math.PI / 2);\n      }\n    }\n    const pressed = this.input.isJustPressed(\"KeyE\") || this.input.isJustPressed(\"Space\") || typeof input.isTouchSourceJustPressed === \"function\" && input.isTouchSourceJustPressed(\"pad:a\");\n    if (pressed) {\n      const pos = this.getPosition();\n      this.eventBus.emit(\"hv:interact\", { x: pos.x, y: pos.y });\n    }\n    const toolKeys = [\"Digit1\", \"Digit2\", \"Digit3\", \"Digit4\"];\n    for (const code of toolKeys) {\n      if (this.input.isJustPressed(code)) {\n        this.eventBus.emit(\"hv:key\", { code });\n      }\n    }\n    if (this.input.isJustPressed(\"KeyQ\")) {\n      this.eventBus.emit(\"hv:key\", { code: \"KeyQ\" });\n    }\n    const cancel = this.input.isJustPressed(\"Escape\") || typeof input.isTouchSourceJustPressed === \"function\" && input.isTouchSourceJustPressed(\"pad:b\");\n    if (cancel) {\n      this.eventBus.emit(\"hv:cancel\", {});\n    }\n  }\n}\nvar PlayerController_default = PlayerController;\n"
+      }
+     }
+    },
+    {
+     "id": "mira",
+     "name": "Mira",
+     "components": {
+      "transform": {
+       "x": 0.5,
+       "y": -2.5,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 0.9,
+       "height": 0.9,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "farmer_f"
+      },
+      "rigidBody": {
+       "type": "dynamic",
+       "gravityScale": 0,
+       "linearDamping": 8,
+       "angularDamping": 8,
+       "fixedRotation": true
+      },
+      "circleCollider": {
+       "radius": 0.4,
+       "offsetX": 0,
+       "offsetY": 0,
+       "isSensor": false,
+       "restitution": 0,
+       "friction": 0.1
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      },
+      "script": {
+       "src": "// Harvest Valley \u2014 NpcWander\n// Type-only import so the editor's tsc can resolve the base class: at\n// runtime ScriptComponent is a sandbox global provided by ScriptSandbox,\n// never imported. `import type` + `declare const` are both erased by\n// esbuild, so the compiled script has no require() and the sandbox stays\n// intact. All this.* members below are the real ScriptComponent API.\nimport type { ScriptComponent as _ScriptComponent } from '@glix/runtime';\ndeclare const ScriptComponent: typeof _ScriptComponent;\n// Generic wander behaviour. Waypoints are picked by entity name so one\n// script serves both the villager (Mira) and the yard chicken:\n//   Mira    \u2014 wanders the village green south of the house\n//   Chicken \u2014 wanders the west yard by the pond\n// Walk to a waypoint, idle 2-4s, pick another. Faces the direction of travel.\nclass NpcWander extends ScriptComponent {\n  speed = 1.6;\n  private waypoints: Array<{ x: number; y: number }> = [];\n  private target = 0;\n  private idleTimer = 0;\n  private started = false;\n\n  onStart(): void {\n    if (this.name === 'Mira') {\n      this.speed = 1.6;\n      this.waypoints = [\n        { x: 0.5, y: -2.5 },\n        { x: 3.5, y: -3.5 },\n        { x: 1.5, y: -4.5 },\n        { x: -1.5, y: -3.5 },\n        { x: 5.5, y: -1.5 },\n      ];\n    } else {\n      // Chicken (or any other wanderer): west yard by the pond.\n      this.speed = 1.2;\n      this.waypoints = [\n        { x: -6.5, y: -1.5 },\n        { x: -6.5, y: -5.0 },\n        { x: -3.5, y: -5.5 },\n        { x: -1.5, y: -5.0 },\n      ];\n    }\n    this.target = 0;\n    this.idleTimer = 1;\n    this.started = true;\n  }\n\n  onUpdate(dt: number): void {\n    if (!this.started || this.waypoints.length === 0) return;\n\n    if (this.idleTimer > 0) {\n      this.idleTimer -= dt;\n      this.setVelocity(0, 0);\n      return;\n    }\n\n    const pos = this.getPosition();\n    const wp = this.waypoints[this.target];\n    const dx = wp.x - pos.x;\n    const dy = wp.y - pos.y;\n    const dist = Math.sqrt(dx * dx + dy * dy);\n\n    if (dist < 0.25) {\n      this.setVelocity(0, 0);\n      this.idleTimer = 2 + Math.random() * 2;\n      this.target = Math.floor(Math.random() * this.waypoints.length);\n      return;\n    }\n\n    this.setVelocity((dx / dist) * this.speed, (dy / dist) * this.speed);\n    this.setRotation(Math.atan2(dy, dx) - Math.PI / 2);\n  }\n}\n\nexport default NpcWander;\n",
+       "compiledJs": "\"use strict\";\nvar __defProp = Object.defineProperty;\nvar __getOwnPropDesc = Object.getOwnPropertyDescriptor;\nvar __getOwnPropNames = Object.getOwnPropertyNames;\nvar __hasOwnProp = Object.prototype.hasOwnProperty;\nvar __export = (target, all) => {\n  for (var name in all)\n    __defProp(target, name, { get: all[name], enumerable: true });\n};\nvar __copyProps = (to, from, except, desc) => {\n  if (from && typeof from === \"object\" || typeof from === \"function\") {\n    for (let key of __getOwnPropNames(from))\n      if (!__hasOwnProp.call(to, key) && key !== except)\n        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });\n  }\n  return to;\n};\nvar __toCommonJS = (mod) => __copyProps(__defProp({}, \"__esModule\", { value: true }), mod);\nvar NpcWander_exports = {};\n__export(NpcWander_exports, {\n  default: () => NpcWander_default\n});\nmodule.exports = __toCommonJS(NpcWander_exports);\nclass NpcWander extends ScriptComponent {\n  speed = 1.6;\n  waypoints = [];\n  target = 0;\n  idleTimer = 0;\n  started = false;\n  onStart() {\n    if (this.name === \"Mira\") {\n      this.speed = 1.6;\n      this.waypoints = [\n        { x: 0.5, y: -2.5 },\n        { x: 3.5, y: -3.5 },\n        { x: 1.5, y: -4.5 },\n        { x: -1.5, y: -3.5 },\n        { x: 5.5, y: -1.5 }\n      ];\n    } else {\n      this.speed = 1.2;\n      this.waypoints = [\n        { x: -6.5, y: -1.5 },\n        { x: -6.5, y: -5 },\n        { x: -3.5, y: -5.5 },\n        { x: -1.5, y: -5 }\n      ];\n    }\n    this.target = 0;\n    this.idleTimer = 1;\n    this.started = true;\n  }\n  onUpdate(dt) {\n    if (!this.started || this.waypoints.length === 0) return;\n    if (this.idleTimer > 0) {\n      this.idleTimer -= dt;\n      this.setVelocity(0, 0);\n      return;\n    }\n    const pos = this.getPosition();\n    const wp = this.waypoints[this.target];\n    const dx = wp.x - pos.x;\n    const dy = wp.y - pos.y;\n    const dist = Math.sqrt(dx * dx + dy * dy);\n    if (dist < 0.25) {\n      this.setVelocity(0, 0);\n      this.idleTimer = 2 + Math.random() * 2;\n      this.target = Math.floor(Math.random() * this.waypoints.length);\n      return;\n    }\n    this.setVelocity(dx / dist * this.speed, dy / dist * this.speed);\n    this.setRotation(Math.atan2(dy, dx) - Math.PI / 2);\n  }\n}\nvar NpcWander_default = NpcWander;\n"
+      }
+     }
+    },
+    {
+     "id": "chicken",
+     "name": "Chicken",
+     "components": {
+      "transform": {
+       "x": -6.5,
+       "y": -1.5,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 0.9,
+       "height": 0.9,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "chicken"
+      },
+      "rigidBody": {
+       "type": "dynamic",
+       "gravityScale": 0,
+       "linearDamping": 8,
+       "angularDamping": 8,
+       "fixedRotation": true
+      },
+      "circleCollider": {
+       "radius": 0.3,
+       "offsetX": 0,
+       "offsetY": 0,
+       "isSensor": false,
+       "restitution": 0,
+       "friction": 0.1
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      },
+      "script": {
+       "src": "// Harvest Valley \u2014 NpcWander\n// Type-only import so the editor's tsc can resolve the base class: at\n// runtime ScriptComponent is a sandbox global provided by ScriptSandbox,\n// never imported. `import type` + `declare const` are both erased by\n// esbuild, so the compiled script has no require() and the sandbox stays\n// intact. All this.* members below are the real ScriptComponent API.\nimport type { ScriptComponent as _ScriptComponent } from '@glix/runtime';\ndeclare const ScriptComponent: typeof _ScriptComponent;\n// Generic wander behaviour. Waypoints are picked by entity name so one\n// script serves both the villager (Mira) and the yard chicken:\n//   Mira    \u2014 wanders the village green south of the house\n//   Chicken \u2014 wanders the west yard by the pond\n// Walk to a waypoint, idle 2-4s, pick another. Faces the direction of travel.\nclass NpcWander extends ScriptComponent {\n  speed = 1.6;\n  private waypoints: Array<{ x: number; y: number }> = [];\n  private target = 0;\n  private idleTimer = 0;\n  private started = false;\n\n  onStart(): void {\n    if (this.name === 'Mira') {\n      this.speed = 1.6;\n      this.waypoints = [\n        { x: 0.5, y: -2.5 },\n        { x: 3.5, y: -3.5 },\n        { x: 1.5, y: -4.5 },\n        { x: -1.5, y: -3.5 },\n        { x: 5.5, y: -1.5 },\n      ];\n    } else {\n      // Chicken (or any other wanderer): west yard by the pond.\n      this.speed = 1.2;\n      this.waypoints = [\n        { x: -6.5, y: -1.5 },\n        { x: -6.5, y: -5.0 },\n        { x: -3.5, y: -5.5 },\n        { x: -1.5, y: -5.0 },\n      ];\n    }\n    this.target = 0;\n    this.idleTimer = 1;\n    this.started = true;\n  }\n\n  onUpdate(dt: number): void {\n    if (!this.started || this.waypoints.length === 0) return;\n\n    if (this.idleTimer > 0) {\n      this.idleTimer -= dt;\n      this.setVelocity(0, 0);\n      return;\n    }\n\n    const pos = this.getPosition();\n    const wp = this.waypoints[this.target];\n    const dx = wp.x - pos.x;\n    const dy = wp.y - pos.y;\n    const dist = Math.sqrt(dx * dx + dy * dy);\n\n    if (dist < 0.25) {\n      this.setVelocity(0, 0);\n      this.idleTimer = 2 + Math.random() * 2;\n      this.target = Math.floor(Math.random() * this.waypoints.length);\n      return;\n    }\n\n    this.setVelocity((dx / dist) * this.speed, (dy / dist) * this.speed);\n    this.setRotation(Math.atan2(dy, dx) - Math.PI / 2);\n  }\n}\n\nexport default NpcWander;\n",
+       "compiledJs": "\"use strict\";\nvar __defProp = Object.defineProperty;\nvar __getOwnPropDesc = Object.getOwnPropertyDescriptor;\nvar __getOwnPropNames = Object.getOwnPropertyNames;\nvar __hasOwnProp = Object.prototype.hasOwnProperty;\nvar __export = (target, all) => {\n  for (var name in all)\n    __defProp(target, name, { get: all[name], enumerable: true });\n};\nvar __copyProps = (to, from, except, desc) => {\n  if (from && typeof from === \"object\" || typeof from === \"function\") {\n    for (let key of __getOwnPropNames(from))\n      if (!__hasOwnProp.call(to, key) && key !== except)\n        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });\n  }\n  return to;\n};\nvar __toCommonJS = (mod) => __copyProps(__defProp({}, \"__esModule\", { value: true }), mod);\nvar NpcWander_exports = {};\n__export(NpcWander_exports, {\n  default: () => NpcWander_default\n});\nmodule.exports = __toCommonJS(NpcWander_exports);\nclass NpcWander extends ScriptComponent {\n  speed = 1.6;\n  waypoints = [];\n  target = 0;\n  idleTimer = 0;\n  started = false;\n  onStart() {\n    if (this.name === \"Mira\") {\n      this.speed = 1.6;\n      this.waypoints = [\n        { x: 0.5, y: -2.5 },\n        { x: 3.5, y: -3.5 },\n        { x: 1.5, y: -4.5 },\n        { x: -1.5, y: -3.5 },\n        { x: 5.5, y: -1.5 }\n      ];\n    } else {\n      this.speed = 1.2;\n      this.waypoints = [\n        { x: -6.5, y: -1.5 },\n        { x: -6.5, y: -5 },\n        { x: -3.5, y: -5.5 },\n        { x: -1.5, y: -5 }\n      ];\n    }\n    this.target = 0;\n    this.idleTimer = 1;\n    this.started = true;\n  }\n  onUpdate(dt) {\n    if (!this.started || this.waypoints.length === 0) return;\n    if (this.idleTimer > 0) {\n      this.idleTimer -= dt;\n      this.setVelocity(0, 0);\n      return;\n    }\n    const pos = this.getPosition();\n    const wp = this.waypoints[this.target];\n    const dx = wp.x - pos.x;\n    const dy = wp.y - pos.y;\n    const dist = Math.sqrt(dx * dx + dy * dy);\n    if (dist < 0.25) {\n      this.setVelocity(0, 0);\n      this.idleTimer = 2 + Math.random() * 2;\n      this.target = Math.floor(Math.random() * this.waypoints.length);\n      return;\n    }\n    this.setVelocity(dx / dist * this.speed, dy / dist * this.speed);\n    this.setRotation(Math.atan2(dy, dx) - Math.PI / 2);\n  }\n}\nvar NpcWander_default = NpcWander;\n"
+      }
+     }
+    },
+    {
+     "id": "shop-basket",
+     "name": "Basket",
+     "components": {
+      "transform": {
+       "x": 2.0,
+       "y": -1.0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "sprite": {
+       "textureId": "farm-atlas-tex",
+       "width": 0.9,
+       "height": 0.9,
+       "pivotX": 0.5,
+       "pivotY": 0.5,
+       "region": "basket"
+      },
+      "sortingLayer": {
+       "layer": 1,
+       "orderInLayer": 0,
+       "ySort": true
+      }
+     }
+    },
+    {
+     "id": "game-manager",
+     "name": "Game Manager",
+     "components": {
+      "transform": {
+       "x": 0,
+       "y": 0,
+       "rotation": 0,
+       "scaleX": 1,
+       "scaleY": 1
+      },
+      "script": {
+       "src": "// Harvest Valley \u2014 GameManager\n// Type-only import so the editor's tsc can resolve the base class: at\n// runtime ScriptComponent is a sandbox global provided by ScriptSandbox,\n// never imported. `import type` + `declare const` are both erased by\n// esbuild, so the compiled script has no require() and the sandbox stays\n// intact. All this.* members below are the real ScriptComponent API.\nimport type { ScriptComponent as _ScriptComponent } from '@glix/runtime';\ndeclare const ScriptComponent: typeof _ScriptComponent;\n// Owns ALL game state: clock/day, coins, seeds, harvest bag, quest, plots,\n// shop, dialogue, fishing, save/load. The player script only forwards input\n// as events (hv:interact / hv:key / hv:cancel); this script decides what\n// happens. HUD + dialogue + fishing bar are UI entities mutated in place.\n//\n// Persistence contract (no engine storage API exists yet):\n//   - serialize() returns the save JSON; restore(json) applies it.\n//   - On sleep, this script emits `hv:save` { save } on the event bus AND\n//     stashes it at engine.__hvSave. The host (editor Play mode / exported\n//     page) listens for hv:save and writes the JSON to IndexedDB, and on\n//     boot sets engine.__hvSaveData before the scene loads; onStart() reads\n//     it back here. See harvest-valley/README.md for the host snippet.\n//   - Test/debug hook: engine.__hvGame is this instance (harness + console).\n//\n// World coordinates: tilemap transform (-8, 6.5), 16x13 tiles.\n// Tile (col,row) centre = (col - 7.5, 6.0 - row).\n// Layering (matches the layering team's topdown.glix): ground tilemaps\n// layer 0, every sprite layer 1 with ySort.\n\ntype CropKind = 'tomato' | 'carrot';\ntype ToolKind = 'hoe' | 'seeds' | 'can';\n\ninterface PlotState {\n  col: number;\n  row: number;\n  x: number;\n  y: number;\n  state: 'grass' | 'tilled' | 'planted';\n  crop: CropKind | '';\n  stage: number; // 0 sprout, 1 growing, 2 mature\n  watered: boolean;\n  timer: number; // seconds of watered growth in the current stage\n  sprite: any; // crop sprite entity id, or -1\n}\n\nconst STAGE_TIME = 20; // seconds of watered growth per stage\nconst DAY_MINUTES = 960; // 06:00 -> 22:00\nconst DAY_START_MINUTES = 360; // 06:00\nconst DAY_LENGTH_SECONDS = 480; // one full day = 8 real minutes\nconst CROP_DEFS: Record<CropKind, { seedPrice: number; sellPrice: number; matureRegion: string }> = {\n  tomato: { seedPrice: 10, sellPrice: 12, matureRegion: 'tomato' },\n  carrot: { seedPrice: 15, sellPrice: 18, matureRegion: 'carrot' },\n};\nconst FISH_SELL_PRICE = 15;\nconst QUEST_REWARD = 50;\nconst FISH_ZONE: [number, number] = [0.35, 0.65];\n\nclass GameManager extends ScriptComponent {\n  // --- persistent state ---\n  day = 1;\n  minutes = DAY_START_MINUTES;\n  coins = 20;\n  seeds: Record<CropKind, number> = { tomato: 2, carrot: 0 };\n  bag: Record<'tomato' | 'carrot' | 'fish', number> = { tomato: 0, carrot: 0, fish: 0 };\n  quest: 'none' | 'active' | 'done' = 'none';\n  tool: ToolKind = 'hoe';\n  seedType: CropKind = 'tomato';\n\n  // --- transient state ---\n  plots: PlotState[] = [];\n  dialogueTimer = 0;\n  shopOpen = false;\n  fishing = false;\n  fishMarker = 0;\n  fishDir = 1;\n  private dialogueText = '';\n  private uiHiddenY = 2000;\n\n  onStart(): void {\n    // Debug/test hook for the harness and the editor console.\n    const engine = (this as any)._engine;\n    if (engine) engine.__hvGame = this;\n\n    // 6 plots, 2 rows x 3 cols, rows 5-6 / cols 4-6 of the tilemap.\n    const cols = [4, 5, 6];\n    const rows = [5, 6];\n    for (const row of rows) {\n      for (const col of cols) {\n        this.plots.push({\n          col,\n          row,\n          x: col - 7.5,\n          y: 6.0 - row,\n          state: 'grass',\n          crop: '',\n          stage: 0,\n          watered: false,\n          timer: 0,\n          sprite: -1,\n        });\n      }\n    }\n\n    this.eventBus.on('hv:interact', (data: any) => this.onInteract(data.x, data.y));\n    this.eventBus.on('hv:key', (data: any) => this.onKey(data.code));\n    this.eventBus.on('hv:cancel', () => this.onCancel());\n    this.eventBus.on('hv:shop-buy-tomato', () => this.buySeed('tomato'));\n    this.eventBus.on('hv:shop-buy-carrot', () => this.buySeed('carrot'));\n    this.eventBus.on('hv:shop-sell-all', () => this.sellAll());\n    this.eventBus.on('hv:shop-close', () => this.closeShop());\n\n    // Restore a save the host injected before the scene loaded, if any.\n    // Otherwise ask the host save bridge (IndexedDB) for the save \u2014 it\n    // restores asynchronously via restoreFromSave() once the read resolves.\n    let restoredFromHost = false;\n    if (engine && typeof engine.__hvSaveData === 'string' && engine.__hvSaveData.length > 2) {\n      try {\n        this.restore(engine.__hvSaveData);\n        restoredFromHost = true;\n        this.showDialogue('Welcome back to Harvest Valley! Day ' + this.day + '.');\n      } catch (e) {\n        console.warn('[Harvest Valley] Save data was corrupt, starting fresh:', (e as Error).message);\n      }\n    }\n    if (!restoredFromHost) this.eventBus.emit('hv:load-request', undefined);\n\n    this.hideDialogue();\n    this.hideFishingBar();\n    this.updateHud();\n  }\n\n  onUpdate(dt: number): void {\n    // Clock: one full day (06:00-22:00) lasts DAY_LENGTH_SECONDS.\n    if (!this.shopOpen && !this.fishing) {\n      this.minutes += (dt / DAY_LENGTH_SECONDS) * DAY_MINUTES;\n      if (this.minutes >= DAY_START_MINUTES + DAY_MINUTES) {\n        this.minutes = DAY_START_MINUTES + DAY_MINUTES;\n      }\n    }\n\n    // Crop growth: watered plots advance one stage per STAGE_TIME seconds.\n    for (const plot of this.plots) {\n      if (plot.state === 'planted' && plot.watered && plot.stage < 2) {\n        plot.timer += dt;\n        if (plot.timer >= STAGE_TIME) {\n          plot.timer = 0;\n          plot.stage += 1;\n          this.setCropSprite(plot);\n        }\n      }\n    }\n\n    // Fishing marker sweeps back and forth.\n    if (this.fishing) {\n      this.fishMarker += this.fishDir * dt * 0.9;\n      if (this.fishMarker >= 1) {\n        this.fishMarker = 1;\n        this.fishDir = -1;\n      } else if (this.fishMarker <= 0) {\n        this.fishMarker = 0;\n        this.fishDir = 1;\n      }\n      this.updateFishingBar();\n    }\n\n    if (this.dialogueTimer > 0) {\n      this.dialogueTimer -= dt;\n      if (this.dialogueTimer <= 0 && !this.shopOpen) this.hideDialogue();\n    }\n\n    // Camera follows the player.\n    const player = this.findEntityByName('Player');\n    if (player !== undefined) {\n      const t = this.getComponent<any>(player, 'transform');\n      if (t) this.setCameraPosition(t.x, t.y);\n    }\n\n    this.updateHud();\n  }\n\n  // --- input routing -------------------------------------------------------\n\n  private onInteract(px: number, py: number): void {\n    if (this.shopOpen) return; // shop keys/buttons handle input while open\n    if (this.fishing) {\n      this.tryCatchFish();\n      return;\n    }\n\n    const near = (x: number, y: number, r: number) =>\n      Math.hypot(px - x, py - y) <= r;\n\n    // Bed (sleep) \u2014 inside the house, tiles (3.5..4.5, 2.0).\n    if (near(4.0, 2.0, 1.4)) {\n      this.sleep();\n      return;\n    }\n    // Shop stall counter (1.5..2.5, -1.0).\n    if (near(2.0, -1.0, 1.5)) {\n      this.openShop();\n      return;\n    }\n    // Pond south edge (-4.0, -2.0).\n    if (near(-4.0, -2.0, 1.6)) {\n      this.startFishing();\n      return;\n    }\n    // Mira the villager.\n    const mira = this.findEntityByName('Mira');\n    if (mira !== undefined) {\n      const t = this.getComponent<any>(mira, 'transform');\n      if (t && near(t.x, t.y, 1.5)) {\n        this.talkToMira();\n        return;\n      }\n    }\n    // Crop plots.\n    let best: PlotState | null = null;\n    let bestD = 1.4;\n    for (const plot of this.plots) {\n      const d = Math.hypot(px - plot.x, py - plot.y);\n      if (d < bestD) {\n        bestD = d;\n        best = plot;\n      }\n    }\n    if (best) this.useToolOnPlot(best);\n  }\n\n  private onKey(code: string): void {\n    if (this.shopOpen) {\n      if (code === 'Digit1') this.buySeed('tomato');\n      else if (code === 'Digit2') this.buySeed('carrot');\n      else if (code === 'Digit3') this.sellAll();\n      else if (code === 'Digit4') this.closeShop();\n      return;\n    }\n    if (this.fishing) return;\n    if (code === 'Digit1') {\n      this.tool = 'hoe';\n      this.showDialogue('Tool: Hoe \u2014 till soil, harvest ripe crops.');\n    } else if (code === 'Digit2') {\n      this.tool = 'seeds';\n      this.showDialogue('Tool: Seeds (' + this.seedType + ') \u2014 press Q to switch crop.');\n    } else if (code === 'Digit3') {\n      this.tool = 'can';\n      this.showDialogue('Tool: Watering Can \u2014 water planted crops so they grow.');\n    } else if (code === 'KeyQ') {\n      this.seedType = this.seedType === 'tomato' ? 'carrot' : 'tomato';\n      if (this.tool !== 'seeds') this.tool = 'seeds';\n      this.showDialogue('Seeds: ' + this.seedType + ' (have ' + this.seeds[this.seedType] + ').');\n    }\n  }\n\n  private onCancel(): void {\n    if (this.shopOpen) {\n      this.closeShop();\n      return;\n    }\n    if (this.fishing) {\n      this.fishing = false;\n      this.hideFishingBar();\n      this.showDialogue('You reel in and walk away from the pond.');\n      return;\n    }\n    this.hideDialogue();\n  }\n\n  // --- farming -------------------------------------------------------------\n\n  private groundTilemap(): any {\n    const ground = this.findEntityByName('Valley Ground');\n    if (ground === undefined) return null;\n    return this.getComponent<any>(ground, 'tilemap');\n  }\n\n  private setPlotTile(plot: PlotState, tile: number): void {\n    const tm = this.groundTilemap();\n    if (!tm || !tm.layers || !tm.layers[1]) return;\n    // Details layer is layers[1]; -1 = empty (shows the grass Ground layer).\n    tm.layers[1].tiles[plot.row][plot.col] = tile;\n  }\n\n  private useToolOnPlot(plot: PlotState): void {\n    if (plot.state === 'grass') {\n      if (this.tool !== 'hoe') {\n        this.showDialogue('This grass needs the Hoe first (press 1).');\n        return;\n      }\n      plot.state = 'tilled';\n      // Tilled row tiles: 60 / 61 / 62 across the row.\n      this.setPlotTile(plot, 60 + (plot.col % 3));\n      this.playClick();\n      this.showDialogue('Tilled! Now plant seeds (press 2).');\n      return;\n    }\n\n    if (plot.state === 'tilled') {\n      if (this.tool !== 'seeds') {\n        this.showDialogue('Tilled soil \u2014 plant seeds (press 2).');\n        return;\n      }\n      if (this.seeds[this.seedType] <= 0) {\n        this.showDialogue('No ' + this.seedType + ' seeds left \u2014 buy more at the stall.');\n        return;\n      }\n      this.seeds[this.seedType] -= 1;\n      plot.state = 'planted';\n      plot.crop = this.seedType;\n      plot.stage = 0;\n      plot.watered = false;\n      plot.timer = 0;\n      plot.sprite = this.spawn('Crop-' + plot.col + '-' + plot.row, {\n        transform: { x: plot.x, y: plot.y, rotation: 0, scaleX: 1, scaleY: 1 },\n        sprite: {\n          textureId: 'farm-atlas-tex',\n          width: 0.9,\n          height: 0.9,\n          pivotX: 0.5,\n          pivotY: 0.5,\n          region: 'grass',\n        },\n        sortingLayer: { layer: 1, orderInLayer: 0, ySort: true },\n      });\n      this.playClick();\n      this.showDialogue('Planted ' + this.seedType + '! Water it (press 3).');\n      return;\n    }\n\n    // Planted.\n    if (plot.stage >= 2) {\n      const crop = plot.crop as CropKind;\n      this.bag[crop] += 1;\n      if (plot.sprite !== -1) this.destroyEntity(plot.sprite);\n      plot.sprite = -1;\n      plot.state = 'tilled';\n      plot.crop = '';\n      plot.stage = 0;\n      plot.watered = false;\n      plot.timer = 0;\n      this.setPlotTile(plot, 60 + (plot.col % 3));\n      this.playClick();\n      this.showDialogue(\n        'Harvested 1 ' + crop + '! Bag: ' + this.bag[crop] + ' (sell at the stall).'\n      );\n      return;\n    }\n    if (this.tool === 'can') {\n      if (plot.watered) {\n        this.showDialogue('Already watered \u2014 give it time to grow.');\n        return;\n      }\n      plot.watered = true;\n      this.setPlotTile(plot, 48);\n      this.playClick();\n      this.showDialogue('Watered! It will grow while the soil stays wet.');\n      return;\n    }\n    if (this.tool === 'hoe') {\n      this.showDialogue('It is growing \u2014 water it (press 3), don\\'t dig it up.');\n      return;\n    }\n    this.showDialogue('Growing... keep it watered and wait.');\n  }\n\n  private setCropSprite(plot: PlotState): void {\n    if (plot.sprite === -1 || !plot.crop) return;\n    const sprite = this.getComponent<any>(plot.sprite, 'sprite');\n    if (!sprite) return;\n    if (plot.stage === 0) sprite.region = 'grass';\n    else if (plot.stage === 1) sprite.region = 'tomato_plant';\n    else sprite.region = CROP_DEFS[plot.crop as CropKind].matureRegion;\n  }\n\n  // --- shop ----------------------------------------------------------------\n\n  private openShop(): void {\n    this.shopOpen = true;\n    this.eventBus.emit('hv:freeze', { frozen: true });\n    this.showShopPanel(true);\n    this.setDialogueText(\n      'Mira\\'s Stall \u2014 Day ' + this.day + '\\n' +\n      'Tomato seeds 10c  |  Carrot seeds 15c\\n' +\n      'Sell: tomato 12c, carrot 18c, fish 15c\\n' +\n      'Coins: ' + this.coins + '   (keys 1-4 or tap the buttons)'\n    );\n  }\n\n  private closeShop(): void {\n    this.shopOpen = false;\n    this.eventBus.emit('hv:freeze', { frozen: false });\n    this.showShopPanel(false);\n    this.hideDialogue();\n  }\n\n  private buySeed(kind: CropKind): void {\n    if (!this.shopOpen) return;\n    const price = CROP_DEFS[kind].seedPrice;\n    if (this.coins < price) {\n      this.setDialogueText('Not enough coins for ' + kind + ' seeds (' + price + 'c).');\n      return;\n    }\n    this.coins -= price;\n    this.seeds[kind] += 1;\n    this.playClick();\n    this.setDialogueText(\n      'Bought 1 ' + kind + ' seed for ' + price + 'c.\\n' +\n      'Coins: ' + this.coins + '  |  Seeds: tomato ' + this.seeds.tomato +\n      ', carrot ' + this.seeds.carrot\n    );\n  }\n\n  private sellAll(): void {\n    if (!this.shopOpen) return;\n    const earned =\n      this.bag.tomato * CROP_DEFS.tomato.sellPrice +\n      this.bag.carrot * CROP_DEFS.carrot.sellPrice +\n      this.bag.fish * FISH_SELL_PRICE;\n    if (earned === 0) {\n      this.setDialogueText('Nothing to sell \u2014 harvest crops or catch a fish first.');\n      return;\n    }\n    this.coins += earned;\n    const sold =\n      this.bag.tomato + ' tomato, ' + this.bag.carrot + ' carrot, ' + this.bag.fish + ' fish';\n    this.bag.tomato = 0;\n    this.bag.carrot = 0;\n    this.bag.fish = 0;\n    this.playClick();\n    this.setDialogueText('Sold ' + sold + ' for ' + earned + 'c. Coins: ' + this.coins + '.');\n  }\n\n  // --- NPC + quest -----------------------------------------------------------\n\n  private talkToMira(): void {\n    if (this.quest === 'none') {\n      this.quest = 'active';\n      this.showDialogue(\n        'Mira: \"Morning! The village feast needs tomatoes.\\n' +\n        'Bring me 3 tomatoes and I will pay you 50c.\"'\n      );\n    } else if (this.quest === 'active') {\n      if (this.bag.tomato >= 3) {\n        this.bag.tomato -= 3;\n        this.coins += QUEST_REWARD;\n        this.quest = 'done';\n        this.playClick();\n        this.showDialogue(\n          'Mira: \"Three perfect tomatoes! Thank you!\"\\nQuest complete \u2014 +' + QUEST_REWARD + 'c. Coins: ' + this.coins + '.'\n        );\n      } else {\n        this.showDialogue(\n          'Mira: \"I still need 3 tomatoes for the feast.\\nYou have ' + this.bag.tomato + ' in your bag.\"'\n        );\n      }\n    } else {\n      this.showDialogue('Mira: \"Thanks again for the tomatoes. The feast will be lovely!\"');\n    }\n  }\n\n  // --- fishing ---------------------------------------------------------------\n\n  private startFishing(): void {\n    this.fishing = true;\n    this.fishMarker = 0;\n    this.fishDir = 1;\n    this.eventBus.emit('hv:freeze', { frozen: true });\n    this.showFishingBar();\n    this.showDialogue('Fishing! Press E when the marker is in the green zone.');\n  }\n\n  private tryCatchFish(): void {\n    this.fishing = false;\n    this.eventBus.emit('hv:freeze', { frozen: false });\n    this.hideFishingBar();\n    if (this.fishMarker >= FISH_ZONE[0] && this.fishMarker <= FISH_ZONE[1]) {\n      this.bag.fish += 1;\n      this.playClick();\n      this.showDialogue('Caught a fish! Fish in bag: ' + this.bag.fish + ' (sell: 15c).');\n    } else {\n      this.showDialogue('It got away... the marker was outside the green zone.');\n    }\n  }\n\n  // --- sleep / save / load -----------------------------------------------------\n\n  private sleep(): void {\n    // Overnight, watered crops grow one stage.\n    for (const plot of this.plots) {\n      if (plot.state === 'planted' && plot.watered && plot.stage < 2) {\n        plot.stage += 1;\n        plot.timer = 0;\n        this.setCropSprite(plot);\n      }\n      plot.watered = false;\n      if (plot.state === 'planted') this.setPlotTile(plot, 60 + (plot.col % 3));\n    }\n    this.day += 1;\n    this.minutes = DAY_START_MINUTES;\n    // Wake up by the bed BEFORE serializing, so the save records the\n    // wake-up spot (4.0, 1.0) \u2014 not the bed tile (4.0, 2.0) the player\n    // slept on. Otherwise reload spawns the player on the bed.\n    const player = this.findEntityByName('Player');\n    if (player !== undefined) this.setPositionFor(player, 4.0, 1.0);\n    const save = this.serialize();\n    const engine = (this as any)._engine;\n    if (engine) engine.__hvSave = save;\n    this.eventBus.emit('hv:save', { save });\n    this.showDialogue('Day ' + this.day + ' \u2014 you wake up rested. Game saved.');\n  }\n\n  private setPositionFor(entity: any, x: number, y: number): void {\n    const t = this.getComponent<any>(entity, 'transform');\n    if (t) {\n      t.x = x;\n      t.y = y;\n    }\n    this.physics.teleport(entity, x, y);\n  }\n\n  serialize(): string {\n    return JSON.stringify({\n      version: 1,\n      day: this.day,\n      minutes: Math.round(this.minutes),\n      coins: this.coins,\n      seeds: this.seeds,\n      bag: this.bag,\n      quest: this.quest,\n      tool: this.tool,\n      seedType: this.seedType,\n      plots: this.plots.map((p) => ({\n        col: p.col,\n        row: p.row,\n        state: p.state,\n        crop: p.crop,\n        stage: p.stage,\n        watered: p.watered,\n        timer: p.timer,\n      })),\n      player: (() => {\n        const player = this.findEntityByName('Player');\n        if (player === undefined) return null;\n        const t = this.getComponent<any>(player, 'transform');\n        return t ? { x: t.x, y: t.y } : null;\n      })(),\n    });\n  }\n\n  /** Host save-bridge entry point: apply a save loaded from IndexedDB\n   * after onStart (the read is async). Refreshes the HUD and greets the\n   * player. Called by the runtime SaveBridge; never call from a script. */\n  restoreFromSave(save: string): void {\n    this.restore(save);\n    this.updateHud();\n    this.showDialogue('Welcome back to Harvest Valley! Day ' + this.day + '.');\n  }\n\n  restore(json: string): void {\n    const data = JSON.parse(json);\n    this.day = data.day ?? 1;\n    this.minutes = data.minutes ?? DAY_START_MINUTES;\n    this.coins = data.coins ?? 20;\n    this.seeds = { tomato: 2, carrot: 0, ...(data.seeds ?? {}) };\n    this.bag = { tomato: 0, carrot: 0, fish: 0, ...(data.bag ?? {}) };\n    this.quest = data.quest ?? 'none';\n    this.tool = data.tool ?? 'hoe';\n    this.seedType = data.seedType ?? 'tomato';\n\n    // Clear existing crop sprites, then rebuild plots from the save.\n    for (const plot of this.plots) {\n      if (plot.sprite !== -1) {\n        this.destroyEntity(plot.sprite);\n        plot.sprite = -1;\n      }\n    }\n    for (const saved of data.plots ?? []) {\n      const plot = this.plots.find((p) => p.col === saved.col && p.row === saved.row);\n      if (!plot) continue;\n      plot.state = saved.state;\n      plot.crop = saved.crop ?? '';\n      plot.stage = saved.stage ?? 0;\n      plot.watered = !!saved.watered;\n      plot.timer = saved.timer ?? 0;\n      if (plot.state === 'grass') {\n        this.setPlotTile(plot, -1);\n      } else if (plot.state === 'tilled') {\n        this.setPlotTile(plot, 60 + (plot.col % 3));\n      } else {\n        this.setPlotTile(plot, plot.watered ? 48 : 60 + (plot.col % 3));\n        plot.sprite = this.spawn('Crop-' + plot.col + '-' + plot.row, {\n          transform: { x: plot.x, y: plot.y, rotation: 0, scaleX: 1, scaleY: 1 },\n          sprite: {\n            textureId: 'farm-atlas-tex',\n            width: 0.9,\n            height: 0.9,\n            pivotX: 0.5,\n            pivotY: 0.5,\n            region: 'grass',\n          },\n          sortingLayer: { layer: 1, orderInLayer: 0, ySort: true },\n        });\n        this.setCropSprite(plot);\n      }\n    }\n    if (data.player) {\n      const player = this.findEntityByName('Player');\n      if (player !== undefined) this.setPositionFor(player, data.player.x, data.player.y);\n    }\n  }\n\n  // --- HUD / dialogue / fishing bar -------------------------------------------\n\n  private clockText(): string {\n    const total = Math.floor(this.minutes);\n    const hh = Math.floor(total / 60);\n    const mm = total % 60;\n    const pad = (n: number) => (n < 10 ? '0' + n : '' + n);\n    return 'Day ' + this.day + '  ' + pad(hh) + ':' + pad(mm);\n  }\n\n  private setLabel(name: string, text: string): void {\n    const e = this.findEntityByName(name);\n    if (e === undefined) return;\n    const label = this.getComponent<any>(e, 'uiLabel');\n    if (label) label.text = text;\n  }\n\n  private setUiOffsetY(name: string, y: number): void {\n    const e = this.findEntityByName(name);\n    if (e === undefined) return;\n    const t = this.getComponent<any>(e, 'uiTransform');\n    if (t) t.offsetY = y;\n  }\n\n  private setUiOffset(name: string, x: number, y: number): void {\n    const e = this.findEntityByName(name);\n    if (e === undefined) return;\n    const t = this.getComponent<any>(e, 'uiTransform');\n    if (t) {\n      t.offsetX = x;\n      t.offsetY = y;\n    }\n  }\n\n  private updateHud(): void {\n    const toolName =\n      this.tool === 'hoe' ? 'Hoe (1)' : this.tool === 'seeds' ? 'Seeds (2)' : 'Can (3)';\n    this.setLabel(\n      'HUD-Status',\n      this.clockText() + '   |   Coins: ' + this.coins + 'c   |   Tool: ' + toolName +\n        (this.tool === 'seeds' ? ' [' + this.seedType + ', Q to switch]' : '')\n    );\n    this.setLabel(\n      'HUD-Inv',\n      'Seeds: tomato ' + this.seeds.tomato + ', carrot ' + this.seeds.carrot +\n        '   |   Bag: tomato ' + this.bag.tomato + ', carrot ' + this.bag.carrot +\n        ', fish ' + this.bag.fish +\n        (this.quest === 'active' ? '   |   Quest: 3 tomatoes for Mira' : '')\n    );\n\n    // Context hint for whatever is nearest the player.\n    if (this.shopOpen || this.fishing) return;\n    const player = this.findEntityByName('Player');\n    if (player === undefined) return;\n    const t = this.getComponent<any>(player, 'transform');\n    if (!t) return;\n    const px = t.x;\n    const py = t.y;\n    const near = (x: number, y: number, r: number) => Math.hypot(px - x, py - y) <= r;\n    let hint = '';\n    if (near(4.0, 2.0, 1.4)) hint = 'E \u2014 Sleep until tomorrow (saves the game)';\n    else if (near(2.0, -1.0, 1.5)) hint = 'E \u2014 Open Mira\\'s Stall (buy seeds, sell crops)';\n    else if (near(-4.0, -2.0, 1.6)) hint = 'E \u2014 Fish in the pond';\n    else {\n      const mira = this.findEntityByName('Mira');\n      if (mira !== undefined) {\n        const mt = this.getComponent<any>(mira, 'transform');\n        if (mt && near(mt.x, mt.y, 1.5)) {\n          hint =\n            this.quest === 'none'\n              ? 'E \u2014 Talk to Mira'\n              : this.quest === 'active'\n                ? 'E \u2014 Talk to Mira (quest: 3 tomatoes)'\n                : 'E \u2014 Talk to Mira';\n        }\n      }\n    }\n    if (!hint) {\n      for (const plot of this.plots) {\n        if (Math.hypot(px - plot.x, py - plot.y) <= 1.4) {\n          if (plot.state === 'grass') hint = 'E \u2014 Till with the Hoe (press 1)';\n          else if (plot.state === 'tilled') hint = 'E \u2014 Plant ' + this.seedType + ' seeds (press 2)';\n          else if (plot.stage >= 2) hint = 'E \u2014 Harvest the ' + plot.crop + '!';\n          else if (!plot.watered) hint = 'E \u2014 Water the ' + plot.crop + ' (press 3)';\n          else hint = 'Growing... stage ' + (plot.stage + 1) + ' of 3';\n          break;\n        }\n      }\n    }\n    if (!hint) {\n      hint =\n        'WASD / arrows or D-pad to walk  \u2022  1/2/3 tools  \u2022  E interact' +\n        (this.minutes >= DAY_START_MINUTES + DAY_MINUTES - 30 ? '  \u2022  It is late \u2014 go to bed!' : '');\n    }\n    this.setLabel('HUD-Hint', hint);\n  }\n\n  private showDialogue(text: string): void {\n    this.setDialogueText(text);\n    this.dialogueTimer = 4;\n  }\n\n  private setDialogueText(text: string): void {\n    this.dialogueText = text;\n    this.setLabel('Dialogue-Text', text);\n    // Dialogue panel sits at the bottom centre; move it on-screen.\n    this.setUiOffsetY('Dialogue-Panel', -140);\n    this.setUiOffsetY('Dialogue-Text', -128);\n  }\n\n  private hideDialogue(): void {\n    this.dialogueTimer = 0;\n    this.setUiOffsetY('Dialogue-Panel', this.uiHiddenY);\n    this.setUiOffsetY('Dialogue-Text', this.uiHiddenY);\n  }\n\n  private showShopPanel(show: boolean): void {\n    // Shop buttons ride with the dialogue panel (panel top y=580, buttons y=632).\n    const y = show ? -88 : this.uiHiddenY;\n    this.setUiOffsetY('Shop-Btn-1', y);\n    this.setUiOffsetY('Shop-Btn-2', y);\n    this.setUiOffsetY('Shop-Btn-3', y);\n    this.setUiOffsetY('Shop-Btn-4', y);\n  }\n\n  private showFishingBar(): void {\n    this.setUiOffsetY('Fishing-Bg', -320);\n    this.setUiOffsetY('Fishing-Zone', -320);\n    this.setUiOffsetY('Fishing-Marker', -322);\n    this.updateFishingBar();\n  }\n\n  private hideFishingBar(): void {\n    this.setUiOffsetY('Fishing-Bg', this.uiHiddenY);\n    this.setUiOffsetY('Fishing-Zone', this.uiHiddenY);\n    this.setUiOffsetY('Fishing-Marker', this.uiHiddenY);\n  }\n\n  private updateFishingBar(): void {\n    // Bar is 300 wide, anchored centre (offset -150). Marker is 12 wide.\n    const x = -150 + this.fishMarker * 300 - 6;\n    this.setUiOffset('Fishing-Marker', x, -322);\n  }\n\n  private playClick(): void {\n    try {\n      if (this.audio && typeof (this.audio as any).playSound === 'function') {\n        (this.audio as any).playSound('ui-click');\n      }\n    } catch (e) {\n      // Audio is best-effort (headless harness has a stub).\n    }\n  }\n}\n\nexport default GameManager;\n",
+       "compiledJs": "\"use strict\";\nvar __defProp = Object.defineProperty;\nvar __getOwnPropDesc = Object.getOwnPropertyDescriptor;\nvar __getOwnPropNames = Object.getOwnPropertyNames;\nvar __hasOwnProp = Object.prototype.hasOwnProperty;\nvar __export = (target, all) => {\n  for (var name in all)\n    __defProp(target, name, { get: all[name], enumerable: true });\n};\nvar __copyProps = (to, from, except, desc) => {\n  if (from && typeof from === \"object\" || typeof from === \"function\") {\n    for (let key of __getOwnPropNames(from))\n      if (!__hasOwnProp.call(to, key) && key !== except)\n        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });\n  }\n  return to;\n};\nvar __toCommonJS = (mod) => __copyProps(__defProp({}, \"__esModule\", { value: true }), mod);\nvar GameManager_exports = {};\n__export(GameManager_exports, {\n  default: () => GameManager_default\n});\nmodule.exports = __toCommonJS(GameManager_exports);\nconst STAGE_TIME = 20;\nconst DAY_MINUTES = 960;\nconst DAY_START_MINUTES = 360;\nconst DAY_LENGTH_SECONDS = 480;\nconst CROP_DEFS = {\n  tomato: { seedPrice: 10, sellPrice: 12, matureRegion: \"tomato\" },\n  carrot: { seedPrice: 15, sellPrice: 18, matureRegion: \"carrot\" }\n};\nconst FISH_SELL_PRICE = 15;\nconst QUEST_REWARD = 50;\nconst FISH_ZONE = [0.35, 0.65];\nclass GameManager extends ScriptComponent {\n  // --- persistent state ---\n  day = 1;\n  minutes = DAY_START_MINUTES;\n  coins = 20;\n  seeds = { tomato: 2, carrot: 0 };\n  bag = { tomato: 0, carrot: 0, fish: 0 };\n  quest = \"none\";\n  tool = \"hoe\";\n  seedType = \"tomato\";\n  // --- transient state ---\n  plots = [];\n  dialogueTimer = 0;\n  shopOpen = false;\n  fishing = false;\n  fishMarker = 0;\n  fishDir = 1;\n  dialogueText = \"\";\n  uiHiddenY = 2e3;\n  onStart() {\n    const engine = this._engine;\n    if (engine) engine.__hvGame = this;\n    const cols = [4, 5, 6];\n    const rows = [5, 6];\n    for (const row of rows) {\n      for (const col of cols) {\n        this.plots.push({\n          col,\n          row,\n          x: col - 7.5,\n          y: 6 - row,\n          state: \"grass\",\n          crop: \"\",\n          stage: 0,\n          watered: false,\n          timer: 0,\n          sprite: -1\n        });\n      }\n    }\n    this.eventBus.on(\"hv:interact\", (data) => this.onInteract(data.x, data.y));\n    this.eventBus.on(\"hv:key\", (data) => this.onKey(data.code));\n    this.eventBus.on(\"hv:cancel\", () => this.onCancel());\n    this.eventBus.on(\"hv:shop-buy-tomato\", () => this.buySeed(\"tomato\"));\n    this.eventBus.on(\"hv:shop-buy-carrot\", () => this.buySeed(\"carrot\"));\n    this.eventBus.on(\"hv:shop-sell-all\", () => this.sellAll());\n    this.eventBus.on(\"hv:shop-close\", () => this.closeShop());\n    let restoredFromHost = false;\n    if (engine && typeof engine.__hvSaveData === \"string\" && engine.__hvSaveData.length > 2) {\n      try {\n        this.restore(engine.__hvSaveData);\n        restoredFromHost = true;\n        this.showDialogue(\"Welcome back to Harvest Valley! Day \" + this.day + \".\");\n      } catch (e) {\n        console.warn(\"[Harvest Valley] Save data was corrupt, starting fresh:\", e.message);\n      }\n    }\n    if (!restoredFromHost) this.eventBus.emit(\"hv:load-request\", void 0);\n    this.hideDialogue();\n    this.hideFishingBar();\n    this.updateHud();\n  }\n  onUpdate(dt) {\n    if (!this.shopOpen && !this.fishing) {\n      this.minutes += dt / DAY_LENGTH_SECONDS * DAY_MINUTES;\n      if (this.minutes >= DAY_START_MINUTES + DAY_MINUTES) {\n        this.minutes = DAY_START_MINUTES + DAY_MINUTES;\n      }\n    }\n    for (const plot of this.plots) {\n      if (plot.state === \"planted\" && plot.watered && plot.stage < 2) {\n        plot.timer += dt;\n        if (plot.timer >= STAGE_TIME) {\n          plot.timer = 0;\n          plot.stage += 1;\n          this.setCropSprite(plot);\n        }\n      }\n    }\n    if (this.fishing) {\n      this.fishMarker += this.fishDir * dt * 0.9;\n      if (this.fishMarker >= 1) {\n        this.fishMarker = 1;\n        this.fishDir = -1;\n      } else if (this.fishMarker <= 0) {\n        this.fishMarker = 0;\n        this.fishDir = 1;\n      }\n      this.updateFishingBar();\n    }\n    if (this.dialogueTimer > 0) {\n      this.dialogueTimer -= dt;\n      if (this.dialogueTimer <= 0 && !this.shopOpen) this.hideDialogue();\n    }\n    const player = this.findEntityByName(\"Player\");\n    if (player !== void 0) {\n      const t = this.getComponent(player, \"transform\");\n      if (t) this.setCameraPosition(t.x, t.y);\n    }\n    this.updateHud();\n  }\n  // --- input routing -------------------------------------------------------\n  onInteract(px, py) {\n    if (this.shopOpen) return;\n    if (this.fishing) {\n      this.tryCatchFish();\n      return;\n    }\n    const near = (x, y, r) => Math.hypot(px - x, py - y) <= r;\n    if (near(4, 2, 1.4)) {\n      this.sleep();\n      return;\n    }\n    if (near(2, -1, 1.5)) {\n      this.openShop();\n      return;\n    }\n    if (near(-4, -2, 1.6)) {\n      this.startFishing();\n      return;\n    }\n    const mira = this.findEntityByName(\"Mira\");\n    if (mira !== void 0) {\n      const t = this.getComponent(mira, \"transform\");\n      if (t && near(t.x, t.y, 1.5)) {\n        this.talkToMira();\n        return;\n      }\n    }\n    let best = null;\n    let bestD = 1.4;\n    for (const plot of this.plots) {\n      const d = Math.hypot(px - plot.x, py - plot.y);\n      if (d < bestD) {\n        bestD = d;\n        best = plot;\n      }\n    }\n    if (best) this.useToolOnPlot(best);\n  }\n  onKey(code) {\n    if (this.shopOpen) {\n      if (code === \"Digit1\") this.buySeed(\"tomato\");\n      else if (code === \"Digit2\") this.buySeed(\"carrot\");\n      else if (code === \"Digit3\") this.sellAll();\n      else if (code === \"Digit4\") this.closeShop();\n      return;\n    }\n    if (this.fishing) return;\n    if (code === \"Digit1\") {\n      this.tool = \"hoe\";\n      this.showDialogue(\"Tool: Hoe \\u2014 till soil, harvest ripe crops.\");\n    } else if (code === \"Digit2\") {\n      this.tool = \"seeds\";\n      this.showDialogue(\"Tool: Seeds (\" + this.seedType + \") \\u2014 press Q to switch crop.\");\n    } else if (code === \"Digit3\") {\n      this.tool = \"can\";\n      this.showDialogue(\"Tool: Watering Can \\u2014 water planted crops so they grow.\");\n    } else if (code === \"KeyQ\") {\n      this.seedType = this.seedType === \"tomato\" ? \"carrot\" : \"tomato\";\n      if (this.tool !== \"seeds\") this.tool = \"seeds\";\n      this.showDialogue(\"Seeds: \" + this.seedType + \" (have \" + this.seeds[this.seedType] + \").\");\n    }\n  }\n  onCancel() {\n    if (this.shopOpen) {\n      this.closeShop();\n      return;\n    }\n    if (this.fishing) {\n      this.fishing = false;\n      this.hideFishingBar();\n      this.showDialogue(\"You reel in and walk away from the pond.\");\n      return;\n    }\n    this.hideDialogue();\n  }\n  // --- farming -------------------------------------------------------------\n  groundTilemap() {\n    const ground = this.findEntityByName(\"Valley Ground\");\n    if (ground === void 0) return null;\n    return this.getComponent(ground, \"tilemap\");\n  }\n  setPlotTile(plot, tile) {\n    const tm = this.groundTilemap();\n    if (!tm || !tm.layers || !tm.layers[1]) return;\n    tm.layers[1].tiles[plot.row][plot.col] = tile;\n  }\n  useToolOnPlot(plot) {\n    if (plot.state === \"grass\") {\n      if (this.tool !== \"hoe\") {\n        this.showDialogue(\"This grass needs the Hoe first (press 1).\");\n        return;\n      }\n      plot.state = \"tilled\";\n      this.setPlotTile(plot, 60 + plot.col % 3);\n      this.playClick();\n      this.showDialogue(\"Tilled! Now plant seeds (press 2).\");\n      return;\n    }\n    if (plot.state === \"tilled\") {\n      if (this.tool !== \"seeds\") {\n        this.showDialogue(\"Tilled soil \\u2014 plant seeds (press 2).\");\n        return;\n      }\n      if (this.seeds[this.seedType] <= 0) {\n        this.showDialogue(\"No \" + this.seedType + \" seeds left \\u2014 buy more at the stall.\");\n        return;\n      }\n      this.seeds[this.seedType] -= 1;\n      plot.state = \"planted\";\n      plot.crop = this.seedType;\n      plot.stage = 0;\n      plot.watered = false;\n      plot.timer = 0;\n      plot.sprite = this.spawn(\"Crop-\" + plot.col + \"-\" + plot.row, {\n        transform: { x: plot.x, y: plot.y, rotation: 0, scaleX: 1, scaleY: 1 },\n        sprite: {\n          textureId: \"farm-atlas-tex\",\n          width: 0.9,\n          height: 0.9,\n          pivotX: 0.5,\n          pivotY: 0.5,\n          region: \"grass\"\n        },\n        sortingLayer: { layer: 1, orderInLayer: 0, ySort: true }\n      });\n      this.playClick();\n      this.showDialogue(\"Planted \" + this.seedType + \"! Water it (press 3).\");\n      return;\n    }\n    if (plot.stage >= 2) {\n      const crop = plot.crop;\n      this.bag[crop] += 1;\n      if (plot.sprite !== -1) this.destroyEntity(plot.sprite);\n      plot.sprite = -1;\n      plot.state = \"tilled\";\n      plot.crop = \"\";\n      plot.stage = 0;\n      plot.watered = false;\n      plot.timer = 0;\n      this.setPlotTile(plot, 60 + plot.col % 3);\n      this.playClick();\n      this.showDialogue(\n        \"Harvested 1 \" + crop + \"! Bag: \" + this.bag[crop] + \" (sell at the stall).\"\n      );\n      return;\n    }\n    if (this.tool === \"can\") {\n      if (plot.watered) {\n        this.showDialogue(\"Already watered \\u2014 give it time to grow.\");\n        return;\n      }\n      plot.watered = true;\n      this.setPlotTile(plot, 48);\n      this.playClick();\n      this.showDialogue(\"Watered! It will grow while the soil stays wet.\");\n      return;\n    }\n    if (this.tool === \"hoe\") {\n      this.showDialogue(\"It is growing \\u2014 water it (press 3), don't dig it up.\");\n      return;\n    }\n    this.showDialogue(\"Growing... keep it watered and wait.\");\n  }\n  setCropSprite(plot) {\n    if (plot.sprite === -1 || !plot.crop) return;\n    const sprite = this.getComponent(plot.sprite, \"sprite\");\n    if (!sprite) return;\n    if (plot.stage === 0) sprite.region = \"grass\";\n    else if (plot.stage === 1) sprite.region = \"tomato_plant\";\n    else sprite.region = CROP_DEFS[plot.crop].matureRegion;\n  }\n  // --- shop ----------------------------------------------------------------\n  openShop() {\n    this.shopOpen = true;\n    this.eventBus.emit(\"hv:freeze\", { frozen: true });\n    this.showShopPanel(true);\n    this.setDialogueText(\n      \"Mira's Stall \\u2014 Day \" + this.day + \"\\nTomato seeds 10c  |  Carrot seeds 15c\\nSell: tomato 12c, carrot 18c, fish 15c\\nCoins: \" + this.coins + \"   (keys 1-4 or tap the buttons)\"\n    );\n  }\n  closeShop() {\n    this.shopOpen = false;\n    this.eventBus.emit(\"hv:freeze\", { frozen: false });\n    this.showShopPanel(false);\n    this.hideDialogue();\n  }\n  buySeed(kind) {\n    if (!this.shopOpen) return;\n    const price = CROP_DEFS[kind].seedPrice;\n    if (this.coins < price) {\n      this.setDialogueText(\"Not enough coins for \" + kind + \" seeds (\" + price + \"c).\");\n      return;\n    }\n    this.coins -= price;\n    this.seeds[kind] += 1;\n    this.playClick();\n    this.setDialogueText(\n      \"Bought 1 \" + kind + \" seed for \" + price + \"c.\\nCoins: \" + this.coins + \"  |  Seeds: tomato \" + this.seeds.tomato + \", carrot \" + this.seeds.carrot\n    );\n  }\n  sellAll() {\n    if (!this.shopOpen) return;\n    const earned = this.bag.tomato * CROP_DEFS.tomato.sellPrice + this.bag.carrot * CROP_DEFS.carrot.sellPrice + this.bag.fish * FISH_SELL_PRICE;\n    if (earned === 0) {\n      this.setDialogueText(\"Nothing to sell \\u2014 harvest crops or catch a fish first.\");\n      return;\n    }\n    this.coins += earned;\n    const sold = this.bag.tomato + \" tomato, \" + this.bag.carrot + \" carrot, \" + this.bag.fish + \" fish\";\n    this.bag.tomato = 0;\n    this.bag.carrot = 0;\n    this.bag.fish = 0;\n    this.playClick();\n    this.setDialogueText(\"Sold \" + sold + \" for \" + earned + \"c. Coins: \" + this.coins + \".\");\n  }\n  // --- NPC + quest -----------------------------------------------------------\n  talkToMira() {\n    if (this.quest === \"none\") {\n      this.quest = \"active\";\n      this.showDialogue(\n        'Mira: \"Morning! The village feast needs tomatoes.\\nBring me 3 tomatoes and I will pay you 50c.\"'\n      );\n    } else if (this.quest === \"active\") {\n      if (this.bag.tomato >= 3) {\n        this.bag.tomato -= 3;\n        this.coins += QUEST_REWARD;\n        this.quest = \"done\";\n        this.playClick();\n        this.showDialogue(\n          'Mira: \"Three perfect tomatoes! Thank you!\"\\nQuest complete \\u2014 +' + QUEST_REWARD + \"c. Coins: \" + this.coins + \".\"\n        );\n      } else {\n        this.showDialogue(\n          'Mira: \"I still need 3 tomatoes for the feast.\\nYou have ' + this.bag.tomato + ' in your bag.\"'\n        );\n      }\n    } else {\n      this.showDialogue('Mira: \"Thanks again for the tomatoes. The feast will be lovely!\"');\n    }\n  }\n  // --- fishing ---------------------------------------------------------------\n  startFishing() {\n    this.fishing = true;\n    this.fishMarker = 0;\n    this.fishDir = 1;\n    this.eventBus.emit(\"hv:freeze\", { frozen: true });\n    this.showFishingBar();\n    this.showDialogue(\"Fishing! Press E when the marker is in the green zone.\");\n  }\n  tryCatchFish() {\n    this.fishing = false;\n    this.eventBus.emit(\"hv:freeze\", { frozen: false });\n    this.hideFishingBar();\n    if (this.fishMarker >= FISH_ZONE[0] && this.fishMarker <= FISH_ZONE[1]) {\n      this.bag.fish += 1;\n      this.playClick();\n      this.showDialogue(\"Caught a fish! Fish in bag: \" + this.bag.fish + \" (sell: 15c).\");\n    } else {\n      this.showDialogue(\"It got away... the marker was outside the green zone.\");\n    }\n  }\n  // --- sleep / save / load -----------------------------------------------------\n  sleep() {\n    for (const plot of this.plots) {\n      if (plot.state === \"planted\" && plot.watered && plot.stage < 2) {\n        plot.stage += 1;\n        plot.timer = 0;\n        this.setCropSprite(plot);\n      }\n      plot.watered = false;\n      if (plot.state === \"planted\") this.setPlotTile(plot, 60 + plot.col % 3);\n    }\n    this.day += 1;\n    this.minutes = DAY_START_MINUTES;\n    const player = this.findEntityByName(\"Player\");\n    if (player !== void 0) this.setPositionFor(player, 4, 1);\n    const save = this.serialize();\n    const engine = this._engine;\n    if (engine) engine.__hvSave = save;\n    this.eventBus.emit(\"hv:save\", { save });\n    this.showDialogue(\"Day \" + this.day + \" \\u2014 you wake up rested. Game saved.\");\n  }\n  setPositionFor(entity, x, y) {\n    const t = this.getComponent(entity, \"transform\");\n    if (t) {\n      t.x = x;\n      t.y = y;\n    }\n    this.physics.teleport(entity, x, y);\n  }\n  serialize() {\n    return JSON.stringify({\n      version: 1,\n      day: this.day,\n      minutes: Math.round(this.minutes),\n      coins: this.coins,\n      seeds: this.seeds,\n      bag: this.bag,\n      quest: this.quest,\n      tool: this.tool,\n      seedType: this.seedType,\n      plots: this.plots.map((p) => ({\n        col: p.col,\n        row: p.row,\n        state: p.state,\n        crop: p.crop,\n        stage: p.stage,\n        watered: p.watered,\n        timer: p.timer\n      })),\n      player: (() => {\n        const player = this.findEntityByName(\"Player\");\n        if (player === void 0) return null;\n        const t = this.getComponent(player, \"transform\");\n        return t ? { x: t.x, y: t.y } : null;\n      })()\n    });\n  }\n  /** Host save-bridge entry point: apply a save loaded from IndexedDB\n   * after onStart (the read is async). Refreshes the HUD and greets the\n   * player. Called by the runtime SaveBridge; never call from a script. */\n  restoreFromSave(save) {\n    this.restore(save);\n    this.updateHud();\n    this.showDialogue(\"Welcome back to Harvest Valley! Day \" + this.day + \".\");\n  }\n  restore(json) {\n    const data = JSON.parse(json);\n    this.day = data.day ?? 1;\n    this.minutes = data.minutes ?? DAY_START_MINUTES;\n    this.coins = data.coins ?? 20;\n    this.seeds = { tomato: 2, carrot: 0, ...data.seeds ?? {} };\n    this.bag = { tomato: 0, carrot: 0, fish: 0, ...data.bag ?? {} };\n    this.quest = data.quest ?? \"none\";\n    this.tool = data.tool ?? \"hoe\";\n    this.seedType = data.seedType ?? \"tomato\";\n    for (const plot of this.plots) {\n      if (plot.sprite !== -1) {\n        this.destroyEntity(plot.sprite);\n        plot.sprite = -1;\n      }\n    }\n    for (const saved of data.plots ?? []) {\n      const plot = this.plots.find((p) => p.col === saved.col && p.row === saved.row);\n      if (!plot) continue;\n      plot.state = saved.state;\n      plot.crop = saved.crop ?? \"\";\n      plot.stage = saved.stage ?? 0;\n      plot.watered = !!saved.watered;\n      plot.timer = saved.timer ?? 0;\n      if (plot.state === \"grass\") {\n        this.setPlotTile(plot, -1);\n      } else if (plot.state === \"tilled\") {\n        this.setPlotTile(plot, 60 + plot.col % 3);\n      } else {\n        this.setPlotTile(plot, plot.watered ? 48 : 60 + plot.col % 3);\n        plot.sprite = this.spawn(\"Crop-\" + plot.col + \"-\" + plot.row, {\n          transform: { x: plot.x, y: plot.y, rotation: 0, scaleX: 1, scaleY: 1 },\n          sprite: {\n            textureId: \"farm-atlas-tex\",\n            width: 0.9,\n            height: 0.9,\n            pivotX: 0.5,\n            pivotY: 0.5,\n            region: \"grass\"\n          },\n          sortingLayer: { layer: 1, orderInLayer: 0, ySort: true }\n        });\n        this.setCropSprite(plot);\n      }\n    }\n    if (data.player) {\n      const player = this.findEntityByName(\"Player\");\n      if (player !== void 0) this.setPositionFor(player, data.player.x, data.player.y);\n    }\n  }\n  // --- HUD / dialogue / fishing bar -------------------------------------------\n  clockText() {\n    const total = Math.floor(this.minutes);\n    const hh = Math.floor(total / 60);\n    const mm = total % 60;\n    const pad = (n) => n < 10 ? \"0\" + n : \"\" + n;\n    return \"Day \" + this.day + \"  \" + pad(hh) + \":\" + pad(mm);\n  }\n  setLabel(name, text) {\n    const e = this.findEntityByName(name);\n    if (e === void 0) return;\n    const label = this.getComponent(e, \"uiLabel\");\n    if (label) label.text = text;\n  }\n  setUiOffsetY(name, y) {\n    const e = this.findEntityByName(name);\n    if (e === void 0) return;\n    const t = this.getComponent(e, \"uiTransform\");\n    if (t) t.offsetY = y;\n  }\n  setUiOffset(name, x, y) {\n    const e = this.findEntityByName(name);\n    if (e === void 0) return;\n    const t = this.getComponent(e, \"uiTransform\");\n    if (t) {\n      t.offsetX = x;\n      t.offsetY = y;\n    }\n  }\n  updateHud() {\n    const toolName = this.tool === \"hoe\" ? \"Hoe (1)\" : this.tool === \"seeds\" ? \"Seeds (2)\" : \"Can (3)\";\n    this.setLabel(\n      \"HUD-Status\",\n      this.clockText() + \"   |   Coins: \" + this.coins + \"c   |   Tool: \" + toolName + (this.tool === \"seeds\" ? \" [\" + this.seedType + \", Q to switch]\" : \"\")\n    );\n    this.setLabel(\n      \"HUD-Inv\",\n      \"Seeds: tomato \" + this.seeds.tomato + \", carrot \" + this.seeds.carrot + \"   |   Bag: tomato \" + this.bag.tomato + \", carrot \" + this.bag.carrot + \", fish \" + this.bag.fish + (this.quest === \"active\" ? \"   |   Quest: 3 tomatoes for Mira\" : \"\")\n    );\n    if (this.shopOpen || this.fishing) return;\n    const player = this.findEntityByName(\"Player\");\n    if (player === void 0) return;\n    const t = this.getComponent(player, \"transform\");\n    if (!t) return;\n    const px = t.x;\n    const py = t.y;\n    const near = (x, y, r) => Math.hypot(px - x, py - y) <= r;\n    let hint = \"\";\n    if (near(4, 2, 1.4)) hint = \"E \\u2014 Sleep until tomorrow (saves the game)\";\n    else if (near(2, -1, 1.5)) hint = \"E \\u2014 Open Mira's Stall (buy seeds, sell crops)\";\n    else if (near(-4, -2, 1.6)) hint = \"E \\u2014 Fish in the pond\";\n    else {\n      const mira = this.findEntityByName(\"Mira\");\n      if (mira !== void 0) {\n        const mt = this.getComponent(mira, \"transform\");\n        if (mt && near(mt.x, mt.y, 1.5)) {\n          hint = this.quest === \"none\" ? \"E \\u2014 Talk to Mira\" : this.quest === \"active\" ? \"E \\u2014 Talk to Mira (quest: 3 tomatoes)\" : \"E \\u2014 Talk to Mira\";\n        }\n      }\n    }\n    if (!hint) {\n      for (const plot of this.plots) {\n        if (Math.hypot(px - plot.x, py - plot.y) <= 1.4) {\n          if (plot.state === \"grass\") hint = \"E \\u2014 Till with the Hoe (press 1)\";\n          else if (plot.state === \"tilled\") hint = \"E \\u2014 Plant \" + this.seedType + \" seeds (press 2)\";\n          else if (plot.stage >= 2) hint = \"E \\u2014 Harvest the \" + plot.crop + \"!\";\n          else if (!plot.watered) hint = \"E \\u2014 Water the \" + plot.crop + \" (press 3)\";\n          else hint = \"Growing... stage \" + (plot.stage + 1) + \" of 3\";\n          break;\n        }\n      }\n    }\n    if (!hint) {\n      hint = \"WASD / arrows or D-pad to walk  \\u2022  1/2/3 tools  \\u2022  E interact\" + (this.minutes >= DAY_START_MINUTES + DAY_MINUTES - 30 ? \"  \\u2022  It is late \\u2014 go to bed!\" : \"\");\n    }\n    this.setLabel(\"HUD-Hint\", hint);\n  }\n  showDialogue(text) {\n    this.setDialogueText(text);\n    this.dialogueTimer = 4;\n  }\n  setDialogueText(text) {\n    this.dialogueText = text;\n    this.setLabel(\"Dialogue-Text\", text);\n    this.setUiOffsetY(\"Dialogue-Panel\", -140);\n    this.setUiOffsetY(\"Dialogue-Text\", -128);\n  }\n  hideDialogue() {\n    this.dialogueTimer = 0;\n    this.setUiOffsetY(\"Dialogue-Panel\", this.uiHiddenY);\n    this.setUiOffsetY(\"Dialogue-Text\", this.uiHiddenY);\n  }\n  showShopPanel(show) {\n    const y = show ? -88 : this.uiHiddenY;\n    this.setUiOffsetY(\"Shop-Btn-1\", y);\n    this.setUiOffsetY(\"Shop-Btn-2\", y);\n    this.setUiOffsetY(\"Shop-Btn-3\", y);\n    this.setUiOffsetY(\"Shop-Btn-4\", y);\n  }\n  showFishingBar() {\n    this.setUiOffsetY(\"Fishing-Bg\", -320);\n    this.setUiOffsetY(\"Fishing-Zone\", -320);\n    this.setUiOffsetY(\"Fishing-Marker\", -322);\n    this.updateFishingBar();\n  }\n  hideFishingBar() {\n    this.setUiOffsetY(\"Fishing-Bg\", this.uiHiddenY);\n    this.setUiOffsetY(\"Fishing-Zone\", this.uiHiddenY);\n    this.setUiOffsetY(\"Fishing-Marker\", this.uiHiddenY);\n  }\n  updateFishingBar() {\n    const x = -150 + this.fishMarker * 300 - 6;\n    this.setUiOffset(\"Fishing-Marker\", x, -322);\n  }\n  playClick() {\n    try {\n      if (this.audio && typeof this.audio.playSound === \"function\") {\n        this.audio.playSound(\"ui-click\");\n      }\n    } catch (e) {\n    }\n  }\n}\nvar GameManager_default = GameManager;\n"
+      }
+     }
+    },
+    {
+     "id": "hud-status",
+     "name": "HUD-Status",
+     "components": {
+      "uiTransform": {
+       "anchorX": 0,
+       "anchorY": 0,
+       "pivotX": 0,
+       "pivotY": 0,
+       "offsetX": 12,
+       "offsetY": 10
+      },
+      "uiLabel": {
+       "text": "",
+       "fontSize": 18,
+       "color": "#ffffff",
+       "fontFamily": "Arial"
+      }
+     }
+    },
+    {
+     "id": "hud-inv",
+     "name": "HUD-Inv",
+     "components": {
+      "uiTransform": {
+       "anchorX": 0,
+       "anchorY": 0,
+       "pivotX": 0,
+       "pivotY": 0,
+       "offsetX": 12,
+       "offsetY": 36
+      },
+      "uiLabel": {
+       "text": "",
+       "fontSize": 15,
+       "color": "#ffffff",
+       "fontFamily": "Arial"
+      }
+     }
+    },
+    {
+     "id": "hud-hint",
+     "name": "HUD-Hint",
+     "components": {
+      "uiTransform": {
+       "anchorX": 0,
+       "anchorY": 1,
+       "pivotX": 0,
+       "pivotY": 0,
+       "offsetX": 12,
+       "offsetY": -16
+      },
+      "uiLabel": {
+       "text": "",
+       "fontSize": 15,
+       "color": "#ffe9a8",
+       "fontFamily": "Arial"
+      }
+     }
+    },
+    {
+     "id": "dialogue-panel",
+     "name": "Dialogue-Panel",
+     "components": {
+      "uiTransform": {
+       "anchorX": 0.5,
+       "anchorY": 1,
+       "pivotX": 0,
+       "pivotY": 0,
+       "offsetX": -280,
+       "offsetY": 2000
+      },
+      "uiPanel": {
+       "width": 560,
+       "height": 110,
+       "color": "#1A1A2E",
+       "borderRadius": 8
+      }
+     }
+    },
+    {
+     "id": "dialogue-text",
+     "name": "Dialogue-Text",
+     "components": {
+      "uiTransform": {
+       "anchorX": 0.5,
+       "anchorY": 1,
+       "pivotX": 0,
+       "pivotY": 0,
+       "offsetX": -268,
+       "offsetY": 2000
+      },
+      "uiLabel": {
+       "text": "",
+       "fontSize": 16,
+       "color": "#ffffff",
+       "fontFamily": "Arial"
+      }
+     }
+    },
+    {
+     "id": "shop-btn-1",
+     "name": "Shop-Btn-1",
+     "components": {
+      "uiTransform": {
+       "anchorX": 0.5,
+       "anchorY": 1,
+       "pivotX": 0,
+       "pivotY": 0,
+       "offsetX": -268,
+       "offsetY": 2000
+      },
+      "uiButton": {
+       "normalColor": "#533483",
+       "hoverColor": "#E94560",
+       "pressColor": "#1A1A2E",
+       "onClick": "hv:shop-buy-tomato"
+      },
+      "uiLabel": {
+       "text": "1 Tomato 10c",
+       "fontSize": 14,
+       "color": "#ffffff",
+       "fontFamily": "Arial"
+      }
+     }
+    },
+    {
+     "id": "shop-btn-2",
+     "name": "Shop-Btn-2",
+     "components": {
+      "uiTransform": {
+       "anchorX": 0.5,
+       "anchorY": 1,
+       "pivotX": 0,
+       "pivotY": 0,
+       "offsetX": -140,
+       "offsetY": 2000
+      },
+      "uiButton": {
+       "normalColor": "#533483",
+       "hoverColor": "#E94560",
+       "pressColor": "#1A1A2E",
+       "onClick": "hv:shop-buy-carrot"
+      },
+      "uiLabel": {
+       "text": "2 Carrot 15c",
+       "fontSize": 14,
+       "color": "#ffffff",
+       "fontFamily": "Arial"
+      }
+     }
+    },
+    {
+     "id": "shop-btn-3",
+     "name": "Shop-Btn-3",
+     "components": {
+      "uiTransform": {
+       "anchorX": 0.5,
+       "anchorY": 1,
+       "pivotX": 0,
+       "pivotY": 0,
+       "offsetX": -12,
+       "offsetY": 2000
+      },
+      "uiButton": {
+       "normalColor": "#533483",
+       "hoverColor": "#E94560",
+       "pressColor": "#1A1A2E",
+       "onClick": "hv:shop-sell-all"
+      },
+      "uiLabel": {
+       "text": "3 Sell all",
+       "fontSize": 14,
+       "color": "#ffffff",
+       "fontFamily": "Arial"
+      }
+     }
+    },
+    {
+     "id": "shop-btn-4",
+     "name": "Shop-Btn-4",
+     "components": {
+      "uiTransform": {
+       "anchorX": 0.5,
+       "anchorY": 1,
+       "pivotX": 0,
+       "pivotY": 0,
+       "offsetX": 116,
+       "offsetY": 2000
+      },
+      "uiButton": {
+       "normalColor": "#533483",
+       "hoverColor": "#E94560",
+       "pressColor": "#1A1A2E",
+       "onClick": "hv:shop-close"
+      },
+      "uiLabel": {
+       "text": "4 Close",
+       "fontSize": 14,
+       "color": "#ffffff",
+       "fontFamily": "Arial"
+      }
+     }
+    },
+    {
+     "id": "fishing-bg",
+     "name": "Fishing-Bg",
+     "components": {
+      "uiTransform": {
+       "anchorX": 0.5,
+       "anchorY": 1,
+       "pivotX": 0,
+       "pivotY": 0,
+       "offsetX": -150,
+       "offsetY": 2000
+      },
+      "uiProgressBar": {
+       "value": 100,
+       "max": 100,
+       "fillColor": "#533483",
+       "bgColor": "#222222",
+       "width": 300,
+       "height": 18
+      }
+     }
+    },
+    {
+     "id": "fishing-zone",
+     "name": "Fishing-Zone",
+     "components": {
+      "uiTransform": {
+       "anchorX": 0.5,
+       "anchorY": 1,
+       "pivotX": 0,
+       "pivotY": 0,
+       "offsetX": -45,
+       "offsetY": 2000
+      },
+      "uiProgressBar": {
+       "value": 100,
+       "max": 100,
+       "fillColor": "#22c55e",
+       "bgColor": "#22c55e",
+       "width": 90,
+       "height": 18
+      }
+     }
+    },
+    {
+     "id": "fishing-marker",
+     "name": "Fishing-Marker",
+     "components": {
+      "uiTransform": {
+       "anchorX": 0.5,
+       "anchorY": 1,
+       "pivotX": 0,
+       "pivotY": 0,
+       "offsetX": -156,
+       "offsetY": 2000
+      },
+      "uiProgressBar": {
+       "value": 100,
+       "max": 100,
+       "fillColor": "#ffd23f",
+       "bgColor": "#ffd23f",
+       "width": 12,
+       "height": 22
+      }
+     }
+    }
+   ]
+  }
+ },
+ "settings": {
+  "startScene": "main",
+  "physics": {
+   "gravity": {
+    "x": 0,
+    "y": 0
+   }
+  },
+  "postProcess": {
+   "bloom": false,
+   "vignette": false,
+   "crt": false,
+   "bloomThreshold": 0.8,
+   "vignetteStrength": 0.3
+  },
+  "input": {}
+ }
+}

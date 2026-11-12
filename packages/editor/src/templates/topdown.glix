@@ -1,0 +1,2269 @@
+{
+  "version": "1.0.0",
+  "meta": {
+    "name": "Top-Down Farming",
+    "resolution": {
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "assets": {
+    "farm-tiles": {
+      "id": "farm-tiles",
+      "type": "texture",
+      "name": "Farm tileset sheet 12x11 (Tiny Farm; grass+dirt from Tiny Town)",
+      "mimeType": "image/png",
+      "data": "data:image/png;base64,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"
+    },
+    "farm-tileset": {
+      "id": "farm-tileset",
+      "type": "tileset",
+      "name": "Tiny Farm tileset",
+      "mimeType": "application/json",
+      "data": "{\"textureId\": \"farm-tiles\", \"tileWidth\": 16, \"tileHeight\": 16, \"columns\": 12, \"rows\": 11, \"spacing\": 0}"
+    },
+    "farm-atlas-tex": {
+      "id": "farm-atlas-tex",
+      "type": "texture",
+      "name": "Tiny Farm props atlas (9x4, 31 regions)",
+      "mimeType": "image/png",
+      "data": "data:image/png;base64,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"
+    },
+    "farm-atlas": {
+      "id": "farm-atlas",
+      "type": "spriteatlas",
+      "name": "Tiny Farm props atlas",
+      "mimeType": "application/json",
+      "data": "{\"textureId\": \"farm-atlas-tex\", \"regions\": {\"farmer_f\": {\"x\": 0.0, \"y\": 0.0, \"w\": 0.111111, \"h\": 0.25}, \"farmer_m\": {\"x\": 0.111111, \"y\": 0.0, \"w\": 0.111111, \"h\": 0.25}, \"cow\": {\"x\": 0.222222, \"y\": 0.0, \"w\": 0.111111, \"h\": 0.25}, \"sheep\": {\"x\": 0.333333, \"y\": 0.0, \"w\": 0.111111, \"h\": 0.25}, \"chicken\": {\"x\": 0.444444, \"y\": 0.0, \"w\": 0.111111, \"h\": 0.25}, \"water_can\": {\"x\": 0.555556, \"y\": 0.0, \"w\": 0.111111, \"h\": 0.25}, \"shovel\": {\"x\": 0.666667, \"y\": 0.0, \"w\": 0.111111, \"h\": 0.25}, \"hoe\": {\"x\": 0.777778, \"y\": 0.0, \"w\": 0.111111, \"h\": 0.25}, \"tomato_plant\": {\"x\": 0.888889, \"y\": 0.0, \"w\": 0.111111, \"h\": 0.25}, \"tomato\": {\"x\": 0.0, \"y\": 0.25, \"w\": 0.111111, \"h\": 0.25}, \"carrot\": {\"x\": 0.111111, \"y\": 0.25, \"w\": 0.111111, \"h\": 0.25}, \"pumpkin\": {\"x\": 0.222222, \"y\": 0.25, \"w\": 0.111111, \"h\": 0.25}, \"corn\": {\"x\": 0.333333, \"y\": 0.25, \"w\": 0.111111, \"h\": 0.25}, \"wheat\": {\"x\": 0.444444, \"y\": 0.25, \"w\": 0.111111, \"h\": 0.25}, \"sunflower\": {\"x\": 0.555556, \"y\": 0.25, \"w\": 0.111111, \"h\": 0.25}, \"grass\": {\"x\": 0.666667, \"y\": 0.25, \"w\": 0.111111, \"h\": 0.25}, \"basket\": {\"x\": 0.777778, \"y\": 0.25, \"w\": 0.111111, \"h\": 0.25}, \"hay\": {\"x\": 0.888889, \"y\": 0.25, \"w\": 0.111111, \"h\": 0.25}, \"tree_pine_top\": {\"x\": 0.0, \"y\": 0.5, \"w\": 0.111111, \"h\": 0.25}, \"tree_pine\": {\"x\": 0.111111, \"y\": 0.5, \"w\": 0.111111, \"h\": 0.25}, \"tree_pine_tall\": {\"x\": 0.222222, \"y\": 0.5, \"w\": 0.111111, \"h\": 0.25}, \"tree_trunk\": {\"x\": 0.333333, \"y\": 0.5, \"w\": 0.111111, \"h\": 0.25}, \"barn_wall_x1\": {\"x\": 0.444444, \"y\": 0.5, \"w\": 0.111111, \"h\": 0.25}, \"barn_wall_x2\": {\"x\": 0.555556, \"y\": 0.5, \"w\": 0.111111, \"h\": 0.25}, \"barn_wall_x3\": {\"x\": 0.666667, \"y\": 0.5, \"w\": 0.111111, \"h\": 0.25}, \"barn_wall_v1\": {\"x\": 0.777778, \"y\": 0.5, \"w\": 0.111111, \"h\": 0.25}, \"barn_door\": {\"x\": 0.888889, \"y\": 0.5, \"w\": 0.111111, \"h\": 0.25}, \"barn_wall_v2\": {\"x\": 0.0, \"y\": 0.75, \"w\": 0.111111, \"h\": 0.25}, \"barn_roof_l\": {\"x\": 0.111111, \"y\": 0.75, \"w\": 0.111111, \"h\": 0.25}, \"barn_roof_m\": {\"x\": 0.222222, \"y\": 0.75, \"w\": 0.111111, \"h\": 0.25}, \"barn_roof_r\": {\"x\": 0.333333, \"y\": 0.75, \"w\": 0.111111, \"h\": 0.25}}}"
+    },
+    "ui-click": {
+      "id": "ui-click",
+      "type": "audio",
+      "name": "UI click (Kenney Interface Sounds)",
+      "mimeType": "audio/ogg",
+      "data": "data:audio/ogg;base64,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"
+    }
+  },
+  "prefabs": {},
+  "scenes": {
+    "main": {
+      "id": "main",
+      "name": "Main Scene",
+      "entities": [
+        {
+          "id": "farm-ground",
+          "name": "Farm Ground",
+          "components": {
+            "transform": {
+              "x": -8,
+              "y": 6.5,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "tilemap": {
+              "tilesetId": "farm-tileset",
+              "layers": [
+                {
+                  "name": "Ground",
+                  "tiles": [
+                    [
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0
+                    ],
+                    [
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0
+                    ],
+                    [
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0
+                    ],
+                    [
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0
+                    ],
+                    [
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0
+                    ],
+                    [
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0
+                    ],
+                    [
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0
+                    ],
+                    [
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0
+                    ],
+                    [
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0
+                    ],
+                    [
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0
+                    ],
+                    [
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0
+                    ],
+                    [
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0
+                    ],
+                    [
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0
+                    ]
+                  ],
+                  "visible": true,
+                  "opacity": 1.0
+                },
+                {
+                  "name": "Details",
+                  "tiles": [
+                    [
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1
+                    ],
+                    [
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1
+                    ],
+                    [
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1
+                    ],
+                    [
+                      -1,
+                      -1,
+                      -1,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1
+                    ],
+                    [
+                      -1,
+                      -1,
+                      -1,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1
+                    ],
+                    [
+                      -1,
+                      -1,
+                      -1,
+                      1,
+                      48,
+                      49,
+                      50,
+                      51,
+                      1,
+                      0,
+                      0,
+                      0,
+                      0,
+                      -1,
+                      -1,
+                      -1
+                    ],
+                    [
+                      -1,
+                      -1,
+                      -1,
+                      1,
+                      60,
+                      61,
+                      62,
+                      63,
+                      1,
+                      0,
+                      0,
+                      0,
+                      0,
+                      -1,
+                      -1,
+                      -1
+                    ],
+                    [
+                      -1,
+                      -1,
+                      -1,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      -1,
+                      -1,
+                      -1
+                    ],
+                    [
+                      -1,
+                      -1,
+                      -1,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      -1,
+                      -1,
+                      -1
+                    ],
+                    [
+                      -1,
+                      -1,
+                      -1,
+                      0,
+                      0,
+                      1,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      -1,
+                      -1,
+                      -1
+                    ],
+                    [
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1
+                    ],
+                    [
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1
+                    ],
+                    [
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1,
+                      -1
+                    ]
+                  ],
+                  "visible": true,
+                  "opacity": 1.0
+                }
+              ],
+              "tileWidth": 1,
+              "tileHeight": 1
+            },
+            "sortingLayer": {
+              "layer": 0,
+              "orderInLayer": 0,
+              "ySort": false
+            }
+          }
+        },
+        {
+          "id": "tree-0-0",
+          "name": "Pine Tree",
+          "components": {
+            "transform": {
+              "x": -5.5,
+              "y": 4.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 1,
+              "height": 1,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "tree_pine_top"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "tree-0-1",
+          "name": "Pine Tree",
+          "components": {
+            "transform": {
+              "x": -4.5,
+              "y": 4.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 1,
+              "height": 1,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "tree_pine"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "tree-0-2",
+          "name": "Pine Tree",
+          "components": {
+            "transform": {
+              "x": -3.5,
+              "y": 4.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 1,
+              "height": 1,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "tree_pine_top"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "tree-0-3",
+          "name": "Pine Tree",
+          "components": {
+            "transform": {
+              "x": -2.5,
+              "y": 4.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 1,
+              "height": 1,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "tree_pine"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "tree-0-4",
+          "name": "Pine Tree",
+          "components": {
+            "transform": {
+              "x": -1.5,
+              "y": 4.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 1,
+              "height": 1,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "tree_pine_top"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "tree-0-5",
+          "name": "Pine Tree",
+          "components": {
+            "transform": {
+              "x": -0.5,
+              "y": 4.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 1,
+              "height": 1,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "tree_pine"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "tree-0-6",
+          "name": "Pine Tree",
+          "components": {
+            "transform": {
+              "x": 0.5,
+              "y": 4.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 1,
+              "height": 1,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "tree_pine_top"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "tree-0-7",
+          "name": "Pine Tree",
+          "components": {
+            "transform": {
+              "x": 1.5,
+              "y": 4.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 1,
+              "height": 1,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "tree_pine"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "tree-0-8",
+          "name": "Pine Tree",
+          "components": {
+            "transform": {
+              "x": 2.5,
+              "y": 4.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 1,
+              "height": 1,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "tree_pine_top"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "tree-1-0",
+          "name": "Pine Tree",
+          "components": {
+            "transform": {
+              "x": -5.5,
+              "y": 3.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 1,
+              "height": 1,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "tree_pine_tall"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "tree-2-0",
+          "name": "Tree Trunk",
+          "components": {
+            "transform": {
+              "x": -5.5,
+              "y": 2.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 1,
+              "height": 1,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "tree_trunk"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "tree-3-0",
+          "name": "Pine Tree",
+          "components": {
+            "transform": {
+              "x": -5.5,
+              "y": 1.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 1,
+              "height": 1,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "tree_pine_tall"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "tree-3-11",
+          "name": "Tree Trunk",
+          "components": {
+            "transform": {
+              "x": 5.5,
+              "y": 1.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 1,
+              "height": 1,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "tree_trunk"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "tree-4-0",
+          "name": "Pine Tree",
+          "components": {
+            "transform": {
+              "x": -5.5,
+              "y": 0.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 1,
+              "height": 1,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "tree_pine_top"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "tree-4-11",
+          "name": "Pine Tree",
+          "components": {
+            "transform": {
+              "x": 5.5,
+              "y": 0.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 1,
+              "height": 1,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "tree_pine"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "tree-5-0",
+          "name": "Pine Tree",
+          "components": {
+            "transform": {
+              "x": -5.5,
+              "y": -1.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 1,
+              "height": 1,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "tree_pine"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "tree-5-11",
+          "name": "Pine Tree",
+          "components": {
+            "transform": {
+              "x": 5.5,
+              "y": -1.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 1,
+              "height": 1,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "tree_pine_tall"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "tree-6-0",
+          "name": "Pine Tree",
+          "components": {
+            "transform": {
+              "x": -5.5,
+              "y": -2.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 1,
+              "height": 1,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "tree_pine_tall"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "tree-6-11",
+          "name": "Tree Trunk",
+          "components": {
+            "transform": {
+              "x": 5.5,
+              "y": -2.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 1,
+              "height": 1,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "tree_trunk"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "tree-7-0",
+          "name": "Pine Tree",
+          "components": {
+            "transform": {
+              "x": -5.5,
+              "y": -3.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 1,
+              "height": 1,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "tree_pine_top"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "tree-7-11",
+          "name": "Pine Tree",
+          "components": {
+            "transform": {
+              "x": 5.5,
+              "y": -3.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 1,
+              "height": 1,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "tree_pine"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "tree-8-0",
+          "name": "Pine Tree",
+          "components": {
+            "transform": {
+              "x": -5.5,
+              "y": -4.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 1,
+              "height": 1,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "tree_pine"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "tree-8-1",
+          "name": "Pine Tree",
+          "components": {
+            "transform": {
+              "x": -4.5,
+              "y": -4.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 1,
+              "height": 1,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "tree_pine_top"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "tree-8-2",
+          "name": "Pine Tree",
+          "components": {
+            "transform": {
+              "x": -3.5,
+              "y": -4.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 1,
+              "height": 1,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "tree_pine"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "tree-8-3",
+          "name": "Pine Tree",
+          "components": {
+            "transform": {
+              "x": -2.5,
+              "y": -4.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 1,
+              "height": 1,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "tree_pine_top"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "tree-8-4",
+          "name": "Pine Tree",
+          "components": {
+            "transform": {
+              "x": -1.5,
+              "y": -4.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 1,
+              "height": 1,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "tree_pine"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "tree-8-5",
+          "name": "Pine Tree",
+          "components": {
+            "transform": {
+              "x": -0.5,
+              "y": -4.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 1,
+              "height": 1,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "tree_pine_top"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "tree-8-6",
+          "name": "Pine Tree",
+          "components": {
+            "transform": {
+              "x": 0.5,
+              "y": -4.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 1,
+              "height": 1,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "tree_pine"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "tree-8-7",
+          "name": "Pine Tree",
+          "components": {
+            "transform": {
+              "x": 1.5,
+              "y": -4.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 1,
+              "height": 1,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "tree_pine_top"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "tree-8-8",
+          "name": "Pine Tree",
+          "components": {
+            "transform": {
+              "x": 2.5,
+              "y": -4.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 1,
+              "height": 1,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "tree_pine"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "tree-8-9",
+          "name": "Pine Tree",
+          "components": {
+            "transform": {
+              "x": 3.5,
+              "y": -4.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 1,
+              "height": 1,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "tree_pine_top"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "tree-8-10",
+          "name": "Pine Tree",
+          "components": {
+            "transform": {
+              "x": 4.5,
+              "y": -4.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 1,
+              "height": 1,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "tree_pine"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "tree-8-11",
+          "name": "Pine Tree",
+          "components": {
+            "transform": {
+              "x": 5.5,
+              "y": -4.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 1,
+              "height": 1,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "tree_pine_top"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "barn-0-9",
+          "name": "Barn Roof",
+          "components": {
+            "transform": {
+              "x": 3.5,
+              "y": 4.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 1,
+              "height": 1,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "barn_roof_l"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "barn-0-10",
+          "name": "Barn Roof",
+          "components": {
+            "transform": {
+              "x": 4.5,
+              "y": 4.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 1,
+              "height": 1,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "barn_roof_m"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "barn-0-11",
+          "name": "Barn Roof",
+          "components": {
+            "transform": {
+              "x": 5.5,
+              "y": 4.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 1,
+              "height": 1,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "barn_roof_r"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "barn-1-9",
+          "name": "Barn Wall",
+          "components": {
+            "transform": {
+              "x": 3.5,
+              "y": 3.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 1,
+              "height": 1,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "barn_wall_x1"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "barn-1-10",
+          "name": "Barn Wall",
+          "components": {
+            "transform": {
+              "x": 4.5,
+              "y": 3.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 1,
+              "height": 1,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "barn_wall_x2"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "barn-1-11",
+          "name": "Barn Wall",
+          "components": {
+            "transform": {
+              "x": 5.5,
+              "y": 3.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 1,
+              "height": 1,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "barn_wall_x3"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "barn-2-9",
+          "name": "Barn Wall",
+          "components": {
+            "transform": {
+              "x": 3.5,
+              "y": 2.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 1,
+              "height": 1,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "barn_wall_v1"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "barn-2-10",
+          "name": "Barn Door",
+          "components": {
+            "transform": {
+              "x": 4.5,
+              "y": 2.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 1,
+              "height": 1,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "barn_door"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "barn-2-11",
+          "name": "Barn Wall",
+          "components": {
+            "transform": {
+              "x": 5.5,
+              "y": 2.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 1,
+              "height": 1,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "barn_wall_v2"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "player",
+          "name": "Player",
+          "components": {
+            "transform": {
+              "x": -4,
+              "y": 2.5,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 0.9,
+              "height": 0.9,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "farmer_m"
+            },
+            "rigidBody": {
+              "type": "dynamic",
+              "gravityScale": 0,
+              "linearDamping": 8,
+              "angularDamping": 8,
+              "fixedRotation": true
+            },
+            "circleCollider": {
+              "radius": 0.4,
+              "offsetX": 0,
+              "offsetY": 0,
+              "isSensor": false,
+              "restitution": 0,
+              "friction": 0.1
+            },
+            "script": {
+              "src": "// Top-Down Controller\nclass TopDownController extends ScriptComponent {\n  speed = 5;\n\n  onUpdate(dt: number) {\n    const moveX =\n      (this.input.isKeyDown('ArrowRight') || this.input.isKeyDown('KeyD') ? 1 : 0) -\n      (this.input.isKeyDown('ArrowLeft')  || this.input.isKeyDown('KeyA') ? 1 : 0);\n    const moveY =\n      (this.input.isKeyDown('ArrowUp')   || this.input.isKeyDown('KeyW') ? 1 : 0) -\n      (this.input.isKeyDown('ArrowDown') || this.input.isKeyDown('KeyS') ? 1 : 0);\n\n    // Normalize diagonal movement\n    const len = Math.sqrt(moveX * moveX + moveY * moveY) || 1;\n    this.setVelocity((moveX / len) * this.speed, (moveY / len) * this.speed);\n\n    // Rotate to face movement direction\n    if (moveX !== 0 || moveY !== 0) {\n      this.setRotation(Math.atan2(moveY, moveX) - Math.PI / 2);\n    }\n  }\n}\n\nexport default TopDownController;",
+              "compiledJs": "var __defProp = Object.defineProperty;\nvar __getOwnPropDesc = Object.getOwnPropertyDescriptor;\nvar __getOwnPropNames = Object.getOwnPropertyNames;\nvar __hasOwnProp = Object.prototype.hasOwnProperty;\nvar __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;\nvar __export = (target, all) => {\n  for (var name in all)\n    __defProp(target, name, { get: all[name], enumerable: true });\n};\nvar __copyProps = (to, from, except, desc) => {\n  if (from && typeof from === \"object\" || typeof from === \"function\") {\n    for (let key of __getOwnPropNames(from))\n      if (!__hasOwnProp.call(to, key) && key !== except)\n        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });\n  }\n  return to;\n};\nvar __toCommonJS = (mod) => __copyProps(__defProp({}, \"__esModule\", { value: true }), mod);\nvar __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== \"symbol\" ? key + \"\" : key, value);\nvar stdin_exports = {};\n__export(stdin_exports, {\n  default: () => stdin_default\n});\nmodule.exports = __toCommonJS(stdin_exports);\nclass TopDownController extends ScriptComponent {\n  constructor() {\n    super(...arguments);\n    __publicField(this, \"speed\", 5);\n  }\n  onUpdate(dt) {\n    const moveX = (this.input.isKeyDown(\"ArrowRight\") || this.input.isKeyDown(\"KeyD\") ? 1 : 0) - (this.input.isKeyDown(\"ArrowLeft\") || this.input.isKeyDown(\"KeyA\") ? 1 : 0);\n    const moveY = (this.input.isKeyDown(\"ArrowUp\") || this.input.isKeyDown(\"KeyW\") ? 1 : 0) - (this.input.isKeyDown(\"ArrowDown\") || this.input.isKeyDown(\"KeyS\") ? 1 : 0);\n    const len = Math.sqrt(moveX * moveX + moveY * moveY) || 1;\n    this.setVelocity(moveX / len * this.speed, moveY / len * this.speed);\n    if (moveX !== 0 || moveY !== 0) {\n      this.setRotation(Math.atan2(moveY, moveX) - Math.PI / 2);\n    }\n  }\n}\nvar stdin_default = TopDownController;\n//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsiPHN0ZGluPiJdLAogICJzb3VyY2VzQ29udGVudCI6IFsiLy8gVG9wLURvd24gQ29udHJvbGxlclxuY2xhc3MgVG9wRG93bkNvbnRyb2xsZXIgZXh0ZW5kcyBTY3JpcHRDb21wb25lbnQge1xuICBzcGVlZCA9IDU7XG5cbiAgb25VcGRhdGUoZHQ6IG51bWJlcikge1xuICAgIGNvbnN0IG1vdmVYID1cbiAgICAgICh0aGlzLmlucHV0LmlzS2V5RG93bignQXJyb3dSaWdodCcpIHx8IHRoaXMuaW5wdXQuaXNLZXlEb3duKCdLZXlEJykgPyAxIDogMCkgLVxuICAgICAgKHRoaXMuaW5wdXQuaXNLZXlEb3duKCdBcnJvd0xlZnQnKSAgfHwgdGhpcy5pbnB1dC5pc0tleURvd24oJ0tleUEnKSA/IDEgOiAwKTtcbiAgICBjb25zdCBtb3ZlWSA9XG4gICAgICAodGhpcy5pbnB1dC5pc0tleURvd24oJ0Fycm93VXAnKSAgIHx8IHRoaXMuaW5wdXQuaXNLZXlEb3duKCdLZXlXJykgPyAxIDogMCkgLVxuICAgICAgKHRoaXMuaW5wdXQuaXNLZXlEb3duKCdBcnJvd0Rvd24nKSB8fCB0aGlzLmlucHV0LmlzS2V5RG93bignS2V5UycpID8gMSA6IDApO1xuXG4gICAgLy8gTm9ybWFsaXplIGRpYWdvbmFsIG1vdmVtZW50XG4gICAgY29uc3QgbGVuID0gTWF0aC5zcXJ0KG1vdmVYICogbW92ZVggKyBtb3ZlWSAqIG1vdmVZKSB8fCAxO1xuICAgIHRoaXMuc2V0VmVsb2NpdHkoKG1vdmVYIC8gbGVuKSAqIHRoaXMuc3BlZWQsIChtb3ZlWSAvIGxlbikgKiB0aGlzLnNwZWVkKTtcblxuICAgIC8vIFJvdGF0ZSB0byBmYWNlIG1vdmVtZW50IGRpcmVjdGlvblxuICAgIGlmIChtb3ZlWCAhPT0gMCB8fCBtb3ZlWSAhPT0gMCkge1xuICAgICAgdGhpcy5zZXRSb3RhdGlvbihNYXRoLmF0YW4yKG1vdmVZLCBtb3ZlWCkgLSBNYXRoLlBJIC8gMik7XG4gICAgfVxuICB9XG59XG5cbmV4cG9ydCBkZWZhdWx0IFRvcERvd25Db250cm9sbGVyOyJdLAogICJtYXBwaW5ncyI6ICI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQ0EsTUFBTSwwQkFBMEIsZ0JBQWdCO0FBQUEsRUFBaEQ7QUFBQTtBQUNFLGlDQUFRO0FBQUE7QUFBQSxFQUVSLFNBQVMsSUFBWTtBQUNuQixVQUFNLFNBQ0gsS0FBSyxNQUFNLFVBQVUsWUFBWSxLQUFLLEtBQUssTUFBTSxVQUFVLE1BQU0sSUFBSSxJQUFJLE1BQ3pFLEtBQUssTUFBTSxVQUFVLFdBQVcsS0FBTSxLQUFLLE1BQU0sVUFBVSxNQUFNLElBQUksSUFBSTtBQUM1RSxVQUFNLFNBQ0gsS0FBSyxNQUFNLFVBQVUsU0FBUyxLQUFPLEtBQUssTUFBTSxVQUFVLE1BQU0sSUFBSSxJQUFJLE1BQ3hFLEtBQUssTUFBTSxVQUFVLFdBQVcsS0FBSyxLQUFLLE1BQU0sVUFBVSxNQUFNLElBQUksSUFBSTtBQUczRSxVQUFNLE1BQU0sS0FBSyxLQUFLLFFBQVEsUUFBUSxRQUFRLEtBQUssS0FBSztBQUN4RCxTQUFLLFlBQWEsUUFBUSxNQUFPLEtBQUssT0FBUSxRQUFRLE1BQU8sS0FBSyxLQUFLO0FBR3ZFLFFBQUksVUFBVSxLQUFLLFVBQVUsR0FBRztBQUM5QixXQUFLLFlBQVksS0FBSyxNQUFNLE9BQU8sS0FBSyxJQUFJLEtBQUssS0FBSyxDQUFDO0FBQUEsSUFDekQ7QUFBQSxFQUNGO0FBQ0Y7QUFFQSxJQUFPLGdCQUFROyIsCiAgIm5hbWVzIjogW10KfQo=\n"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "crop-tomato-plant",
+          "name": "Tomato Plant",
+          "components": {
+            "transform": {
+              "x": -3.5,
+              "y": 1.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 0.8,
+              "height": 0.8,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "tomato_plant"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "crop-tomato",
+          "name": "Tomato",
+          "components": {
+            "transform": {
+              "x": -2.5,
+              "y": 1.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 0.8,
+              "height": 0.8,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "tomato"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "crop-carrot",
+          "name": "Carrot",
+          "components": {
+            "transform": {
+              "x": -1.5,
+              "y": 1.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 0.8,
+              "height": 0.8,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "carrot"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "crop-pumpkin",
+          "name": "Pumpkin",
+          "components": {
+            "transform": {
+              "x": -0.5,
+              "y": 1.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 0.8,
+              "height": 0.8,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "pumpkin"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "crop-corn",
+          "name": "Corn",
+          "components": {
+            "transform": {
+              "x": -3.5,
+              "y": 0.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 0.8,
+              "height": 0.8,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "corn"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "crop-wheat",
+          "name": "Wheat",
+          "components": {
+            "transform": {
+              "x": -2.5,
+              "y": 0.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 0.8,
+              "height": 0.8,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "wheat"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "crop-sunflower",
+          "name": "Sunflower",
+          "components": {
+            "transform": {
+              "x": -1.5,
+              "y": 0.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 0.8,
+              "height": 0.8,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "sunflower"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "crop-sprout",
+          "name": "Sprout",
+          "components": {
+            "transform": {
+              "x": -0.5,
+              "y": 0.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 0.8,
+              "height": 0.8,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "tomato_plant"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "prop-basket",
+          "name": "Basket",
+          "components": {
+            "transform": {
+              "x": -3.5,
+              "y": -2.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 0.8,
+              "height": 0.8,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "basket"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "tool-watering-can",
+          "name": "Watering Can",
+          "components": {
+            "transform": {
+              "x": -4.5,
+              "y": -1.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 0.6,
+              "height": 0.6,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "water_can"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "tool-shovel",
+          "name": "Shovel",
+          "components": {
+            "transform": {
+              "x": -3.5,
+              "y": -1.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 0.6,
+              "height": 0.6,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "shovel"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "tool-hoe",
+          "name": "Hoe",
+          "components": {
+            "transform": {
+              "x": -2.5,
+              "y": -1.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 0.6,
+              "height": 0.6,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "hoe"
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "animal-cow",
+          "name": "Cow",
+          "components": {
+            "transform": {
+              "x": 4.5,
+              "y": -3.5,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 0.9,
+              "height": 0.9,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "cow"
+            },
+            "rigidBody": {
+              "type": "static",
+              "gravityScale": 0,
+              "linearDamping": 0,
+              "angularDamping": 0,
+              "fixedRotation": true
+            },
+            "circleCollider": {
+              "radius": 0.4,
+              "offsetX": 0,
+              "offsetY": 0,
+              "isSensor": false,
+              "restitution": 0,
+              "friction": 0.1
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "animal-sheep",
+          "name": "Sheep",
+          "components": {
+            "transform": {
+              "x": -4.5,
+              "y": -3.5,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 0.9,
+              "height": 0.9,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "sheep"
+            },
+            "rigidBody": {
+              "type": "static",
+              "gravityScale": 0,
+              "linearDamping": 0,
+              "angularDamping": 0,
+              "fixedRotation": true
+            },
+            "circleCollider": {
+              "radius": 0.4,
+              "offsetX": 0,
+              "offsetY": 0,
+              "isSensor": false,
+              "restitution": 0,
+              "friction": 0.1
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "animal-chicken",
+          "name": "Chicken",
+          "components": {
+            "transform": {
+              "x": 2.5,
+              "y": 1.0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 1
+            },
+            "sprite": {
+              "textureId": "farm-atlas-tex",
+              "width": 0.9,
+              "height": 0.9,
+              "pivotX": 0.5,
+              "pivotY": 0.5,
+              "region": "chicken"
+            },
+            "rigidBody": {
+              "type": "static",
+              "gravityScale": 0,
+              "linearDamping": 0,
+              "angularDamping": 0,
+              "fixedRotation": true
+            },
+            "circleCollider": {
+              "radius": 0.4,
+              "offsetX": 0,
+              "offsetY": 0,
+              "isSensor": false,
+              "restitution": 0,
+              "friction": 0.1
+            },
+            "sortingLayer": {
+              "layer": 1,
+              "orderInLayer": 0,
+              "ySort": true
+            }
+          }
+        },
+        {
+          "id": "wall-top",
+          "name": "Wall Top",
+          "components": {
+            "transform": {
+              "x": 0,
+              "y": 7,
+              "rotation": 0,
+              "scaleX": 17,
+              "scaleY": 1
+            },
+            "rigidBody": {
+              "type": "static",
+              "gravityScale": 0,
+              "linearDamping": 0,
+              "angularDamping": 0,
+              "fixedRotation": true
+            },
+            "boxCollider": {
+              "width": 1,
+              "height": 1,
+              "offsetX": 0,
+              "offsetY": 0,
+              "isSensor": false,
+              "restitution": 0,
+              "friction": 0.1
+            }
+          }
+        },
+        {
+          "id": "wall-bottom",
+          "name": "Wall Bottom",
+          "components": {
+            "transform": {
+              "x": 0,
+              "y": -7,
+              "rotation": 0,
+              "scaleX": 17,
+              "scaleY": 1
+            },
+            "rigidBody": {
+              "type": "static",
+              "gravityScale": 0,
+              "linearDamping": 0,
+              "angularDamping": 0,
+              "fixedRotation": true
+            },
+            "boxCollider": {
+              "width": 1,
+              "height": 1,
+              "offsetX": 0,
+              "offsetY": 0,
+              "isSensor": false,
+              "restitution": 0,
+              "friction": 0.1
+            }
+          }
+        },
+        {
+          "id": "wall-left",
+          "name": "Wall Left",
+          "components": {
+            "transform": {
+              "x": -8.5,
+              "y": 0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 14
+            },
+            "rigidBody": {
+              "type": "static",
+              "gravityScale": 0,
+              "linearDamping": 0,
+              "angularDamping": 0,
+              "fixedRotation": true
+            },
+            "boxCollider": {
+              "width": 1,
+              "height": 1,
+              "offsetX": 0,
+              "offsetY": 0,
+              "isSensor": false,
+              "restitution": 0,
+              "friction": 0.1
+            }
+          }
+        },
+        {
+          "id": "wall-right",
+          "name": "Wall Right",
+          "components": {
+            "transform": {
+              "x": 8.5,
+              "y": 0,
+              "rotation": 0,
+              "scaleX": 1,
+              "scaleY": 14
+            },
+            "rigidBody": {
+              "type": "static",
+              "gravityScale": 0,
+              "linearDamping": 0,
+              "angularDamping": 0,
+              "fixedRotation": true
+            },
+            "boxCollider": {
+              "width": 1,
+              "height": 1,
+              "offsetX": 0,
+              "offsetY": 0,
+              "isSensor": false,
+              "restitution": 0,
+              "friction": 0.1
+            }
+          }
+        }
+      ]
+    }
+  },
+  "settings": {
+    "startScene": "main",
+    "physics": {
+      "gravity": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    "postProcess": {
+      "bloom": false,
+      "vignette": false,
+      "crt": false,
+      "bloomThreshold": 0.8,
+      "vignetteStrength": 0.3
+    },
+    "input": {},
+    "backgroundColor": "#84C669"
+  }
+}

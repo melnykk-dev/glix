@@ -1,0 +1,41 @@
+:root {
+  /* Glix Palette A — Logo True (locked 2026-11-12) */
+  --glix-raspberry: #E94560;
+  --glix-raspberry-light: #FF6B81;
+  --glix-raspberry-dark: #C22E47;
+  --glix-purple: #533483;
+  --glix-purple-light: #7A5CAB;
+  --glix-purple-deep: #3A235F;
+  --glix-ink: #1A1A2E;
+  --glix-ink-deep: #12122A;
+  --glix-ink-panel: #23233F;
+  --glix-ink-panel-2: #2B2B4A;
+  --glix-paper: #F5F5F5;
+  --glix-paper-dim: #E9E9F2;
+  --glix-muted-dark: #A8A8C0;
+  --glix-muted-light: #5C5C78;
+  --glix-success: #2FBF71;
+  --glix-warning: #FFB224;
+  --glix-danger: #E94560;
+  --glix-info: #7A5CAB;
+  --glix-font: 'Outfit', sans-serif;
+  /* dark theme (default) */
+  --glix-bg: #12122A;
+  --glix-bg-alt: #1A1A2E;
+  --glix-bg-panel: #23233F;
+  --glix-text: #F5F5F5;
+  --glix-text-muted: #A8A8C0;
+  --glix-accent: #E94560;
+  --glix-accent-hi: #FF6B81;
+  --glix-border: rgba(245, 245, 245, 0.08);
+}
+[data-theme="light"] {
+  --glix-bg: #F5F5F5;
+  --glix-bg-alt: #E9E9F2;
+  --glix-bg-panel: #FFFFFF;
+  --glix-text: #1A1A2E;
+  --glix-text-muted: #5C5C78;
+  --glix-accent: #E94560;
+  --glix-accent-hi: #C22E47;
+  --glix-border: #E3E3EF;
+}

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="320" viewBox="0 0 1280 320">
+  <!-- v2 layout (2026-11-12 fix): mark shrunk to 144px and raised, tagline
+       dropped to y=272 in brighter #C9C9DC — 54px clear gap, no touching. -->
+  <rect width="1280" height="320" fill="#1A1A2E"/>
+  <rect x="0" y="0" width="1280" height="3" fill="#E94560"/>
+  <pattern id="dots" x="0" y="0" width="32" height="32" patternUnits="userSpaceOnUse">
+    <circle cx="16" cy="16" r="1" fill="#E94560" opacity="0.08"/>
+  </pattern>
+  <rect width="1280" height="320" fill="url(#dots)"/>
+  <g transform="translate(80,48) scale(1.5)">
+    <rect x="6" y="6" width="24" height="24" rx="4" fill="#E94560"/>
+    <rect x="36" y="6" width="24" height="24" rx="4" fill="#E94560"/>
+    <rect x="66" y="6" width="24" height="24" rx="4" fill="#E94560"/>
+    <rect x="6" y="36" width="24" height="24" rx="4" fill="#E94560"/>
+    <rect x="66" y="36" width="24" height="24" rx="4" fill="#E94560"/>
+    <rect x="6" y="66" width="24" height="24" rx="4" fill="#E94560"/>
+    <rect x="36" y="66" width="24" height="24" rx="4" fill="#533483"/>
+    <rect x="66" y="66" width="24" height="24" rx="4" fill="#533483"/>
+    <polygon points="44,42 44,58 58,50" fill="#E94560"/>
+  </g>
+  <text x="260" y="165" font-family="Outfit, 'Liberation Sans', sans-serif" font-size="96" font-weight="700" fill="#F5F5F5" letter-spacing="-3">glix</text>
+  <rect x="1010" y="58" width="190" height="44" rx="22" fill="none" stroke="#FF6B81" stroke-width="2"/>
+  <text x="1105" y="88" text-anchor="middle" font-family="Outfit, 'Liberation Sans', sans-serif" font-size="20" font-weight="700" fill="#FF6B81" letter-spacing="2">FREE FOREVER</text>
+  <text x="80" y="272" font-family="Outfit, 'Liberation Sans', sans-serif" font-size="24" font-weight="400" fill="#C9C9DC">A fun, local-first 2D game engine. Build games in the browser. No installs, no accounts.</text>
+  <rect x="0" y="317" width="1280" height="3" fill="#533483"/>
+</svg>
